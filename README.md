@@ -12,6 +12,9 @@ robots.txt                  Suchmaschinen aussperren
 marke.js                    Logo „Lernspiele“ mit Fach-Etikett (für alle Seiten; neue Fächer hier eintragen)
 lehrer-oagzajb8/            Lehrer-Ansicht (alle Fächer + Jahrgänge, nicht an Schüler weitergeben)
   apps.js                   Verzeichnis aller Lernspiele – bei neuem Kapitel/Jahrgang/Fach ergänzen
+bio2-ic0yjzio/              Biologie 2. Klasse
+  index.html                Kapitelübersicht
+  pflanzen-pilze/           Kapitel „1. Pflanzen und Pilze“ (wie unten, plus animation.js)
 bio3-pnnstwfb/              Biologie 3. Klasse
   index.html                Kapitelübersicht
   gewaesser/                Kapitel „1. Gewässer“
@@ -21,7 +24,9 @@ bio3-pnnstwfb/              Biologie 3. Klasse
     questions.js            Quizfragen
 ```
 
-Link für die Schüler: `https://hac-teach.github.io/lernapp/bio3-pnnstwfb/`
+Links für die Schüler:
+- 2. Klasse: `https://hac-teach.github.io/lernapp/bio2-ic0yjzio/`
+- 3. Klasse: `https://hac-teach.github.io/lernapp/bio3-pnnstwfb/`
 
 Lehrer-Ansicht: `https://hac-teach.github.io/lernapp/lehrer-oagzajb8/`
 

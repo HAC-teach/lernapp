@@ -5,6 +5,9 @@ const FAECHER = [
   {
     id: "bio", name: "Biologie", color: "#3f9a6f", soft: "#e3f4ea",
     klassen: [
+      { name: "2. Klasse", folder: "bio2-ic0yjzio", kapitel: [
+        { name: "1. Pflanzen und Pilze", path: "pflanzen-pilze/" }
+      ] },
       { name: "3. Klasse", folder: "bio3-pnnstwfb", kapitel: [
         { name: "1. Gewässer", path: "gewaesser/" }
       ] }
