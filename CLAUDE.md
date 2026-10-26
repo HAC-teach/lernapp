@@ -13,8 +13,14 @@ A static learning app for a biology class (Austrian AHS, topic "1. Gewässer"), 
 - Questions must be based on the slide content. Don't invent content beyond the slides without saying so.
 - Keep it phone-friendly and keep the dark mode working.
 
-## Files
+## Structure / access
 
+- Root `index.html` is a neutral page that links nowhere. Each grade+subject lives in its own unguessable folder (e.g. `bio3-pnnstwfb/` = Biologie 3. Klasse); only that link goes to the students. Never link one grade's folder from another or from the root. All pages carry `noindex`; `robots.txt` disallows everything (never list folder names in it).
+- `<grade folder>/index.html` – chapter list. Each chapter is a subfolder (e.g. `gewaesser/`) with the files below.
+
+## Files (per chapter folder)
+
+- `lernen.js` – `LESSONS[topicId]` = learning cards `{ title, points[], tip? }`, shown before the quiz of that topic. Content comes from the slides.
 - `index.html` – the whole app (UI, styles, logic). Rounds of `ROUND_SIZE` (10) random questions; best scores stored in `localStorage` under `gewaesser-best`.
 - `questions.js` – `TOPICS` and `QUESTIONS`. Add or change questions here. Types:
   - `mc`: `options[]`, `answer` = index of the correct option

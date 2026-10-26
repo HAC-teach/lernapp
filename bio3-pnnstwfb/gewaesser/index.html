@@ -1,0 +1,298 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Gewässer Lernspiel</title>
+<style>
+  :root {
+    --bg: #eef6f8; --card: #ffffff; --text: #16323d; --muted: #5b7380;
+    --accent: #0e7c99; --accent-soft: #d6eef4; --ok: #1f8a4c; --ok-soft: #dcf3e5;
+    --bad: #c2412d; --bad-soft: #fbe3de; --border: #cfe0e6;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0f1d23; --card: #172a32; --text: #e4f0f3; --muted: #93aab4;
+      --accent: #4fc0dc; --accent-soft: #1d3c47; --ok: #5fd08f; --ok-soft: #173a29;
+      --bad: #f08a76; --bad-soft: #43221c; --border: #2a434d; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  main { max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 1.8rem; margin: 0 0 4px; }
+  h2 { font-size: 1.25rem; margin: 0 0 16px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-radius: 16px; padding: 20px; }
+  .grid { display: grid; gap: 12px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  .topic { text-align: left; background: var(--card); border: 2px solid var(--border); border-radius: 14px;
+    padding: 14px 16px; display: flex; gap: 12px; align-items: center; transition: border-color .15s, transform .15s; }
+  .topic:hover { border-color: var(--accent); transform: translateY(-1px); }
+  .topic.all { grid-column: 1 / -1; background: var(--accent-soft); }
+  .topic .ic { font-size: 1.8rem; }
+  .topic small { display: block; color: var(--muted); font-size: .85rem; }
+  .btn { background: var(--accent); color: #fff; border: 0; border-radius: 10px; padding: 12px 20px; font-weight: 600; }
+  .btn:disabled { opacity: .45; cursor: default; }
+  .btn.ghost { background: transparent; color: var(--accent); border: 2px solid var(--accent); }
+  .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--muted); font-size: .95rem; }
+  .progress { height: 8px; background: var(--accent-soft); border-radius: 99px; overflow: hidden; margin-bottom: 20px; }
+  .progress div { height: 100%; background: var(--accent); transition: width .3s; }
+  .q { font-size: 1.2rem; font-weight: 600; margin: 0 0 18px; }
+  .opts { display: grid; gap: 10px; }
+  .opt { text-align: left; background: var(--card); border: 2px solid var(--border); border-radius: 12px; padding: 12px 14px; }
+  .opt:hover:not(:disabled) { border-color: var(--accent); }
+  .opt.sel { border-color: var(--accent); background: var(--accent-soft); }
+  .opt.ok { border-color: var(--ok); background: var(--ok-soft); }
+  .opt.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .opt:disabled { cursor: default; }
+  .tf { grid-template-columns: 1fr 1fr; }
+  .tf .opt { text-align: center; font-weight: 600; padding: 18px; }
+  .seq { min-height: 52px; border: 2px dashed var(--border); border-radius: 12px; padding: 8px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .seq:empty::before { content: "Tippe die Begriffe in der richtigen Reihenfolge an …"; color: var(--muted); padding: 6px; }
+  .chip { background: var(--accent-soft); border: 2px solid transparent; border-radius: 10px; padding: 8px 12px; text-align: left; }
+  .chip .n { display: inline-block; min-width: 1.6em; font-weight: 700; color: var(--accent); }
+  .chip.ok { border-color: var(--ok); background: var(--ok-soft); }
+  .chip.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .pool { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pool .opt { padding: 8px 12px; }
+  .row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 10px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--border); }
+  .row:last-child { border-bottom: 0; }
+  .row b { font-weight: 600; }
+  select { font: inherit; color: var(--text); background: var(--card); border: 2px solid var(--border); border-radius: 10px; padding: 8px; width: 100%; }
+  select.ok { border-color: var(--ok); background: var(--ok-soft); }
+  select.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .fix { grid-column: 2; font-size: .9rem; color: var(--ok); }
+  .feedback { margin-top: 18px; border-radius: 12px; padding: 12px 14px; }
+  .feedback.ok { background: var(--ok-soft); }
+  .feedback.bad { background: var(--bad-soft); }
+  .feedback strong { display: block; }
+  .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
+  .big { font-size: 3rem; font-weight: 800; color: var(--accent); margin: 8px 0; }
+  .center { text-align: center; }
+  .review { margin-top: 20px; text-align: left; }
+  .review li { margin-bottom: 10px; }
+  .review span { color: var(--muted); display: block; font-size: .92rem; }
+  .best { color: var(--muted); font-size: .85rem; }
+  .streak { font-weight: 700; color: var(--accent); }
+  .back { display: inline-block; color: var(--accent); text-decoration: none; font-weight: 600; margin-bottom: 12px; }
+  .learn ul { margin: 0; padding-left: 1.2em; }
+  .learn li { margin-bottom: 8px; }
+  .tip { margin-top: 16px; background: var(--accent-soft); border-radius: 12px; padding: 10px 14px; }
+  .dots { display: flex; gap: 6px; justify-content: center; margin-top: 16px; }
+  .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+  .dots i.on { background: var(--accent); }
+  .skip { background: none; border: 0; color: var(--accent); text-decoration: underline; padding: 0; }
+  footer { color: var(--muted); font-size: .85rem; text-align: center; margin-top: 32px; }
+  @media (max-width: 480px) { .row { grid-template-columns: 1fr; } .fix { grid-column: 1; } }
+</style>
+</head>
+<body>
+<main id="app"></main>
+<script src="questions.js"></script>
+<script src="lernen.js"></script>
+<script>
+const app = document.getElementById("app");
+const ROUND_SIZE = 10;
+let state = null;
+
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function loadBest() { try { return JSON.parse(localStorage.getItem("gewaesser-best") || "{}"); } catch { return {}; } }
+function saveBest(id, pct) {
+  try { const b = loadBest(); if (!(b[id] >= pct)) { b[id] = pct; localStorage.setItem("gewaesser-best", JSON.stringify(b)); } } catch {}
+}
+
+function home() {
+  const best = loadBest();
+  const tile = (id, icon, title, count, cls = "") =>
+    `<button class="topic ${cls}" data-id="${id}"><span class="ic">${icon}</span><span><b>${esc(title)}</b>
+      <small>${id === "all" ? "" : `${(LESSONS[id] || []).length} Lernkarten · `}${count} Fragen${best[id] != null ? ` · Bestwert ${best[id]} %` : ""}</small></span></button>`;
+  app.innerHTML = `
+    <a class="back" href="../">← Alle Kapitel</a>
+    <h1>🌊 1. Gewässer</h1>
+    <p class="sub">Wähle ein Thema: Zuerst lernst du mit den Karten, dann testest du dein Wissen im Quiz.</p>
+    <div class="grid">
+      ${tile("all", "🎯", "Alle Themen gemischt", QUESTIONS.length, "all")}
+      ${TOPICS.map(t => tile(t.id, t.icon, t.title, QUESTIONS.filter(q => q.topic === t.id).length)).join("")}
+    </div>
+    <footer>Jede Runde: bis zu ${ROUND_SIZE} zufällige Fragen</footer>`;
+  app.querySelectorAll(".topic").forEach(b => b.onclick = () => b.dataset.id === "all" ? start("all") : learn(b.dataset.id, 0));
+}
+
+function learn(id, i) {
+  const cards = LESSONS[id] || [];
+  if (!cards.length) return start(id);
+  const t = TOPICS.find(t => t.id === id), c = cards[i], last = i === cards.length - 1;
+  app.innerHTML = `
+    <div class="bar"><button class="btn ghost" id="quit" style="padding:6px 12px">← Themen</button>
+      <span>${t.icon} ${esc(t.title)}</span>
+      <span>Karte ${i + 1} / ${cards.length}</span></div>
+    <div class="card learn">
+      <h2>${esc(c.title)}</h2>
+      <ul>${c.points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+      ${c.tip ? `<div class="tip">💡 ${esc(c.tip)}</div>` : ""}
+      <div class="dots">${cards.map((_, j) => `<i class="${j === i ? "on" : ""}"></i>`).join("")}</div>
+      <div class="actions">
+        ${i > 0 ? `<button class="btn ghost" id="prev">← Zurück</button>` : ""}
+        <button class="btn" id="next">${last ? "Quiz starten 🎯" : "Weiter →"}</button>
+      </div>
+    </div>
+    ${last ? "" : `<p class="center"><button class="skip" id="toquiz">Direkt zum Quiz</button></p>`}`;
+  document.getElementById("quit").onclick = home;
+  document.getElementById("next").onclick = () => last ? start(id) : learn(id, i + 1);
+  if (i > 0) document.getElementById("prev").onclick = () => learn(id, i - 1);
+  if (!last) document.getElementById("toquiz").onclick = () => start(id);
+  window.scrollTo(0, 0);
+}
+
+function start(id) {
+  const pool = id === "all" ? QUESTIONS : QUESTIONS.filter(q => q.topic === id);
+  state = { id, list: shuffle(pool).slice(0, ROUND_SIZE), i: 0, score: 0, streak: 0, wrong: [] };
+  render();
+}
+
+function render() {
+  const q = state.list[state.i];
+  const n = state.list.length;
+  state.answered = false;
+  state.pick = null;
+  app.innerHTML = `
+    <div class="bar"><button class="btn ghost" id="quit" style="padding:6px 12px">← Themen</button>
+      <span>Frage ${state.i + 1} / ${n}</span>
+      <span>⭐ ${state.score}${state.streak >= 3 ? ` <span class="streak">🔥${state.streak}</span>` : ""}</span></div>
+    <div class="progress"><div style="width:${state.i / n * 100}%"></div></div>
+    <div class="card">
+      <p class="q">${esc(q.q)}</p>
+      <div id="body"></div>
+      <div id="fb"></div>
+      <div class="actions"><button class="btn" id="go" disabled>Prüfen</button></div>
+    </div>`;
+  document.getElementById("quit").onclick = home;
+  const go = document.getElementById("go");
+  go.onclick = () => state.answered ? next() : check();
+  ({ mc: renderMC, tf: renderTF, order: renderOrder, match: renderMatch })[q.type](q, document.getElementById("body"), go);
+}
+
+function renderMC(q, el, go) {
+  const order = shuffle(q.options.map((_, i) => i));
+  el.innerHTML = `<div class="opts">${order.map(i => `<button class="opt" data-i="${i}">${esc(q.options[i])}</button>`).join("")}</div>`;
+  el.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    el.querySelectorAll(".opt").forEach(x => x.classList.remove("sel"));
+    b.classList.add("sel"); state.pick = +b.dataset.i; go.disabled = false;
+  });
+  state.grade = () => {
+    const ok = state.pick === q.answer;
+    el.querySelectorAll(".opt").forEach(b => {
+      b.disabled = true;
+      if (+b.dataset.i === q.answer) b.classList.add("ok");
+      else if (b.classList.contains("sel")) b.classList.add("bad");
+    });
+    return { ok, correct: q.options[q.answer] };
+  };
+}
+
+function renderTF(q, el, go) {
+  el.innerHTML = `<div class="opts tf"><button class="opt" data-v="1">✔ Richtig</button><button class="opt" data-v="0">✘ Falsch</button></div>`;
+  el.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    el.querySelectorAll(".opt").forEach(x => x.classList.remove("sel"));
+    b.classList.add("sel"); state.pick = b.dataset.v === "1"; go.disabled = false;
+  });
+  state.grade = () => {
+    const ok = state.pick === q.answer;
+    el.querySelectorAll(".opt").forEach(b => {
+      b.disabled = true;
+      if ((b.dataset.v === "1") === q.answer) b.classList.add("ok");
+      else if (b.classList.contains("sel")) b.classList.add("bad");
+    });
+    return { ok, correct: q.answer ? "Richtig" : "Falsch" };
+  };
+}
+
+function renderOrder(q, el, go) {
+  let pool = shuffle(q.items);
+  while (pool.length > 1 && pool.every((x, i) => x === q.items[i])) pool = shuffle(q.items);
+  const seq = [];
+  const draw = () => {
+    el.innerHTML = `
+      <div class="seq">${seq.map((s, i) => `<button class="chip" data-i="${i}"><span class="n">${i + 1}.</span>${esc(s)}</button>`).join("")}</div>
+      <div class="pool">${pool.map((s, i) => `<button class="opt" data-i="${i}">${esc(s)}</button>`).join("")}</div>`;
+    el.querySelectorAll(".pool .opt").forEach(b => b.onclick = () => { seq.push(pool.splice(+b.dataset.i, 1)[0]); draw(); });
+    el.querySelectorAll(".seq .chip").forEach(b => b.onclick = () => { pool.push(seq.splice(+b.dataset.i, 1)[0]); draw(); });
+    go.disabled = pool.length > 0;
+  };
+  draw();
+  state.grade = () => {
+    const ok = seq.every((s, i) => s === q.items[i]);
+    el.querySelectorAll(".seq .chip").forEach((b, i) => { b.disabled = true; b.classList.add(seq[i] === q.items[i] ? "ok" : "bad"); });
+    return { ok, correct: q.items.join(" → ") };
+  };
+}
+
+function renderMatch(q, el, go) {
+  const answers = shuffle([...new Set(q.pairs.map(p => p[1]))]);
+  const rows = shuffle(q.pairs);
+  el.innerHTML = rows.map((p, i) => `
+    <div class="row"><b>${esc(p[0])}</b>
+      <select data-i="${i}"><option value="">– wählen –</option>${answers.map(a => `<option>${esc(a)}</option>`).join("")}</select></div>`).join("");
+  const sels = [...el.querySelectorAll("select")];
+  sels.forEach(s => s.onchange = () => { go.disabled = sels.some(x => !x.value); });
+  state.grade = () => {
+    let ok = true;
+    sels.forEach((s, i) => {
+      s.disabled = true;
+      const right = s.value === rows[i][1];
+      s.classList.add(right ? "ok" : "bad");
+      if (!right) { ok = false; s.parentElement.insertAdjacentHTML("beforeend", `<span class="fix">✔ ${esc(rows[i][1])}</span>`); }
+    });
+    return { ok, correct: q.pairs.map(p => `${p[0]} – ${p[1]}`).join("; ") };
+  };
+}
+
+function check() {
+  const q = state.list[state.i];
+  const { ok, correct } = state.grade();
+  state.answered = true;
+  if (ok) { state.score++; state.streak++; } else { state.streak = 0; state.wrong.push({ q, correct }); }
+  const praise = ["Super!", "Richtig!", "Genau!", "Sehr gut!", "Toll!"];
+  document.getElementById("fb").innerHTML = `
+    <div class="feedback ${ok ? "ok" : "bad"}"><strong>${ok ? "✅ " + praise[Math.floor(Math.random() * praise.length)] : "❌ Leider nicht ganz."}</strong>${esc(q.info || "")}</div>`;
+  const go = document.getElementById("go");
+  go.textContent = state.i + 1 < state.list.length ? "Weiter →" : "Ergebnis anzeigen";
+  go.disabled = false;
+  go.focus();
+}
+
+function next() {
+  state.i++;
+  if (state.i < state.list.length) render(); else result();
+}
+
+function result() {
+  const n = state.list.length, pct = Math.round(state.score / n * 100);
+  saveBest(state.id, pct);
+  const msg = pct === 100 ? "Perfekt! Du bist ein Gewässer-Profi! 🏆" : pct >= 80 ? "Sehr gut gemacht! 🎉" : pct >= 50 ? "Gut! Mit etwas Übung schaffst du noch mehr. 💪" : "Wiederhole das Thema noch einmal – du schaffst das! 📚";
+  app.innerHTML = `
+    <div class="card center">
+      <h2>Ergebnis</h2>
+      <div class="big">${state.score} / ${n}</div>
+      <p>${pct} % · ${msg}</p>
+      ${state.wrong.length ? `<div class="review"><b>Das solltest du wiederholen:</b><ul>${state.wrong.map(w =>
+        `<li>${esc(w.q.q)}<span>✔ ${esc(w.correct)}</span></li>`).join("")}</ul></div>` : ""}
+      <div class="actions" style="justify-content:center">
+        <button class="btn ghost" id="home">Themen</button>
+        ${state.id !== "all" && LESSONS[state.id] ? `<button class="btn ghost" id="relearn">Lernkarten</button>` : ""}
+        <button class="btn" id="again">Nochmal spielen</button>
+      </div>
+    </div>`;
+  document.getElementById("home").onclick = home;
+  document.getElementById("again").onclick = () => start(state.id);
+  const relearn = document.getElementById("relearn");
+  if (relearn) relearn.onclick = () => learn(state.id, 0);
+}
+
+home();
+</script>
+</body>
+</html>

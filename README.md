@@ -1,14 +1,36 @@
-# Gewässer Lernspiel
+# Lernapps
 
-Statisches Lernspiel (Biologie, Thema „1. Gewässer“). Keine Abhängigkeiten, kein Build-Schritt.
+Statische Lernseiten für den Unterricht. Keine Abhängigkeiten, kein Build-Schritt.
 
-- `index.html` – die App
-- `questions.js` – alle Fragen (hier neue Fragen hinzufügen oder ändern)
+## Aufbau
 
-## Auf GitHub Pages veröffentlichen
+Jeder Jahrgang (pro Fach) hat einen eigenen Ordner mit schwer erratbarem Namen. Die Startseite verlinkt keinen Jahrgang – die Schüler brauchen den Link von der Lehrkraft.
 
-1. Neues Repository auf GitHub anlegen und `index.html`, `questions.js` (und diese README) hochladen.
-2. Im Repository: **Settings → Pages → Build and deployment → Source: Deploy from a branch**, Branch `main`, Ordner `/ (root)` wählen.
-3. Nach ca. 1 Minute ist die App unter `https://<benutzername>.github.io/<repository>/` erreichbar.
+```
+index.html                  neutrale Startseite („Link von der Lehrkraft verwenden“)
+robots.txt                  Suchmaschinen aussperren
+bio3-pnnstwfb/              Biologie 3. Klasse
+  index.html                Kapitelübersicht
+  gewaesser/                Kapitel „1. Gewässer“
+    index.html              Lernkarten + Quiz
+    lernen.js               Lernkarten pro Thema
+    questions.js            Quizfragen
+```
 
-Lokal testen: einfach `index.html` im Browser öffnen.
+Link für die Schüler: `https://hac-teach.github.io/lernapp/bio3-pnnstwfb/`
+
+## Neues Kapitel
+
+Einen Kapitelordner kopieren (z. B. `gewaesser/`), `lernen.js` und `questions.js` anpassen und in der Kapitelübersicht des Jahrgangs einen Link ergänzen.
+
+## Neuer Jahrgang / neues Fach
+
+Einen neuen Ordner mit zufälligem Namen anlegen (z. B. `bio4-` + 8 zufällige Zeichen) und nur diesen Link an die Klasse weitergeben.
+
+## Wichtig
+
+Das ist keine echte Zugangssperre: Wer das öffentliche GitHub-Repository ansieht, sieht alle Ordner. Es verhindert nur, dass Schüler sich durch die Seite zu anderen Jahrgängen klicken oder sie per Google finden.
+
+## Veröffentlichen
+
+**Settings → Pages → Deploy from a branch**, Branch `main`, Ordner `/ (root)`. Lokal testen über einen kleinen HTTP-Server (nicht per `file://`).
