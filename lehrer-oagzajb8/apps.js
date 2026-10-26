@@ -9,7 +9,8 @@ const FAECHER = [
         { name: "1. Pflanzen und Pilze", path: "pflanzen-pilze/" },
         { name: "2. Die Zelle", path: "zelle/" },
         { name: "3. Sinnesorgane", path: "sinnesorgane/" },
-        { name: "4. Ökosystem Wald", path: "wald/" }
+        { name: "4. Ökosystem Wald", path: "wald/" },
+        { name: "5. Wirbellose Tiere", path: "wirbellose/" }
       ] },
       { name: "3. Klasse", folder: "bio3-pnnstwfb", kapitel: [
         { name: "1. Gewässer", path: "gewaesser/" }

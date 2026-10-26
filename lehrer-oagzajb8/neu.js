@@ -3,6 +3,8 @@
 // text = was sich geändert hat (für die Lehrkraft), ziel = optional Kapitelordner für die Vorschau.
 // Einträge der letzten 14 Tage bekommen das Kennzeichen „neu“.
 const NEUIGKEITEN = [
+  { datum: "2026-10-26", fach: "bio", wo: "2. Klasse · 5. Wirbellose Tiere", ziel: "bio2-ic0yjzio/wirbellose/",
+    text: "Neues Kapitel mit den Themen I. Wirbeltiere und Wirbellose, II. Bau der Insekten, III. Verwandlung, IV. Käfer und Wanzen, V. Honigbiene und Bienenstaat, VI. Bienentanz und Wildbienen, VII. Ameisen. Lernkarten, 56 Fragen und die Beschriftungsbilder „Honigbiene“ und „Fliegender Käfer“. „Ameisen“ hat auf den Folien keinen Inhalt – dort steht übliches Schulwissen. Animation „Krabbelwelt“ (Ameisenstraße, Marienkäfer und Schmetterlinge; bei allem richtig klappen Marienkäfer die Deckflügel auf und fliegen davon), bei den beiden Bienen-Themen „Bienenstock“ (Bienen über Blumen; bei allem richtig wächst eine Honigwabe und eine Biene tanzt den Schwänzeltanz)." },
   { datum: "2026-10-26", fach: "bio", wo: "2. Klasse · 4. Ökosystem Wald", ziel: "bio2-ic0yjzio/wald/",
     text: "Nahrungsketten-Aufgaben: Die Begriffe stehen jetzt nebeneinander mit Pfeilen nach rechts. Der Pfeil bedeutet immer „wird gefressen von“ – das steht auch über der Aufgabe und auf den Lernkarten." },
   { datum: "2026-10-26", fach: "bio", wo: "2. Klasse · 4. Ökosystem Wald", ziel: "bio2-ic0yjzio/wald/",
