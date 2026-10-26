@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light only">
+<title>Lernspiele – Lehrer-Ansicht</title>
+<style>
+  :root { --card: #ffffff; --text: #2f2a22; --muted: #7c7466; --border: #e4ddd0; --c: #3f9a6f; --soft: #e3f4ea; }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--text); background: #faf8f4; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  header { background: #fff; border-bottom: 3px solid var(--c); }
+  .in { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
+  .brand { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 14px 0 10px; }
+  .brand b { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; }
+  .brand span { color: var(--muted); font-weight: 600; font-size: .9rem; }
+  .tabs { display: flex; gap: 6px; flex-wrap: wrap; padding-bottom: 12px; }
+  .tabs button { font: inherit; font-weight: 700; cursor: pointer; border: 2px solid var(--tc); color: var(--tc); background: #fff; border-radius: 99px; padding: 4px 16px; }
+  .tabs button.on { background: var(--tc); color: #fff; }
+  main { padding-top: 20px; padding-bottom: 48px; }
+  .layout { display: grid; gap: 20px; grid-template-columns: 1fr 380px; align-items: start; }
+  .klasse { background: var(--card); border: 1px solid var(--border); border-top: 5px solid var(--c); border-radius: 10px; padding: 16px; margin-bottom: 16px; }
+  .klasse h2 { margin: 0 0 8px; font-size: 1.2rem; }
+  .link { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; background: var(--soft); border-radius: 8px; padding: 8px 10px; margin-bottom: 12px; font-size: .9rem; }
+  .link code { flex: 1 1 220px; min-width: 0; overflow-wrap: anywhere; }
+  .kap { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; padding: 10px 0; border-top: 1px dashed var(--border); }
+  .kap b { flex: 1; min-width: 140px; }
+  .kap small { color: var(--muted); display: block; font-weight: 400; }
+  .btn { font: inherit; font-size: .88rem; font-weight: 700; cursor: pointer; text-decoration: none; color: var(--text); background: #fff; border: 1px solid var(--border); border-radius: 6px; padding: 5px 12px; }
+  .btn.p { background: var(--c); border-color: var(--c); color: #fff; }
+  .btn:hover { filter: brightness(.97); }
+  .empty { color: var(--muted); background: var(--card); border: 1px dashed var(--border); border-radius: 10px; padding: 20px; }
+  .preview { position: sticky; top: 16px; }
+  .preview p { margin: 0 0 8px; color: var(--muted); font-size: .9rem; font-weight: 600; }
+  .phone { width: 100%; height: 680px; border: 8px solid var(--text); border-radius: 26px; overflow: hidden; background: #fff; }
+  .phone iframe { width: 100%; height: 100%; border: 0; display: block; }
+  .phone .ph { height: 100%; display: grid; place-items: center; color: var(--muted); padding: 20px; text-align: center; }
+  @media (max-width: 860px) { .layout { grid-template-columns: 1fr; } .preview { position: static; } .phone { height: 600px; max-width: 380px; } }
+</style>
+</head>
+<body>
+<header><div class="in">
+  <div class="brand"><b>Lernspiele</b><span>Lehrer-Ansicht · alle Fächer und Jahrgänge</span></div>
+  <div class="tabs" id="tabs"></div>
+</div></header>
+<main class="in"><div class="layout"><div id="list"></div>
+  <aside class="preview"><p id="ptitle">Vorschau</p><div class="phone" id="phone"><div class="ph">Tippe bei einem Kapitel auf „Vorschau“.</div></div></aside>
+</div></main>
+<script src="apps.js"></script>
+<script>
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const base = new URL("../", location.href).href;
+let cur = location.hash.slice(1);
+if (!FAECHER.some(f => f.id === cur)) { try { cur = localStorage.getItem("lehrer-fach") || ""; } catch {} }
+if (!FAECHER.some(f => f.id === cur)) cur = FAECHER[0].id;
+
+const tabs = document.getElementById("tabs");
+tabs.innerHTML = FAECHER.map(f => `<button data-id="${f.id}" style="--tc:${f.color}">${esc(f.name)}</button>`).join("");
+tabs.onclick = e => { const b = e.target.closest("button"); if (b) show(b.dataset.id); };
+
+// Fragen zählen (liest questions.js des Kapitels, immer die aktuelle Version)
+async function count(url, el) {
+  try {
+    const t = await (await fetch(url + "questions.js", { cache: "no-store" })).text();
+    const n = (t.match(/\btopic:/g) || []).length, mc = (t.match(/type:\s*"mc"/g) || []).length;
+    el.textContent = `${n} Fragen · davon ${mc} Multiple Choice`;
+  } catch { el.textContent = ""; }
+}
+
+function show(id) {
+  cur = id;
+  try { localStorage.setItem("lehrer-fach", id); } catch {}
+  history.replaceState(null, "", "#" + id);
+  const f = FAECHER.find(x => x.id === id);
+  document.documentElement.style.setProperty("--c", f.color);
+  document.documentElement.style.setProperty("--soft", f.soft);
+  [...tabs.children].forEach(b => b.classList.toggle("on", b.dataset.id === id));
+  const list = document.getElementById("list");
+  if (!f.klassen.length) { list.innerHTML = `<div class="empty">Für ${esc(f.name)} gibt es noch keine Lernspiele.</div>`; return; }
+  list.innerHTML = f.klassen.map(k => {
+    const url = base + k.folder + "/";
+    return `<section class="klasse"><h2>${esc(f.name)} · ${esc(k.name)}</h2>
+      <div class="link"><span>Schüler-Link:</span><code>${esc(url)}</code><button class="btn" data-copy="${esc(url)}">Kopieren</button>
+        <a class="btn" href="${esc(url)}" target="_blank" rel="noopener">Öffnen</a></div>
+      ${k.kapitel.length ? k.kapitel.map(c => `<div class="kap"><b>${esc(c.name)}<small data-count="${esc(url + c.path)}">…</small></b>
+        <button class="btn p" data-prev="${esc(url + c.path)}" data-name="${esc(f.name + " · " + k.name + " · " + c.name)}">Vorschau</button>
+        <a class="btn" href="${esc(url + c.path)}" target="_blank" rel="noopener">Öffnen</a></div>`).join("") : `<div class="kap"><small>Noch keine Kapitel.</small></div>`}
+    </section>`;
+  }).join("");
+  list.querySelectorAll("[data-count]").forEach(el => count(el.dataset.count, el));
+}
+
+document.getElementById("list").onclick = e => {
+  const c = e.target.closest("[data-copy]");
+  if (c) { navigator.clipboard.writeText(c.dataset.copy).then(() => { c.textContent = "Kopiert ✓"; setTimeout(() => c.textContent = "Kopieren", 1500); }, () => {}); }
+  const p = e.target.closest("[data-prev]");
+  if (p) {
+    document.getElementById("ptitle").textContent = p.dataset.name;
+    document.getElementById("phone").innerHTML = `<iframe src="${esc(p.dataset.prev)}" title="Vorschau"></iframe>`;
+  }
+};
+window.onhashchange = () => { const id = location.hash.slice(1); if (id !== cur && FAECHER.some(f => f.id === id)) show(id); };
+show(cur);
+</script>
+</body>
+</html>

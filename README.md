@@ -9,6 +9,8 @@ Jeder Jahrgang (pro Fach) hat einen eigenen Ordner mit schwer erratbarem Namen. 
 ```
 index.html                  neutrale Startseite („Link von der Lehrkraft verwenden“)
 robots.txt                  Suchmaschinen aussperren
+lehrer-oagzajb8/            Lehrer-Ansicht (alle Fächer + Jahrgänge, nicht an Schüler weitergeben)
+  apps.js                   Verzeichnis aller Lernspiele – bei neuem Kapitel/Jahrgang/Fach ergänzen
 bio3-pnnstwfb/              Biologie 3. Klasse
   index.html                Kapitelübersicht
   gewaesser/                Kapitel „1. Gewässer“
@@ -19,6 +21,8 @@ bio3-pnnstwfb/              Biologie 3. Klasse
 ```
 
 Link für die Schüler: `https://hac-teach.github.io/lernapp/bio3-pnnstwfb/`
+
+Lehrer-Ansicht: `https://hac-teach.github.io/lernapp/lehrer-oagzajb8/`
 
 ## Neues Kapitel
 
