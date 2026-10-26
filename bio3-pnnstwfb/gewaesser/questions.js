@@ -7,11 +7,11 @@
 // "info" wird nach dem Beantworten als Erklärung angezeigt.
 
 const TOPICS = [
-  { id: "kreislauf", title: "Wasserkreislauf", icon: "💧" },
-  { id: "fluss", title: "Fließ- & stehende Gewässer", icon: "🏞️" },
-  { id: "trinkwasser", title: "Trinkwasser & Mensch", icon: "🚰" },
-  { id: "meer", title: "Das Meer", icon: "🌊" },
-  { id: "amphibien", title: "Amphibien & Fische", icon: "🐸" }
+  { id: "kreislauf", title: "Wasserkreislauf" },
+  { id: "fluss", title: "Fließ- & stehende Gewässer" },
+  { id: "trinkwasser", title: "Trinkwasser & Mensch" },
+  { id: "meer", title: "Das Meer" },
+  { id: "amphibien", title: "Amphibien & Fische" }
 ];
 
 const QUESTIONS = [

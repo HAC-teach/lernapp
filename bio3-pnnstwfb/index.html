@@ -6,33 +6,43 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Biologie 3. Klasse</title>
 <style>
-  :root { --bg: #eef6f8; --card: #ffffff; --text: #16323d; --muted: #5b7380; --accent: #0e7c99; --border: #cfe0e6; }
+  :root { --bg: #f4f5f7; --card: #ffffff; --text: #3b4046; --muted: #7b838b; --border: #dfe3e7;
+    --green: #3e9f4c; --green-soft: #eaf5eb; --top: #fbfbfc; }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #0f1d23; --card: #172a32; --text: #e4f0f3; --muted: #93aab4; --accent: #4fc0dc; --border: #2a434d; }
+    :root { --bg: #16191c; --card: #1f2327; --text: #e2e5e8; --muted: #9aa2aa; --border: #353b41;
+      --green: #5cbd69; --green-soft: #1c3121; --top: #1b1e22; }
   }
   * { box-sizing: border-box; }
   body { margin: 0; background: var(--bg); color: var(--text);
     font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .top { background: var(--top); border-bottom: 1px solid var(--border); padding: 14px 16px;
+    font-size: .85rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  .top span { display: block; max-width: 720px; margin: 0 auto; }
   main { max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; }
-  h1 { font-size: 1.8rem; margin: 0 0 4px; }
+  h1 { font-size: 2rem; font-weight: 600; margin: 0 0 6px; }
   .sub { color: var(--muted); margin: 0 0 24px; }
-  .list { display: grid; gap: 12px; }
-  .chapter { display: flex; gap: 14px; align-items: center; background: var(--card); border: 2px solid var(--border);
-    border-radius: 14px; padding: 16px; color: inherit; text-decoration: none; transition: border-color .15s, transform .15s; }
-  a.chapter:hover { border-color: var(--accent); transform: translateY(-1px); }
-  .chapter .ic { font-size: 2rem; }
-  .chapter small { display: block; color: var(--muted); font-size: .9rem; }
+  .list { display: grid; gap: 14px; }
+  .chapter { display: block; background: var(--card); border: 2px solid var(--border); border-radius: 10px;
+    overflow: hidden; color: inherit; text-decoration: none; transition: border-color .15s; }
+  a.chapter:hover { border-color: var(--green); }
+  .chapter .head { display: flex; gap: 12px; align-items: center; padding: 14px 16px; font-weight: 600; }
+  .chapter small { display: block; color: var(--muted); font-size: .9rem; padding: 8px 16px;
+    background: var(--green-soft); border-top: 1px solid var(--border); }
+  .num { flex: none; width: 34px; height: 34px; border-radius: 8px; background: var(--green); color: #fff;
+    display: grid; place-items: center; font-weight: 700; font-size: .95rem; }
   .chapter.soon { opacity: .55; }
+  @media (max-width: 480px) { h1 { font-size: 1.6rem; } }
 </style>
 </head>
 <body>
+<header class="top"><span>Biologie · 3. Klasse</span></header>
 <main>
-  <h1>🔬 Biologie · 3. Klasse</h1>
+  <h1>Kapitel</h1>
   <p class="sub">Wähle ein Kapitel. Du kannst die Themen durchklicken und danach ein Quiz machen.</p>
   <div class="list">
     <!-- Neues Kapitel: Ordner anlegen und hier einen Link ergänzen -->
-    <a class="chapter" href="gewaesser/"><span class="ic">🌊</span>
-      <span><b>1. Gewässer</b><small>Wasserkreislauf · Fließ- & stehende Gewässer · Trinkwasser · Meer · Amphibien</small></span></a>
+    <a class="chapter" href="gewaesser/"><span class="head"><span class="num">1</span>Gewässer</span>
+      <small>Wasserkreislauf · Fließ- & stehende Gewässer · Trinkwasser · Meer · Amphibien</small></a>
   </div>
 </main>
 </body>
