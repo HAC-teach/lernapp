@@ -1,0 +1,707 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light only">
+<title>Ökosystem Wald Lernspiel</title>
+<style>
+  /* Design „Forscherheft“: Karopapier, Textmarker, Klebestreifen, Haftnotizen.
+     Themenfarben: --c (Farbe), --ci (dunkel, für Schrift/Buttons), --soft (sehr hell), --mid (Textmarker) – setzt paint() pro Thema. */
+  :root {
+    --card: #ffffff; --text: #2f2a22; --ink: #2f2a22; --muted: #7c7466; --border: #d9d1c2; --dash: #b9b0a0;
+    --note: #fff6b8; --grid: #e9eef5;
+    --ok: #3f9a6f; --ok-soft: #e3f4ea; --bad: #d0533f; --bad-soft: #fbe6e1;
+    --c: #e0b100; --ci: #7a5f00; --soft: #fdf6d6; --mid: #ffd96a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--text); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #ffffff; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 22px 22px; }
+  .top { background: rgba(255, 255, 255, .94); border-bottom: 1.5px solid var(--ink); padding: 8px 16px; }
+  .top .in { max-width: 820px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .top .info { color: var(--muted); font-size: .9rem; font-weight: 600; }
+  main { max-width: 820px; margin: 0 auto; padding: 24px 16px 48px; }
+  .hl { display: inline; padding: 0 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    background: linear-gradient(transparent 55%, var(--mid) 55%); }
+  h1 { font-size: 2rem; font-weight: 800; margin: 0 0 12px; line-height: 1.35; }
+  h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 16px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  /* Karte mit Klebestreifen */
+  .card { position: relative; background: var(--card); border: 1.5px solid var(--ink); padding: 22px 20px 20px; margin-top: 12px;
+    border-radius: 4px 14px 6px 12px / 12px 6px 14px 4px; }
+  .card::before { content: ""; position: absolute; top: -11px; left: 42%; width: 76px; height: 21px; background: var(--mid); opacity: .8; transform: rotate(-3deg); }
+  /* Themen-Kopf mit Motiv */
+  .thead { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .thead h1 { font-size: 1.55rem; margin: 0; }
+  .thead svg { width: 58px; height: 58px; flex: none; color: var(--ci); transform: rotate(8deg); }
+  /* Themen als Haftnotizen */
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .topic { text-align: left; background: var(--soft); border: 0; border-radius: 2px; padding: 0; display: flex; flex-direction: column;
+    box-shadow: 1px 3px 6px rgba(0, 0, 0, .13); transform: rotate(-1deg); transition: transform .15s, box-shadow .15s; }
+  .topic:nth-child(2n) { transform: rotate(1deg); }
+  .topic:hover { transform: rotate(0) translateY(-2px); box-shadow: 2px 5px 10px rgba(0, 0, 0, .16); }
+  .topic .head { display: flex; gap: 12px; align-items: center; padding: 14px 16px 10px; flex: 1; font-weight: 700; }
+  .topic .head svg { width: 40px; height: 40px; flex: none; color: var(--ci); }
+  .topic small { display: block; color: var(--muted); font-size: .85rem; padding: 8px 16px 12px; border-top: 1.5px dashed rgba(0, 0, 0, .15); }
+  .topic.all, .topic.showmode { grid-column: 1 / -1; transform: rotate(-.4deg); }
+  .num { flex: none; color: var(--ci); font-weight: 800; font-size: 1.4rem; line-height: 1; min-width: 1.1em; }
+  .topic.all .num { font-size: 1rem; }
+  .btn { background: var(--ci); color: #fff; border: 1.5px solid var(--ink); border-radius: 4px; padding: 10px 20px;
+    font-weight: 700; box-shadow: 2px 2px 0 var(--ink); transform: rotate(-.6deg); }
+  .btn:hover:not(:disabled) { filter: brightness(1.08); }
+  .btn:active:not(:disabled) { transform: translate(1px, 1px) rotate(-.6deg); box-shadow: 1px 1px 0 var(--ink); }
+  .btn:disabled { opacity: .45; cursor: default; }
+  .btn.ghost { background: var(--card); color: var(--text); }
+  .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--muted); font-size: .95rem; }
+  .progress { height: 12px; background: var(--card); border: 1.5px solid var(--ink); border-radius: 99px; overflow: hidden; margin-bottom: 14px; }
+  .progress div { height: 100%; transition: width .3s;
+    background: repeating-linear-gradient(-45deg, var(--c) 0 6px, var(--mid) 6px 12px); }
+  .q { font-size: 1.2rem; font-weight: 650; margin: 0 0 18px; }
+  .opts { display: grid; gap: 10px; }
+  .opt { text-align: left; background: var(--card); border: 1.5px dashed var(--dash); border-radius: 6px; padding: 12px 14px; }
+  .opt:hover:not(:disabled) { border-color: var(--c); border-style: solid; }
+  .opt.sel { border: 1.5px solid var(--c); background: var(--soft); box-shadow: inset 0 0 0 1px var(--c); }
+  .opt.ok { border: 1.5px solid var(--ok); background: var(--ok-soft); box-shadow: inset 0 0 0 1px var(--ok); }
+  .opt.bad { border: 1.5px solid var(--bad); background: var(--bad-soft); box-shadow: inset 0 0 0 1px var(--bad); }
+  .opt:disabled { cursor: default; }
+  .tf { grid-template-columns: 1fr 1fr; }
+  .tf .opt { text-align: center; font-weight: 600; padding: 18px; }
+  .seq { min-height: 52px; border: 2px dashed var(--dash); border-radius: 6px; padding: 8px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .seq:empty::before { content: "Tippe die Begriffe in der richtigen Reihenfolge an …"; color: var(--muted); padding: 6px; }
+  .chip { background: var(--soft); border: 1.5px solid transparent; border-radius: 6px; padding: 8px 12px; text-align: left; }
+  .chip .n { display: inline-block; min-width: 1.6em; font-weight: 700; color: var(--ci); }
+  .chip.ok { border-color: var(--ok); background: var(--ok-soft); }
+  .chip.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .pool { display: flex; flex-wrap: wrap; gap: 8px; }
+  .pool .opt { padding: 8px 12px; }
+  .row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1.5px dashed var(--border); }
+  .row:last-child { border-bottom: 0; }
+  .row b { font-weight: 600; }
+  select { font: inherit; color: var(--text); background: var(--card); border: 1.5px solid var(--dash); border-radius: 6px; padding: 9px 10px; width: 100%; }
+  select:focus { outline: 2px solid var(--soft); border-color: var(--c); }
+  select.ok { border-color: var(--ok); background: var(--ok-soft); }
+  select.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .fix { grid-column: 2; font-size: .9rem; color: var(--ok); }
+  .feedback { margin-top: 18px; border-radius: 6px; padding: 12px 14px; border-left: 4px solid; }
+  .feedback.ok { background: var(--ok-soft); border-color: var(--ok); }
+  .feedback.bad { background: var(--bad-soft); border-color: var(--bad); }
+  .feedback strong { display: block; }
+  .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
+  .big { display: inline-block; font-size: 3rem; font-weight: 800; margin: 8px 0; padding: 0 6px;
+    background: linear-gradient(transparent 55%, var(--mid) 55%); }
+  .center { text-align: center; }
+  .review { margin-top: 20px; text-align: left; }
+  .review li { margin-bottom: 10px; }
+  .review span { color: var(--muted); display: block; font-size: .92rem; }
+  .streak { font-weight: 700; color: var(--ci); }
+  .back { display: block; width: fit-content; color: var(--muted); text-decoration: none; font-size: .95rem; font-weight: 600; margin-bottom: 12px; }
+  .back:hover { color: var(--text); }
+  .learn ul { margin: 0; padding-left: 1.2em; }
+  .learn li { margin-bottom: 8px; }
+  .learn li::marker { color: var(--ci); }
+  .tip { margin-top: 18px; background: var(--note); border-radius: 2px; padding: 12px 14px; box-shadow: 1px 2px 5px rgba(0, 0, 0, .12); transform: rotate(-.5deg); }
+  .dots { display: flex; gap: 6px; justify-content: center; margin-top: 16px; }
+  .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+  .dots i.on { background: var(--c); }
+  .skip { background: none; border: 0; color: var(--muted); text-decoration: underline; padding: 0; }
+  footer { color: var(--muted); font-size: .85rem; text-align: center; margin-top: 32px; }
+  .hint { color: var(--muted); font-size: .95rem; margin: -8px 0 12px; }
+  .gaptext { line-height: 2.4; margin: 0; }
+  .gaptext select { width: auto; display: inline-block; padding: 4px 6px; margin: 0 2px; }
+  .fixin { color: var(--ok); font-weight: 600; font-size: .92rem; }
+  .opt.check { display: flex; gap: 10px; align-items: center; }
+  .opt.check::before { content: ""; flex: none; width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; background: var(--card); }
+  .opt.check.sel::before, .opt.check.ok::before { border-color: var(--ok); background: var(--ok); box-shadow: inset 0 0 0 3px var(--card); }
+  .opt.check.sel::before { border-color: var(--c); background: var(--c); }
+  .opt.check.bad::before { border-color: var(--bad); background: var(--bad); box-shadow: inset 0 0 0 3px var(--card); }
+  .opt.miss { border: 2px dashed var(--ok); }
+  /* Beschriftung */
+  .figure { position: relative; border: 1.5px solid var(--ink); border-radius: 6px; overflow: hidden; margin-bottom: 12px; }
+  .figure svg { display: block; width: 100%; height: auto; }
+  .pin { position: absolute; transform: translate(-50%, -50%); width: 30px; height: 30px; border-radius: 50%; padding: 0;
+    background: #ffffff; color: var(--text); border: 2px solid var(--text); font-weight: 800; font-size: .9rem; line-height: 1;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, .35); }
+  .pin.set { background: var(--ci); border-color: var(--ink); color: #fff; }
+  .pin.cur { outline: 3px solid var(--c); outline-offset: 2px; animation: pulse 1s infinite alternate; }
+  .pin.ok { background: var(--ok); border-color: var(--ok); color: #fff; }
+  .pin.bad { background: var(--bad); border-color: var(--bad); color: #fff; }
+  .figure.lbl { padding: 0 10%; background: #ffffff; }
+  .leads { position: absolute; inset: 0; height: 100%; pointer-events: none; }
+  .lead line { stroke: var(--ink); stroke-width: 1.6; }
+  .lead line.halo { stroke: #ffffff; stroke-width: 4.5; }
+  .lead circle { fill: var(--ink); stroke: #ffffff; stroke-width: 1.5; }
+  .lead.cur line:not(.halo) { stroke: var(--ci); stroke-width: 2.4; } .lead.cur circle { fill: var(--ci); }
+  .lead.ok line:not(.halo) { stroke: var(--ok); } .lead.ok circle { fill: var(--ok); }
+  .lead.bad line:not(.halo) { stroke: var(--bad); } .lead.bad circle { fill: var(--bad); }
+  @keyframes pulse { to { outline-offset: 5px; } }
+  .chooser { background: var(--soft); border-radius: 6px; padding: 12px; margin-bottom: 12px; }
+  .chooser b { display: block; margin-bottom: 8px; }
+  .legend { display: grid; gap: 6px; }
+  .lrow { display: flex; gap: 10px; align-items: center; text-align: left; background: var(--card); border: 1.5px solid var(--border); border-radius: 6px; padding: 7px 10px; }
+  .lrow.cur { border-color: var(--c); box-shadow: inset 0 0 0 1px var(--c); }
+  .lrow.ok { border-color: var(--ok); background: var(--ok-soft); }
+  .lrow.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .lrow em { color: var(--muted); }
+  .lrow small { display: block; color: var(--ok); font-size: .88rem; }
+  .pnum { flex: none; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--text); display: grid; place-items: center; font-weight: 800; font-size: .85rem; }
+  /* Millionenshow */
+  .showmode { --c: #3949ab; --ci: #283593; --soft: #e8eaf6; --mid: #c5cae9; --gold: #f5b700; }
+  .tag { display: inline-block; font-size: .75rem; font-weight: 700; color: var(--ci); border: 1.5px solid var(--c); border-radius: 99px; padding: 1px 8px; margin-left: auto; }
+  .show { display: grid; gap: 16px; grid-template-columns: 1fr 190px; align-items: start; }
+  .jokers { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+  .joker { background: var(--card); border: 2px solid var(--c); color: var(--ci); border-radius: 99px; padding: 5px 14px; font-weight: 700; font-size: .9rem; }
+  .joker:disabled { opacity: .35; text-decoration: line-through; cursor: default; }
+  .stake { color: var(--muted); margin: 0 0 6px; font-size: .95rem; }
+  .stake b { color: var(--ci); }
+  .ans { grid-template-columns: 1fr 1fr; }
+  .ans .opt { display: flex; gap: 8px; border-radius: 99px; padding: 11px 16px; border: 1.5px solid var(--c); }
+  .ans .opt b { color: var(--gold); flex: none; }
+  .ans .opt.sel { background: #fff4cc; border-color: var(--gold); box-shadow: inset 0 0 0 1px var(--gold); }
+  .ans .opt.lock { background: var(--gold); border-color: var(--gold); color: #2a1f00; }
+  .ans .opt.lock b { color: #2a1f00; }
+  .ans .opt.gone { visibility: hidden; }
+  .ans .opt.ok b, .ans .opt.bad b { color: inherit; }
+  .jinfo { margin-top: 14px; background: #eef0fb; border-radius: 6px; padding: 12px 14px; }
+  .poll { display: grid; grid-template-columns: 1.5em 1fr 3em; gap: 8px; align-items: center; margin-top: 6px; }
+  .poll i { display: block; height: 14px; background: var(--c); border-radius: 3px; }
+  .ladder { list-style: none; margin: 12px 0 0; padding: 8px; display: flex; flex-direction: column-reverse; gap: 2px;
+    background: var(--card); border: 1.5px solid var(--ink); border-radius: 6px; font-size: .9rem; }
+  .ladder li { display: flex; justify-content: space-between; padding: 2px 8px; border-radius: 4px; color: var(--muted); }
+  .ladder li.safe { color: var(--text); font-weight: 700; }
+  .ladder li.done { color: var(--ok); }
+  .ladder li.now { background: var(--gold); color: #2a1f00; font-weight: 800; }
+  .rules { margin: 0 0 8px; padding-left: 1.2em; }
+  .rules li { margin-bottom: 6px; }
+  /* Animationen am Ende (ohne Ton) */
+  .fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
+  /* Tablet: mehr Platz nutzen */
+  @media (min-width: 700px) {
+    body { font-size: 18px; }
+    main { padding: 32px 24px 56px; }
+    .card { padding: 28px 28px 24px; }
+    .thead h1 { font-size: 1.9rem; }
+    .thead svg { width: 72px; height: 72px; }
+    .opts:not(.tf):not(.ans) { grid-template-columns: 1fr 1fr; }
+    .lab { display: grid; grid-template-columns: 1.4fr 1fr; gap: 18px; align-items: start; }
+    .lab .figure { margin-bottom: 0; }
+  }
+  @media (max-width: 640px) {
+    .show { grid-template-columns: 1fr; }
+    .ladder { flex-direction: row; flex-wrap: wrap; font-size: .8rem; }
+    .ladder li { flex: 1 0 30%; }
+  }
+  @media (max-width: 480px) { .row { grid-template-columns: 1fr; } .pin { width: 24px; height: 24px; font-size: .8rem; } .fix { grid-column: 1; } h1 { font-size: 1.6rem; } .ans { grid-template-columns: 1fr; } .top .info { display: none; } }
+</style>
+</head>
+<body>
+<header class="top"><div class="in"><span data-marke="bio"></span><span class="info">2. Klasse</span></div></header>
+<main id="app"></main>
+<script src="../../marke.js"></script>
+<script src="questions.js"></script>
+<script src="lernen.js"></script>
+<script src="bilder.js"></script>
+<script src="animation.js"></script>
+<script>
+const app = document.getElementById("app");
+let state = null;
+
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+function loadBest() { try { return JSON.parse(localStorage.getItem("wald-best") || "{}"); } catch { return {}; } }
+function saveBest(id, pct) {
+  try { const b = loadBest(); if (!(b[id] >= pct)) { b[id] = pct; localStorage.setItem("wald-best", JSON.stringify(b)); } } catch {}
+}
+
+// Themenfarben: aus TOPICS[].color werden helle und dunkle Abstufungen berechnet
+const FALLBACK = ["#e8a33d", "#3a9e7e", "#3aa0d8", "#2d5fa8", "#7aa83a"];
+const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const mix = (h, w, t) => { const a = rgb(h), b = rgb(w); return `rgb(${a.map((x, i) => Math.round(x + (b[i] - x) * t)).join(",")})`; };
+const colorOf = id => { const i = TOPICS.findIndex(t => t.id === id); return i < 0 ? null : TOPICS[i].color || FALLBACK[i % 5]; };
+const themeVars = c => c ? `--c:${c};--ci:${mix(c, "#000000", .38)};--soft:${mix(c, "#ffffff", .84)};--mid:${mix(c, "#ffffff", .55)}` : "";
+function paint(id, cls = "") { app.className = cls; app.style.cssText = themeVars(colorOf(id)); }
+const topicIcon = id => TOPIC_ICONS[id] ? `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${TOPIC_ICONS[id]}</svg>` : "";
+const topicHead = id => { const t = TOPICS.find(t => t.id === id); return `<div class="thead"><h1><span class="hl">${esc(t.title)}</span></h1>${topicIcon(id)}</div>`; };
+
+function home() {
+  paint(null);
+  const best = loadBest();
+  const tile = (id, badge, title, count, cls = "") =>
+    `<button class="topic ${cls}" data-id="${id}" style="${themeVars(colorOf(id))}"><span class="head">${topicIcon(id) || `<span class="num">${badge}</span>`}${esc(title)}</span>
+      <small>${id === "all" ? "" : `${(LESSONS[id] || []).length} Lernkarten · `}${count} Fragen${best[id] != null ? ` · Bestwert ${best[id]} %` : ""}</small></button>`;
+  app.innerHTML = `
+    <a class="back" href="../">← Alle Kapitel</a>
+    <h1><span class="hl">4. Ökosystem Wald</span></h1>
+    <p class="sub">Wähle ein Thema: Zuerst lernst du mit den Karten, dann testest du dein Wissen im Quiz.</p>
+    <div class="grid">
+      ${tile("all", "Mix", "Alle Themen gemischt", QUESTIONS.length, "all")}
+      <button class="topic showmode" data-id="show"><span class="head"><span class="num">€</span>Millionenshow (alle Themen)</span>
+        <small>${SHOW_MAX} Fragen · 3 Joker${best.show ? ` · Höchster Gewinn ${euro(best.show)}` : ""}</small></button>
+      ${TOPICS.map((t, n) => tile(t.id, n + 1, t.title, QUESTIONS.filter(q => q.topic === t.id).length)).join("")}
+    </div>
+    <footer>Im Quiz kommen alle Fragen des Themas in zufälliger Reihenfolge.</footer>`;
+  app.querySelectorAll(".topic").forEach(b => b.onclick = () =>
+    b.dataset.id === "all" ? start("all") : b.dataset.id === "show" ? showIntro() : learn(b.dataset.id, 0));
+}
+
+function learn(id, i) {
+  const cards = LESSONS[id] || [];
+  if (!cards.length) return start(id);
+  const t = TOPICS.find(t => t.id === id), c = cards[i], last = i === cards.length - 1;
+  paint(id);
+  app.innerHTML = `
+    ${topicHead(id)}
+    <div class="bar"><button class="btn ghost" id="quit" style="padding:6px 12px">← Themen</button>
+      <span>Karte ${i + 1} / ${cards.length}</span></div>
+    <div class="card learn">
+      <h2>${esc(c.title)}</h2>
+      <ul>${c.points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+      ${c.tip ? `<div class="tip"><b>Tipp:</b> ${esc(c.tip)}</div>` : ""}
+      <div class="dots">${cards.map((_, j) => `<i class="${j === i ? "on" : ""}"></i>`).join("")}</div>
+      <div class="actions">
+        ${i > 0 ? `<button class="btn ghost" id="prev">← Zurück</button>` : ""}
+        <button class="btn" id="next">${last ? "Quiz starten" : "Weiter →"}</button>
+      </div>
+    </div>
+    ${last ? "" : `<p class="center"><button class="skip" id="toquiz">Direkt zum Quiz</button></p>`}`;
+  document.getElementById("quit").onclick = home;
+  document.getElementById("next").onclick = () => last ? start(id) : learn(id, i + 1);
+  if (i > 0) document.getElementById("prev").onclick = () => learn(id, i - 1);
+  if (!last) document.getElementById("toquiz").onclick = () => start(id);
+  window.scrollTo(0, 0);
+}
+
+function start(id) {
+  const pool = id === "all" ? QUESTIONS : QUESTIONS.filter(q => q.topic === id);
+  state = { id, list: shuffle(pool), i: 0, score: 0, streak: 0, wrong: [] };
+  render();
+}
+
+function render() {
+  const q = state.list[state.i];
+  const n = state.list.length;
+  state.answered = false;
+  state.pick = null;
+  paint(q.topic);
+  app.innerHTML = `
+    ${topicHead(q.topic)}
+    <div class="bar"><button class="btn ghost" id="quit" style="padding:6px 12px">← Themen</button>
+      <span>Frage ${state.i + 1} / ${n}</span>
+      <span>${state.score} Punkte${state.streak >= 3 ? ` · <span class="streak">${state.streak} in Folge</span>` : ""}</span></div>
+    <div class="progress"><div style="width:${state.i / n * 100}%"></div></div>
+    <div class="card">
+      <p class="q">${esc(q.q)}</p>
+      <div id="body"></div>
+      <div id="fb"></div>
+      <div class="actions"><button class="btn" id="go" disabled>Prüfen</button></div>
+    </div>`;
+  document.getElementById("quit").onclick = home;
+  const go = document.getElementById("go");
+  go.onclick = () => state.answered ? next() : check();
+  ({ mc: renderMC, tf: renderTF, order: renderOrder, match: renderMatch, multi: renderMulti, label: renderLabel, gap: renderGap })[q.type](q, document.getElementById("body"), go);
+}
+
+// Lückentext: {Wort} im Text wird zu einer Auswahlliste
+function renderGap(q, el, go) {
+  const parts = q.text.split(/\{([^}]+)\}/); // gerade Indizes = Text, ungerade = Lücken
+  const gaps = parts.filter((_, i) => i % 2);
+  const choices = shuffle([...new Set(gaps.concat(q.extra || []))]);
+  el.innerHTML = `<p class="hint">Wähle für jede Lücke das passende Wort.</p><p class="gaptext">${parts.map((p, i) => i % 2
+    ? `<select><option value="">…</option>${choices.map(c => `<option>${esc(c)}</option>`).join("")}</select>`
+    : esc(p)).join("")}</p>`;
+  const sels = [...el.querySelectorAll("select")];
+  sels.forEach(s => s.onchange = () => { go.disabled = sels.some(x => !x.value); });
+  state.grade = () => {
+    let ok = true;
+    sels.forEach((s, i) => {
+      s.disabled = true;
+      const right = s.value === gaps[i];
+      s.classList.add(right ? "ok" : "bad");
+      if (!right) { ok = false; s.insertAdjacentHTML("afterend", ` <span class="fixin">(${esc(gaps[i])})</span>`); }
+    });
+    return { ok, correct: parts.join("") };
+  };
+}
+
+function renderMulti(q, el, go) {
+  const order = shuffle(q.options.map((_, i) => i));
+  const sel = new Set();
+  el.innerHTML = `<p class="hint">Mehrere Antworten sind richtig.</p>
+    <div class="opts">${order.map(i => `<button class="opt check" data-i="${i}">${esc(q.options[i])}</button>`).join("")}</div>`;
+  el.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    const i = +b.dataset.i;
+    sel.has(i) ? sel.delete(i) : sel.add(i);
+    b.classList.toggle("sel", sel.has(i));
+    go.disabled = sel.size === 0;
+  });
+  state.grade = () => {
+    const ok = sel.size === q.answers.length && q.answers.every(a => sel.has(a));
+    el.querySelectorAll(".opt").forEach(b => {
+      const i = +b.dataset.i, right = q.answers.includes(i);
+      b.disabled = true; b.classList.remove("sel");
+      if (right) b.classList.add(sel.has(i) ? "ok" : "miss");
+      else if (sel.has(i)) b.classList.add("bad");
+    });
+    return { ok, correct: q.answers.map(i => q.options[i]).join(", ") };
+  };
+}
+
+// Beschriftung: Nummern stehen im Rand links/rechts neben dem Bild, eine Linie zeigt auf die Stelle –
+// so verdecken sie nie das, was beschriftet werden soll
+function pinLayout(markers) {
+  const GAP = 46, TOP = 17, BOTTOM = 243;
+  let side = markers.map(m => m.x < 200 ? 0 : 1);
+  if (side.filter(s => s === 0).length > 5 || side.filter(s => s === 1).length > 5) { // zu voll: nach x halbieren
+    const byX = markers.map((m, i) => i).sort((a, b) => markers[a].x - markers[b].x);
+    byX.forEach((i, k) => side[i] = k < byX.length / 2 ? 0 : 1);
+  }
+  const order = [], pos = [];
+  [0, 1].forEach(s => {
+    const idx = markers.map((m, i) => i).filter(i => side[i] === s).sort((a, b) => markers[a].y - markers[b].y);
+    const ys = idx.map(i => Math.min(BOTTOM, Math.max(TOP, markers[i].y)));
+    for (let k = 1; k < ys.length; k++) ys[k] = Math.max(ys[k], ys[k - 1] + GAP);
+    for (let k = ys.length - 1; k >= 0 && ys[k] > BOTTOM - (ys.length - 1 - k) * GAP; k--) ys[k] = BOTTOM - (ys.length - 1 - k) * GAP;
+    const px = s ? 425 : -25, cross = (a, b, c, d) => { // schneiden sich die Strecken a–b und c–d?
+      const o = (p, q, r) => Math.sign((q.x - p.x) * (r.y - p.y) - (q.y - p.y) * (r.x - p.x));
+      return o(a, b, c) * o(a, b, d) < 0 && o(c, d, a) * o(c, d, b) < 0;
+    };
+    for (let n = 0, swapped = true; swapped && n < 20; n++) { // sich kreuzende Linien durch Tauschen der Plätze entwirren
+      swapped = false;
+      for (let k = 0; k < idx.length; k++) for (let l = k + 1; l < idx.length; l++)
+        if (cross({ x: px, y: ys[k] }, markers[idx[k]], { x: px, y: ys[l] }, markers[idx[l]])) { [idx[k], idx[l]] = [idx[l], idx[k]]; swapped = true; }
+    }
+    idx.forEach((i, k) => { order.push(i); pos.push({ x: px, y: ys[k] }); });
+  });
+  return { ms: order.map(i => markers[i]), pos }; // nummeriert: links von oben nach unten, dann rechts
+}
+
+function renderLabel(q, el, go) {
+  const { ms, pos } = pinLayout(q.markers);
+  const opts = shuffle([...new Set(ms.map(m => m.answer).concat(q.extra || []))]);
+  const pick = ms.map(() => null);
+  let cur = 0, graded = false;
+  const draw = () => {
+    const cls = i => graded ? (pick[i] === ms[i].answer ? " ok" : " bad") : (pick[i] ? " set" : "") + (cur === i ? " cur" : "");
+    el.innerHTML = `
+      <p class="hint">Tippe auf eine Nummer am Bildrand und wähle den passenden Begriff.</p>
+      <div class="lab"><div class="figure lbl"><div class="art">${IMAGES[q.image]}</div>
+        <svg class="leads" viewBox="-50 0 500 260" aria-hidden="true">${ms.map((m, i) => `<g class="lead${cls(i)}">
+          <line class="halo" x1="${pos[i].x}" y1="${pos[i].y}" x2="${m.x}" y2="${m.y}"/><line x1="${pos[i].x}" y1="${pos[i].y}" x2="${m.x}" y2="${m.y}"/>
+          <circle cx="${m.x}" cy="${m.y}" r="4.5"/></g>`).join("")}</svg>
+        ${ms.map((m, i) => `<button class="pin${cls(i)}" data-i="${i}" style="left:${(pos[i].x + 50) / 5}%;top:${pos[i].y / 2.6}%"
+          aria-label="Punkt ${i + 1}" ${graded ? "disabled" : ""}>${i + 1}</button>`).join("")}
+      </div><div>
+      ${!graded && cur != null ? `<div class="chooser"><b>Was gehört zu Punkt ${cur + 1}?</b>
+        <div class="pool">${opts.map((o, k) => `<button class="opt${pick[cur] === o ? " sel" : ""}" data-k="${k}">${esc(o)}</button>`).join("")}</div></div>` : ""}
+      <div class="legend">${ms.map((m, i) => {
+        const res = graded ? (pick[i] === m.answer ? " ok" : " bad") : cur === i ? " cur" : "";
+        return `<button class="lrow${res}" data-i="${i}" ${graded ? "disabled" : ""}><span class="pnum">${i + 1}</span>
+          <span>${pick[i] ? esc(pick[i]) : "<em>noch nicht beschriftet</em>"}${graded && pick[i] !== m.answer ? `<small>Richtig: ${esc(m.answer)}</small>` : ""}</span></button>`;
+      }).join("")}</div></div></div>`;
+    el.querySelectorAll(".pin, .lrow").forEach(b => b.onclick = () => { cur = cur === +b.dataset.i ? null : +b.dataset.i; draw(); });
+    el.querySelectorAll(".chooser .opt").forEach(b => b.onclick = () => {
+      const o = opts[+b.dataset.k];
+      pick.forEach((p, i) => { if (p === o) pick[i] = null; }); // jeder Begriff nur einmal
+      pick[cur] = o;
+      const nextFree = pick.findIndex(p => !p);
+      cur = nextFree < 0 ? null : nextFree;
+      draw();
+    });
+    go.disabled = pick.some(p => !p);
+  };
+  draw();
+  state.grade = () => {
+    graded = true; draw();
+    return { ok: ms.every((m, i) => pick[i] === m.answer), correct: ms.map((m, i) => `${i + 1} = ${m.answer}`).join("; ") };
+  };
+}
+
+function renderMC(q, el, go) {
+  const order = shuffle(q.options.map((_, i) => i));
+  el.innerHTML = `<div class="opts">${order.map(i => `<button class="opt" data-i="${i}">${esc(q.options[i])}</button>`).join("")}</div>`;
+  el.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    el.querySelectorAll(".opt").forEach(x => x.classList.remove("sel"));
+    b.classList.add("sel"); state.pick = +b.dataset.i; go.disabled = false;
+  });
+  state.grade = () => {
+    const ok = state.pick === q.answer;
+    el.querySelectorAll(".opt").forEach(b => {
+      b.disabled = true;
+      if (+b.dataset.i === q.answer) b.classList.add("ok");
+      else if (b.classList.contains("sel")) b.classList.add("bad");
+    });
+    return { ok, correct: q.options[q.answer] };
+  };
+}
+
+function renderTF(q, el, go) {
+  el.innerHTML = `<div class="opts tf"><button class="opt" data-v="1">Richtig</button><button class="opt" data-v="0">Falsch</button></div>`;
+  el.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    el.querySelectorAll(".opt").forEach(x => x.classList.remove("sel"));
+    b.classList.add("sel"); state.pick = b.dataset.v === "1"; go.disabled = false;
+  });
+  state.grade = () => {
+    const ok = state.pick === q.answer;
+    el.querySelectorAll(".opt").forEach(b => {
+      b.disabled = true;
+      if ((b.dataset.v === "1") === q.answer) b.classList.add("ok");
+      else if (b.classList.contains("sel")) b.classList.add("bad");
+    });
+    return { ok, correct: q.answer ? "Richtig" : "Falsch" };
+  };
+}
+
+function renderOrder(q, el, go) {
+  let pool = shuffle(q.items);
+  while (pool.length > 1 && pool.every((x, i) => x === q.items[i])) pool = shuffle(q.items);
+  const seq = [];
+  const draw = () => {
+    el.innerHTML = `
+      <div class="seq">${seq.map((s, i) => `<button class="chip" data-i="${i}"><span class="n">${i + 1}.</span>${esc(s)}</button>`).join("")}</div>
+      <div class="pool">${pool.map((s, i) => `<button class="opt" data-i="${i}">${esc(s)}</button>`).join("")}</div>`;
+    el.querySelectorAll(".pool .opt").forEach(b => b.onclick = () => { seq.push(pool.splice(+b.dataset.i, 1)[0]); draw(); });
+    el.querySelectorAll(".seq .chip").forEach(b => b.onclick = () => { pool.push(seq.splice(+b.dataset.i, 1)[0]); draw(); });
+    go.disabled = pool.length > 0;
+  };
+  draw();
+  state.grade = () => {
+    const ok = seq.every((s, i) => s === q.items[i]);
+    el.querySelectorAll(".seq .chip").forEach((b, i) => { b.disabled = true; b.classList.add(seq[i] === q.items[i] ? "ok" : "bad"); });
+    return { ok, correct: q.items.join(" → ") };
+  };
+}
+
+function renderMatch(q, el, go) {
+  const answers = shuffle([...new Set(q.pairs.map(p => p[1]))]);
+  const rows = shuffle(q.pairs);
+  el.innerHTML = rows.map((p, i) => `
+    <div class="row"><b>${esc(p[0])}</b>
+      <select data-i="${i}"><option value="">– wählen –</option>${answers.map(a => `<option>${esc(a)}</option>`).join("")}</select></div>`).join("");
+  const sels = [...el.querySelectorAll("select")];
+  sels.forEach(s => s.onchange = () => { go.disabled = sels.some(x => !x.value); });
+  state.grade = () => {
+    let ok = true;
+    sels.forEach((s, i) => {
+      s.disabled = true;
+      const right = s.value === rows[i][1];
+      s.classList.add(right ? "ok" : "bad");
+      if (!right) { ok = false; s.parentElement.insertAdjacentHTML("beforeend", `<span class="fix">Richtig: ${esc(rows[i][1])}</span>`); }
+    });
+    return { ok, correct: q.pairs.map(p => `${p[0]} – ${p[1]}`).join("; ") };
+  };
+}
+
+function check() {
+  const q = state.list[state.i];
+  const { ok, correct } = state.grade();
+  state.answered = true;
+  if (ok) { state.score++; state.streak++; } else { state.streak = 0; state.wrong.push({ q, correct }); }
+  const praise = ["Super!", "Richtig!", "Genau!", "Sehr gut!", "Toll!"];
+  document.getElementById("fb").innerHTML = `
+    <div class="feedback ${ok ? "ok" : "bad"}"><strong>${ok ? praise[Math.floor(Math.random() * praise.length)] : "Leider nicht ganz."}</strong>${esc(q.info || "")}</div>`;
+  const go = document.getElementById("go");
+  go.textContent = state.i + 1 < state.list.length ? "Weiter →" : "Ergebnis anzeigen";
+  go.disabled = false;
+  go.focus();
+}
+
+function next() {
+  state.i++;
+  if (state.i < state.list.length) render(); else result();
+}
+
+function result() {
+  const n = state.list.length, pct = Math.round(state.score / n * 100);
+  saveBest(state.id, pct);
+  paint(state.id);
+  const msg = pct === 100 ? "Perfekt! Du bist ein Öko-Profi!" : pct >= 80 ? "Sehr gut gemacht!" : pct >= 50 ? "Gut! Mit etwas Übung schaffst du noch mehr." : "Wiederhole das Thema noch einmal – du schaffst das!";
+  app.innerHTML = `
+    <div class="card center">
+      <h2>Ergebnis</h2>
+      <div class="big">${state.score} / ${n}</div>
+      <p>${pct} % · ${msg}</p>
+      ${state.wrong.length ? `<div class="review"><b>Das solltest du wiederholen:</b><ul>${state.wrong.map(w =>
+        `<li>${esc(w.q.q)}<span>Richtig: ${esc(w.correct)}</span></li>`).join("")}</ul></div>` : ""}
+      <div class="actions" style="justify-content:center">
+        <button class="btn ghost" id="home">Themen</button>
+        ${state.id !== "all" && LESSONS[state.id] ? `<button class="btn ghost" id="relearn">Lernkarten</button>` : ""}
+        <button class="btn" id="again">Nochmal spielen</button>
+      </div>
+    </div>`;
+  document.getElementById("home").onclick = home;
+  document.getElementById("again").onclick = () => start(state.id);
+  const relearn = document.getElementById("relearn");
+  if (relearn) relearn.onclick = () => learn(state.id, 0);
+  window.scrollTo(0, 0);
+  fxEnd(pct === 100 ? "perfect" : "done", state.id);
+}
+
+// ---------- Millionenshow (Spielgeld) ----------
+const LADDER = [50, 100, 200, 300, 500, 1000, 2000, 4000, 8000, 15000, 30000, 75000, 150000, 300000, 1000000];
+const SAFE = [500, 15000]; // Sicherheitsstufen
+const SHOW_MAX = Math.min(15, QUESTIONS.filter(q => q.type === "mc").length);
+const euro = n => "€ " + n.toLocaleString("de-AT");
+let show = null;
+
+function showIntro() {
+  paint(null, "showmode");
+  app.innerHTML = `
+    <div class="bar"><button class="btn ghost" id="quit" style="padding:6px 12px">← Themen</button><span>Millionenshow</span><span></span></div>
+    <div class="card">
+      <h2>Wer wird Öko-Millionär?</h2>
+      <ul class="rules">
+        <li>Du bekommst ${SHOW_MAX} Fragen aus allen Themen. Jede Frage hat 4 Antworten, nur eine ist richtig.</li>
+        <li>Mit jeder richtigen Antwort steigst du eine Stufe auf – bis zur Million (natürlich nur Spielgeld).</li>
+        <li>Du hast 3 Joker: <b>50:50</b>, <b>Publikum</b> und <b>Telefon</b>. Jeden Joker kannst du nur einmal verwenden.</li>
+        <li>Sicherheitsstufen: ${SAFE.map(euro).join(" und ")}. Diesen Betrag behältst du auf jeden Fall.</li>
+        <li>Du kannst jederzeit aussteigen und deinen Gewinn mitnehmen.</li>
+        <li>Bei einer falschen Antwort ist das Spiel vorbei – du beginnst wieder bei Frage 1.</li>
+      </ul>
+      <div class="actions"><button class="btn" id="go">Spiel starten</button></div>
+    </div>`;
+  document.getElementById("quit").onclick = home;
+  document.getElementById("go").onclick = showStart;
+}
+
+function showStart() {
+  const list = shuffle(QUESTIONS.filter(q => q.type === "mc")).slice(0, SHOW_MAX);
+  show = { list, ladder: LADDER.slice(LADDER.length - list.length), i: 0, jokers: { fifty: true, crowd: true, phone: true } };
+  showRender();
+}
+
+const showWon = () => show.i > 0 ? show.ladder[show.i - 1] : 0;
+const showSafe = () => Math.max(0, ...show.ladder.slice(0, show.i).filter(v => SAFE.includes(v)));
+
+function showRender() {
+  const q = show.list[show.i];
+  const order = shuffle(q.options.map((_, i) => i));
+  let pick = null, locked = false;
+  paint(null, "showmode");
+  app.innerHTML = `
+    <div class="bar"><button class="btn ghost" id="quit" style="padding:6px 12px">← Themen</button>
+      <span>Frage ${show.i + 1} / ${show.list.length}</span><span>Gewinn: ${euro(showWon())}</span></div>
+    <div class="show">
+      <div class="card">
+        <div class="jokers">
+          <button class="joker" data-j="fifty" ${show.jokers.fifty ? "" : "disabled"}>50:50</button>
+          <button class="joker" data-j="crowd" ${show.jokers.crowd ? "" : "disabled"}>Publikum</button>
+          <button class="joker" data-j="phone" ${show.jokers.phone ? "" : "disabled"}>Telefon</button>
+        </div>
+        <p class="stake">Es geht um <b>${euro(show.ladder[show.i])}</b></p>
+        <p class="q">${esc(q.q)}</p>
+        <div class="opts ans">${order.map((i, k) => `<button class="opt" data-i="${i}"><b>${"ABCD"[k]}:</b><span>${esc(q.options[i])}</span></button>`).join("")}</div>
+        <div id="jinfo"></div>
+        <div id="fb"></div>
+        <div class="actions">
+          ${show.i > 0 ? `<button class="btn ghost" id="stop">Aussteigen mit ${euro(showWon())}</button>` : ""}
+          <button class="btn" id="go" disabled>Antwort einloggen</button>
+        </div>
+      </div>
+      <ol class="ladder">${show.ladder.map((v, k) =>
+        `<li class="${k === show.i ? "now" : k < show.i ? "done" : ""}${SAFE.includes(v) ? " safe" : ""}"><span>${k + 1}</span><span>${euro(v)}</span></li>`).join("")}</ol>
+    </div>`;
+  const btns = [...app.querySelectorAll(".ans .opt")];
+  const go = document.getElementById("go"), jinfo = document.getElementById("jinfo");
+  const letter = i => "ABCD"[order.indexOf(i)];
+  const open = () => btns.filter(b => !b.classList.contains("gone")).map(b => +b.dataset.i);
+  document.getElementById("quit").onclick = home;
+  const stop = document.getElementById("stop");
+  if (stop) stop.onclick = () => showEnd("stop", showWon());
+  btns.forEach(b => b.onclick = () => {
+    if (locked) return;
+    btns.forEach(x => x.classList.remove("sel"));
+    b.classList.add("sel"); pick = +b.dataset.i; go.disabled = false;
+  });
+
+  app.querySelectorAll(".joker").forEach(j => j.onclick = () => {
+    if (locked) return;
+    const kind = j.dataset.j;
+    show.jokers[kind] = false; j.disabled = true;
+    if (kind === "fifty") {
+      shuffle(open().filter(i => i !== q.answer)).slice(0, 2).forEach(i => {
+        const b = btns.find(x => +x.dataset.i === i);
+        b.classList.add("gone"); b.classList.remove("sel"); b.disabled = true;
+        if (pick === i) { pick = null; go.disabled = true; }
+      });
+      jinfo.innerHTML = "";
+    } else if (kind === "crowd") {
+      // Das Publikum liegt meistens richtig – bei schweren (späten) Fragen etwas seltener
+      const ids = open();
+      const w = ids.map(i => i === q.answer ? 45 + Math.random() * 40 - show.i * 2 : Math.random() * 30);
+      const sum = w.reduce((a, b) => a + b, 0);
+      const pct = w.map(x => Math.round(x / sum * 100));
+      pct[0] += 100 - pct.reduce((a, b) => a + b, 0);
+      const rows = ids.map((i, k) => ({ i, p: pct[k] })).sort((a, b) => order.indexOf(a.i) - order.indexOf(b.i));
+      jinfo.innerHTML = `<div class="jinfo"><b>Das Publikum hat abgestimmt:</b>${rows.map(r =>
+        `<div class="poll"><b>${letter(r.i)}</b><i style="width:${r.p}%"></i><span>${r.p} %</span></div>`).join("")}</div>`;
+    } else {
+      const sure = Math.random() < 0.9 - show.i * 0.03;
+      const others = open().filter(i => i !== q.answer);
+      const guess = sure || !others.length ? q.answer : others[Math.floor(Math.random() * others.length)];
+      jinfo.innerHTML = `<div class="jinfo"><b>Dein Telefonjoker sagt:</b> „${sure
+        ? `Das weiß ich! Ich bin mir ziemlich sicher, es ist ${letter(guess)}.`
+        : `Hmm, schwierig … Ich glaube, es ist ${letter(guess)}. Aber ganz sicher bin ich nicht.`}“</div>`;
+    }
+  });
+
+  go.onclick = () => {
+    if (!locked) {
+      locked = true;
+      app.querySelectorAll(".joker").forEach(j => j.disabled = true);
+      if (stop) stop.disabled = true;
+      go.disabled = true;
+      const sel = btns.find(b => +b.dataset.i === pick);
+      sel.classList.replace("sel", "lock");
+      setTimeout(() => {
+        const ok = pick === q.answer;
+        btns.forEach(b => { b.disabled = true; if (+b.dataset.i === q.answer) b.classList.add("ok"); });
+        if (!ok) { sel.classList.remove("lock"); sel.classList.add("bad"); }
+        else sel.classList.remove("lock");
+        const last = show.i + 1 === show.list.length;
+        document.getElementById("fb").innerHTML = `<div class="feedback ${ok ? "ok" : "bad"}"><strong>${ok
+          ? (last ? "Richtig – du hast die Million gewonnen!" : `Richtig! Du hast jetzt ${euro(show.ladder[show.i])}.`)
+          : "Leider falsch."}</strong>${esc(q.info || "")}</div>`;
+        go.disabled = false;
+        go.textContent = ok ? (last ? "Zum Ergebnis" : "Nächste Frage →") : "Spiel beenden";
+        go.onclick = () => {
+          if (!ok) return showEnd("lost", showSafe(), q);
+          show.i++;
+          if (show.i < show.list.length) showRender(); else showEnd("win", show.ladder[show.ladder.length - 1]);
+        };
+        go.focus();
+      }, 1200);
+    }
+  };
+}
+
+function showEnd(how, amount, wrongQ) {
+  saveBest("show", amount);
+  paint(null, "showmode");
+  const title = how === "win" ? "Öko-Millionär!" : how === "stop" ? "Du bist ausgestiegen" : "Spiel vorbei";
+  const msg = how === "win" ? "Du hast alle Fragen richtig beantwortet. Großartig!"
+    : how === "stop" ? `Klug gespielt! Du hast ${show.i} ${show.i === 1 ? "Frage" : "Fragen"} richtig beantwortet.`
+    : `Du hast ${show.i} ${show.i === 1 ? "Frage" : "Fragen"} richtig beantwortet. Beim nächsten Spiel beginnst du wieder bei Frage 1.`;
+  app.innerHTML = `
+    <div class="card center">
+      <h2>${title}</h2>
+      <p style="margin:0">Du gehst nach Hause mit</p>
+      <div class="big">${euro(amount)}</div>
+      <p>${msg}</p>
+      ${wrongQ ? `<div class="review"><b>Die richtige Antwort war:</b><ul><li>${esc(wrongQ.q)}<span>Richtig: ${esc(wrongQ.options[wrongQ.answer])}</span></li></ul></div>` : ""}
+      <div class="actions" style="justify-content:center">
+        <button class="btn ghost" id="home">Themen</button>
+        <button class="btn" id="again">Neues Spiel (Frage 1)</button>
+      </div>
+    </div>`;
+  document.getElementById("home").onclick = home;
+  document.getElementById("again").onclick = showStart;
+  if (how === "win") fxEnd("perfect", "all"); else if (how === "stop") fxEnd("done", "all");
+}
+
+home();
+</script>
+</body>
+</html>

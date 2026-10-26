@@ -3,6 +3,8 @@
 // text = was sich geändert hat (für die Lehrkraft), ziel = optional Kapitelordner für die Vorschau.
 // Einträge der letzten 14 Tage bekommen das Kennzeichen „neu“.
 const NEUIGKEITEN = [
+  { datum: "2026-10-26", fach: "bio", wo: "2. Klasse · 4. Ökosystem Wald", ziel: "bio2-ic0yjzio/wald/",
+    text: "Neues Kapitel mit den Themen I. Ökologie, II. Aufgaben des Waldes, III. Waldtypen und Forst, IV. Stockwerke und Nahrung, V. Einflüsse auf den Wald, VI. Tropischer Regenwald. Lernkarten, 53 Fragen, Beschriftungsbild „Stockwerke des Waldes“ und die Animation „Waldtiere“ (Eichhörnchen und Vögel; bei allem richtig baut sich der Nahrungskreislauf auf)." },
   { datum: "2026-10-26", fach: "bio", wo: "2. und 3. Klasse · alle Kapitel",
     text: "Beschriften: Die Nummern stehen jetzt am Bildrand und zeigen mit einer Linie auf die Stelle – sie verdecken nichts mehr. Bei den Blattformen und Blatträndern zeigen die Linien direkt auf die Blätter." },
   { datum: "2026-10-26", fach: "bio", wo: "2. und 3. Klasse · alle Kapitel",
