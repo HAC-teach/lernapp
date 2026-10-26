@@ -23,7 +23,7 @@ A static learning app for a biology class (Austrian AHS, topic "1. Gewässer"), 
 
 - `lernen.js` – `LESSONS[topicId]` = learning cards `{ title, points[], tip? }`, shown before the quiz of that topic. Content comes from the slides.
 - `bilder.js` – `IMAGES[name]` = self-drawn inline SVGs (viewBox 0 0 400 260) for `label` questions. Don't copy pictures from the slides (copyright); draw simple SVGs instead.
-- `index.html` – the whole app (UI, styles, logic). Rounds of `ROUND_SIZE` (10) random questions; best scores stored in `localStorage` under `gewaesser-best`. Also contains the „Millionenshow“ mode (mixed topics, only `mc` questions, max 15, 3 jokers, best prize under `show`).
+- `index.html` – the whole app (UI, styles, logic). A topic quiz (and „Alle Themen gemischt“) asks ALL questions of the topic in random order – no round limit; best scores stored in `localStorage` under `gewaesser-best`. Also contains the „Millionenshow“ mode (mixed topics, only `mc` questions, max 15 – keep at least 15 `mc` questions, 3 jokers, best prize under `show`).
 - `questions.js` – `TOPICS` and `QUESTIONS`. Add or change questions here. Types:
   - `mc`: `options[]`, `answer` = index of the correct option
   - `tf`: `answer` = `true` / `false`
@@ -31,6 +31,7 @@ A static learning app for a biology class (Austrian AHS, topic "1. Gewässer"), 
   - `match`: `pairs[]` of `[term, answer]`; duplicate answers are fine (dropdowns use the unique set)
   - `multi`: `options[]`, `answers[]` = indices of ALL correct options (select all that apply)
   - `label`: `image` = key in `IMAGES` (bilder.js), `markers[]` = `{ x, y, answer }` in the image's 400×260 units, optional `extra[]` = wrong terms added to the choices
+  - `gap`: `text` with `{answer}` blanks (each becomes a dropdown), optional `extra[]` = wrong words added to the choices
   - every question has `topic` (a `TOPICS` id), `q`, and an `info` explanation shown after answering
 - `README.md` – short German guide for publishing.
 

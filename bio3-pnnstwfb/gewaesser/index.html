@@ -100,6 +100,9 @@
   .skip { background: none; border: 0; color: var(--muted); text-decoration: underline; padding: 0; }
   footer { color: var(--muted); font-size: .85rem; text-align: center; margin-top: 32px; }
   .hint { color: var(--muted); font-size: .95rem; margin: -8px 0 12px; }
+  .gaptext { line-height: 2.4; margin: 0; }
+  .gaptext select { width: auto; display: inline-block; padding: 4px 6px; margin: 0 2px; }
+  .fixin { color: var(--ok); font-weight: 600; font-size: .92rem; }
   .opt.check { display: flex; gap: 10px; align-items: center; }
   .opt.check::before { content: ""; flex: none; width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; background: var(--card); }
   .opt.check.sel::before, .opt.check.ok::before { border-color: var(--ok); background: var(--ok); box-shadow: inset 0 0 0 3px var(--card); }
@@ -171,7 +174,6 @@
 <script src="bilder.js"></script>
 <script>
 const app = document.getElementById("app");
-const ROUND_SIZE = 10;
 let state = null;
 
 const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
@@ -201,7 +203,7 @@ function home() {
         <small>${SHOW_MAX} Fragen · 3 Joker${best.show ? ` · Höchster Gewinn ${euro(best.show)}` : ""}</small></button>
       ${TOPICS.map((t, n) => tile(t.id, n + 1, t.title, QUESTIONS.filter(q => q.topic === t.id).length, tc(t.id))).join("")}
     </div>
-    <footer>Jede Runde: bis zu ${ROUND_SIZE} zufällige Fragen</footer>`;
+    <footer>Im Quiz kommen alle Fragen des Themas in zufälliger Reihenfolge.</footer>`;
   app.querySelectorAll(".topic").forEach(b => b.onclick = () =>
     b.dataset.id === "all" ? start("all") : b.dataset.id === "show" ? showIntro() : learn(b.dataset.id, 0));
 }
@@ -235,7 +237,7 @@ function learn(id, i) {
 
 function start(id) {
   const pool = id === "all" ? QUESTIONS : QUESTIONS.filter(q => q.topic === id);
-  state = { id, list: shuffle(pool).slice(0, ROUND_SIZE), i: 0, score: 0, streak: 0, wrong: [] };
+  state = { id, list: shuffle(pool), i: 0, score: 0, streak: 0, wrong: [] };
   render();
 }
 
@@ -259,7 +261,29 @@ function render() {
   document.getElementById("quit").onclick = home;
   const go = document.getElementById("go");
   go.onclick = () => state.answered ? next() : check();
-  ({ mc: renderMC, tf: renderTF, order: renderOrder, match: renderMatch, multi: renderMulti, label: renderLabel })[q.type](q, document.getElementById("body"), go);
+  ({ mc: renderMC, tf: renderTF, order: renderOrder, match: renderMatch, multi: renderMulti, label: renderLabel, gap: renderGap })[q.type](q, document.getElementById("body"), go);
+}
+
+// Lückentext: {Wort} im Text wird zu einer Auswahlliste
+function renderGap(q, el, go) {
+  const parts = q.text.split(/\{([^}]+)\}/); // gerade Indizes = Text, ungerade = Lücken
+  const gaps = parts.filter((_, i) => i % 2);
+  const choices = shuffle([...new Set(gaps.concat(q.extra || []))]);
+  el.innerHTML = `<p class="hint">Wähle für jede Lücke das passende Wort.</p><p class="gaptext">${parts.map((p, i) => i % 2
+    ? `<select><option value="">…</option>${choices.map(c => `<option>${esc(c)}</option>`).join("")}</select>`
+    : esc(p)).join("")}</p>`;
+  const sels = [...el.querySelectorAll("select")];
+  sels.forEach(s => s.onchange = () => { go.disabled = sels.some(x => !x.value); });
+  state.grade = () => {
+    let ok = true;
+    sels.forEach((s, i) => {
+      s.disabled = true;
+      const right = s.value === gaps[i];
+      s.classList.add(right ? "ok" : "bad");
+      if (!right) { ok = false; s.insertAdjacentHTML("afterend", ` <span class="fixin">(${esc(gaps[i])})</span>`); }
+    });
+    return { ok, correct: parts.join("") };
+  };
 }
 
 function renderMulti(q, el, go) {

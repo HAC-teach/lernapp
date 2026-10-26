@@ -132,5 +132,94 @@ const IMAGES = {
     <path d="M335 166l6 26h12" stroke="#4f8a3c" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
     <g fill="#ffffff" opacity=".55"><ellipse cx="298" cy="148" rx="8" ry="4"/><ellipse cx="320" cy="142" rx="5" ry="3"/></g>
     <g fill="#4f8a3c" opacity=".7"><circle cx="292" cy="160" r="4"/><circle cx="315" cy="170" r="3"/></g>
+  </svg>`,
+
+  // Anpassungen an die Strömung: Fisch, flaches Tier auf dem Stein, Tier mit Saugnäpfen
+  anpassung: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Anpassungen an die Strömung">
+    <defs><marker id="aA" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#2f6fb5"/></marker></defs>
+    <rect width="400" height="260" fill="#cfe7f7"/>
+    <g stroke="#2f6fb5" stroke-width="3" fill="none" marker-end="url(#aA)">
+      <path d="M20 38H120"/><path d="M40 62H140"/><path d="M20 86H120"/></g>
+    <path d="M0 222Q100 210 200 220T400 216V260H0z" fill="#c9b28a"/>
+    <ellipse cx="92" cy="226" rx="44" ry="20" fill="#9a978e"/>
+    <ellipse cx="262" cy="218" rx="64" ry="28" fill="#8d8d86"/>
+    <path d="M178 112Q222 84 272 112Q222 140 178 112z" fill="#8a9a5b"/>
+    <polygon points="270,112 296,94 296,130" fill="#7a8a4b"/>
+    <path d="M214 98l14-14 6 16z" fill="#7a8a4b"/>
+    <circle cx="192" cy="109" r="4" fill="#ffffff"/><circle cx="191" cy="109" r="2" fill="#000000"/>
+    <ellipse cx="92" cy="203" rx="28" ry="5" fill="#6b5233"/>
+    <g stroke="#6b5233" stroke-width="2" stroke-linecap="round">
+      <path d="M78 206l-6 6M92 207v7M106 206l6 6M120 202l16-6M120 204l18 0M120 206l16 6"/></g>
+    <path d="M238 190C236 160 280 150 292 180" stroke="#3b2f2a" stroke-width="10" fill="none" stroke-linecap="round"/>
+    <ellipse cx="238" cy="192" rx="10" ry="4" fill="#1f1814"/>
+    <ellipse cx="292" cy="183" rx="9" ry="4" fill="#1f1814"/>
+  </svg>`,
+
+  // Trinkwasser: Quelle, Grundwasser und Gefahren durch Landwirtschaft und Industrie
+  trinkwasser: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Trinkwasser und Gefahren">
+    <defs><marker id="tA" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#8a6d45"/></marker></defs>
+    <rect width="400" height="260" fill="#e8f4fc"/>
+    <rect y="120" width="400" height="140" fill="#c9a77c"/>
+    <rect y="206" width="400" height="54" fill="#6fa8dc"/>
+    <path d="M0 122Q60 40 140 122z" fill="#8fbf6a"/>
+    <rect y="116" width="400" height="8" fill="#7cb860"/>
+    <path d="M116 100Q130 116 168 118" stroke="#4a90d9" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <circle cx="116" cy="100" r="5" fill="#4a90d9"/>
+    <g stroke="#4f8a3c" stroke-width="3"><path d="M180 116v-10M192 116v-10M204 116v-10M216 116v-10M228 116v-10M240 116v-10M252 116v-10M264 116v-10M276 116v-10"/></g>
+    <rect x="196" y="68" width="34" height="18" rx="3" fill="#c4553d"/><rect x="218" y="56" width="14" height="14" fill="#c4553d"/>
+    <circle cx="204" cy="90" r="7" fill="#333"/><circle cx="228" cy="92" r="5" fill="#333"/>
+    <path d="M196 78H170" stroke="#777" stroke-width="3"/>
+    <g fill="#e0c040"><circle cx="172" cy="86" r="2.5"/><circle cx="180" cy="92" r="2.5"/><circle cx="168" cy="96" r="2.5"/><circle cx="178" cy="101" r="2.5"/><circle cx="186" cy="84" r="2.5"/></g>
+    <g stroke="#8a6d45" stroke-width="2.5" stroke-dasharray="5 4" fill="none" marker-end="url(#tA)">
+      <path d="M210 128V198"/><path d="M250 128V198"/><path d="M330 172V198"/></g>
+    <rect x="300" y="72" width="64" height="46" fill="#9aa3ab"/><rect x="346" y="38" width="10" height="34" fill="#7d868e"/>
+    <g fill="#d5d9dd"><rect x="308" y="82" width="10" height="10"/><rect x="324" y="82" width="10" height="10"/></g>
+    <circle cx="352" cy="30" r="7" fill="#cfd3d6"/><circle cx="362" cy="22" r="8" fill="#dde0e2"/>
+    <path d="M330 118V160" stroke="#6b4f2a" stroke-width="7"/>
+    <ellipse cx="330" cy="166" rx="20" ry="7" fill="#6b4f2a"/>
+  </svg>`,
+
+  // Nutzung eines Flusses durch den Menschen
+  nutzung: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nutzung eines Flusses">
+    <rect width="400" height="260" fill="#a8d38a"/>
+    <rect y="118" width="400" height="74" fill="#4a90d9"/>
+    <polygon points="28,132 132,132 122,154 38,154" fill="#8b2e24"/>
+    <g fill="#f2a541"><rect x="40" y="118" width="16" height="14"/><rect x="58" y="118" width="16" height="14"/><rect x="76" y="118" width="16" height="14"/></g>
+    <rect x="100" y="112" width="22" height="20" fill="#ffffff" stroke="#777"/>
+    <rect x="176" y="112" width="26" height="80" fill="#8a8a8a"/>
+    <rect x="168" y="82" width="42" height="30" fill="#bfbfbf" stroke="#777"/>
+    <path d="M192 86l-9 12h7l-5 11 12-14h-7l5-9z" fill="#ffd23f" stroke="#a07c00" stroke-width="1"/>
+    <path d="M202 140q10 4 20 0t20 0" stroke="#ffffff" stroke-width="2" fill="none" opacity=".7"/>
+    <circle cx="268" cy="150" r="7" fill="#f0c8a0"/>
+    <path d="M252 158q8-10 16-4t16-4" stroke="#f0c8a0" stroke-width="4" fill="none" stroke-linecap="round"/>
+    <path d="M248 162q10 5 20 0t20 0" stroke="#ffffff" stroke-width="2" fill="none"/>
+    <path d="M318 104Q330 72 322 38H364Q356 72 368 104z" fill="#d5d9dd" stroke="#8b949c" stroke-width="2"/>
+    <g fill="#ffffff" opacity=".9"><circle cx="336" cy="28" r="9"/><circle cx="350" cy="20" r="11"/><circle cx="364" cy="28" r="8"/></g>
+    <path d="M343 104V124" stroke="#8b949c" stroke-width="7"/>
+    <g fill="#3f7d2e"><circle cx="40" cy="220" r="11"/><circle cx="120" cy="230" r="10"/><circle cx="250" cy="225" r="11"/><circle cx="60" cy="60" r="11"/><circle cx="250" cy="70" r="10"/></g>
+  </svg>`,
+
+  // Amphibien: Froschlurch und Schwanzlurch
+  lurche: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Froschlurch und Schwanzlurch">
+    <rect width="400" height="260" fill="#eef6e6"/>
+    <path d="M0 160Q200 148 400 160V260H0z" fill="#a8d38a"/>
+    <ellipse cx="90" cy="226" rx="74" ry="22" fill="#6fa8dc"/>
+    <g transform="translate(-200 -20)">
+      <ellipse cx="290" cy="172" rx="28" ry="13" fill="#4f8a3c"/>
+      <ellipse cx="310" cy="160" rx="44" ry="30" fill="#6aa84f"/>
+      <ellipse cx="346" cy="138" rx="25" ry="18" fill="#6aa84f"/>
+      <g fill="#ffffff"><circle cx="340" cy="120" r="8"/><circle cx="358" cy="122" r="7"/></g>
+      <g fill="#000000"><circle cx="341" cy="120" r="3.5"/><circle cx="359" cy="122" r="3"/></g>
+      <path d="M335 166l6 26h12" stroke="#4f8a3c" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    </g>
+    <path d="M244 164Q200 168 168 192Q205 178 244 178z" fill="#222222"/>
+    <g stroke="#222222" stroke-width="6" stroke-linecap="round" fill="none">
+      <path d="M262 176l-8 18M276 176l-2 18M322 176l8 18M334 174l12 16"/></g>
+    <ellipse cx="290" cy="170" rx="50" ry="12" fill="#222222"/>
+    <ellipse cx="345" cy="167" rx="17" ry="11" fill="#222222"/>
+    <circle cx="352" cy="162" r="3" fill="#ffffff"/>
+    <g fill="#f5c400"><circle cx="258" cy="166" r="4"/><circle cx="280" cy="172" r="4"/><circle cx="300" cy="164" r="4"/><circle cx="320" cy="172" r="4"/><circle cx="340" cy="164" r="3"/><circle cx="210" cy="176" r="3"/></g>
   </svg>`
 };

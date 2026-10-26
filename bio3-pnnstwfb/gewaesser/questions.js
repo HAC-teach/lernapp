@@ -5,6 +5,7 @@
 //   order – Reihenfolge: items[] in der richtigen Reihenfolge (werden gemischt angezeigt)
 //   match – Zuordnen: pairs[] = [[Begriff, Erklärung], ...]
 //   multi – Mehrfachauswahl: options[], answers[] = Indizes ALLER richtigen Antworten
+//   gap   – Lückentext: text mit {Lücken}, extra[] = zusätzliche falsche Wörter zur Auswahl
 //   label – Bild beschriften: image = Name aus IMAGES (bilder.js), markers[] = { x, y, answer }
 //           (x/y im Bild mit 400 × 260 Einheiten), extra[] = zusätzliche falsche Begriffe zur Auswahl
 // Die Millionenshow verwendet nur mc-Fragen.
@@ -26,15 +27,17 @@ const QUESTIONS = [
   { topic: "kreislauf", type: "order", q: "Bringe die Schritte des Wasserkreislaufs in die richtige Reihenfolge.",
     items: ["Verdunstung", "Kondensation (Wolken)", "Niederschlag", "Versickerung"],
     info: "Verdunstung → Kondensation (Wolken) → Niederschlag → Versickerung → und wieder Verdunstung." },
-  { topic: "kreislauf", type: "mc", q: "In welchen drei Aggregatzuständen kommt Wasser im Kreislauf vor?",
-    options: ["fest, flüssig, gasförmig", "flüssig, salzig, süß", "fest, weich, hart", "warm, kalt, gefroren"], answer: 0,
+  { topic: "kreislauf", type: "gap", q: "Ergänze den Satz über die Aggregatzustände.",
+    text: "Im Wasserkreislauf ist Wasser {fest} (Eis), {flüssig} oder {gasförmig} (Wasserdampf).",
+    extra: ["salzig", "weich"],
     info: "Wasser wechselt zwischen fest (Eis), flüssig und gasförmig (Wasserdampf)." },
   { topic: "kreislauf", type: "tf", q: "Wasser wird auch in Gletschern, im Grundwasser und in Gesteinen gespeichert.",
     answer: true, info: "Richtig – neben den Meeren sind Grundwasser, Gletscher und Gesteine wichtige Wasserspeicher." },
   { topic: "kreislauf", type: "tf", q: "Wolken entstehen durch Versickerung.",
     answer: false, info: "Falsch – Wolken entstehen durch Kondensation von Wasserdampf." },
-  { topic: "kreislauf", type: "mc", q: "Was führt das Wasser wieder zurück ins Meer?",
-    options: ["Nur der Regen", "Grundwasser und Fließgewässer", "Gletscher und Wolken", "Die Atmosphäre"], answer: 1,
+  { topic: "kreislauf", type: "gap", q: "Ergänze den Lückentext.",
+    text: "Die {Sonne} liefert die Energie für die Verdunstung. {Grundwasser} und {Fließgewässer} führen das Wasser wieder zurück ins {Meer}.",
+    extra: ["Mond", "Wolken"],
     info: "Grundwasser und Fließgewässer (Bäche, Flüsse) bringen das Wasser zurück ins Meer." },
   { topic: "kreislauf", type: "mc", q: "Was verbindet der Wasserkreislauf?",
     options: ["Nur Meere und Flüsse", "Meere, Gewässer, Böden, Gesteine, Land und Atmosphäre", "Nur Wolken und Regen", "Nur das Grundwasser"], answer: 1,
@@ -59,9 +62,10 @@ const QUESTIONS = [
   { topic: "fluss", type: "mc", q: "Was bedeutet „ökologische Nische“?",
     options: ["Ein Versteck unter einem Stein", "Die Rolle („Beruf“) eines Lebewesens im Ökosystem", "Ein besonders kleiner Lebensraum", "Die Anzahl der Arten in einem Gewässer"], answer: 1,
     info: "Die ökologische Nische ist die Rolle, die ein Lebewesen im Ökosystem einnimmt – sozusagen sein „Beruf“." },
-  { topic: "fluss", type: "mc", q: "Wie verändert sich der Sauerstoffgehalt von der Quelle Richtung Mündung?",
-    options: ["Er nimmt ab", "Er nimmt zu", "Er bleibt gleich", "Er schwankt zufällig"], answer: 0,
-    info: "Flussabwärts steigt die Temperatur – wärmeres Wasser enthält weniger Sauerstoff." },
+  { topic: "fluss", type: "gap", q: "Was passiert flussabwärts? Ergänze.",
+    text: "Flussabwärts {steigt} die Temperatur und der Sauerstoffgehalt {nimmt ab}. Die Strömung wird {schwächer}.",
+    extra: ["nimmt zu", "stärker"],
+    info: "Flussabwärts steigt die Temperatur, der Sauerstoffgehalt nimmt ab und die Strömung nimmt ab." },
   { topic: "fluss", type: "match", q: "Wie verändern sich die Umweltfaktoren flussabwärts?",
     pairs: [
       ["Strömung", "nimmt ab"],
@@ -79,8 +83,9 @@ const QUESTIONS = [
       ["Haftorgane / Saugnäpfe", "Festhalten an Steinen"]
     ],
     info: "Tiere im Fließgewässer sind an die Strömung angepasst." },
-  { topic: "fluss", type: "mc", q: "Welche Lebewesen sind im Fließgewässer die Produzenten?",
-    options: ["Fische", "Pflanzen", "Bakterien", "Insektenlarven"], answer: 1,
+  { topic: "fluss", type: "gap", q: "Biozönose im Fließgewässer: Ergänze.",
+    text: "Die Produzenten sind die {Pflanzen}. Die {Tiere} sind Konsumenten und Destruenten.",
+    extra: ["Steine"],
     info: "Produzenten sind Pflanzen. Tiere sind Konsumenten bzw. Destruenten." },
   { topic: "fluss", type: "mc", q: "Welche dieser Rollen ist KEINE der genannten ökologischen Nischen im Fließgewässer?",
     options: ["Weidegänger", "Filtrierer", "Zerkleinerer", "Bestäuber"], answer: 3,
@@ -96,9 +101,10 @@ const QUESTIONS = [
     answer: false, info: "Falsch – sie können natürlich oder künstlich (vom Menschen, z. B. Stausee) entstanden sein." },
 
   // ---------- Trinkwasser, Nutzung, Renaturierung ----------
-  { topic: "trinkwasser", type: "mc", q: "Woher kommt unser Trinkwasser?",
-    options: ["Aus dem Meer", "Aus Grundwasser und Quellen", "Aus Regenwasser vom Dach", "Aus der Donau"], answer: 1,
-    info: "Trinkwasser kommt aus Grundwasser und Quellen." },
+  { topic: "trinkwasser", type: "gap", q: "Trinkwasser: Ergänze den Lückentext.",
+    text: "Unser Trinkwasser kommt aus {Grundwasser} und {Quellen}. Gefährlich sind {Dünger} aus der Landwirtschaft und {Abwasser} aus Industrie und Haushalt.",
+    extra: ["Meerwasser", "Fischtreppen"],
+    info: "Trinkwasser kommt aus Grundwasser und Quellen. Dünger, Pflanzenschutzmittel, Keime und Abwasser gefährden es." },
   { topic: "trinkwasser", type: "mc", q: "Was ist eine Gefahr für das Trinkwasser aus der Landwirtschaft?",
     options: ["Dünger und Pflanzenschutzmittel", "Fischtreppen", "Wasserkraftwerke", "Auwälder"], answer: 0,
     info: "Dünger und Pflanzenschutzmittel, aber auch Keime und Abwasser aus Industrie und Haushalt gefährden das Wasser." },
@@ -112,12 +118,18 @@ const QUESTIONS = [
       ["Schlammbehandlung", "es entsteht Gas zur Stromerzeugung"]
     ],
     info: "Eine Kläranlage reinigt Abwasser in mehreren Schritten." },
-  { topic: "trinkwasser", type: "mc", q: "Wer reinigt das Wasser bei der biologischen Reinigung?",
-    options: ["Fische", "Chemikalien", "Mikroorganismen", "Filter aus Sand"], answer: 2,
-    info: "Bei der biologischen Reinigung bauen Mikroorganismen Schmutzstoffe ab." },
-  { topic: "trinkwasser", type: "mc", q: "Welche Nutzung eines Flusses durch den Menschen ist hier genannt?",
-    options: ["Transport von Stein und Sand", "Lebensraum für Organismen", "Stromgewinnung in Wasserkraftwerken", "Hohe Wasserqualität für Organismen"], answer: 2,
-    info: "Nutzung durch den Menschen: Schifffahrt, Stromgewinnung, Freizeit, Kühlwasser. Die anderen Antworten beschreiben den naturnahen Zustand." },
+  { topic: "trinkwasser", type: "tf", q: "Bei der biologischen Reinigung reinigen Chemikalien das Wasser.",
+    answer: false, info: "Falsch – bei der biologischen Reinigung reinigen Mikroorganismen das Wasser." },
+  { topic: "trinkwasser", type: "match", q: "Naturnaher Zustand oder Nutzung durch den Menschen? Ordne zu.",
+    pairs: [
+      ["Hohe Wasserqualität für Organismen", "naturnaher Zustand"],
+      ["Lebensraum für Organismen", "naturnaher Zustand"],
+      ["Transport von Stein und Sand", "naturnaher Zustand"],
+      ["Schifffahrtsweg", "Nutzung durch den Menschen"],
+      ["Stromgewinnung in Wasserkraftwerken", "Nutzung durch den Menschen"],
+      ["Kühlwasser für Kraftwerke", "Nutzung durch den Menschen"]
+    ],
+    info: "Ein Fluss hat einen naturnahen Zustand – der Mensch nutzt ihn aber auch und setzt ihn so „unter Druck“." },
   { topic: "trinkwasser", type: "tf", q: "Flusswasser wird auch als Kühlwasser für Industrie und Wärmekraftwerke genutzt.",
     answer: true, info: "Richtig – das ist eine der Nutzungen, die Gewässer „unter Druck“ setzen." },
   { topic: "trinkwasser", type: "mc", q: "Was sind Mäander?",
@@ -134,15 +146,13 @@ const QUESTIONS = [
   { topic: "trinkwasser", type: "mc", q: "Was bedeutet Renaturierung?",
     options: ["Einen Fluss begradigen", "Einen stark veränderten Fluss wieder naturnäher gestalten", "Einen Fluss aufstauen", "Neue Kläranlagen bauen"], answer: 1,
     info: "Renaturierung = einen stark veränderten Fluss wieder naturnäher gestalten." },
-  { topic: "trinkwasser", type: "mc", q: "Welche Maßnahme gehört zur Renaturierung?",
-    options: ["Staumauer bauen", "Ufer betonieren", "Fischtreppen bauen", "Flussschlingen entfernen"], answer: 2,
+  { topic: "trinkwasser", type: "gap", q: "Maßnahmen der Renaturierung: Ergänze.",
+    text: "Bei der Renaturierung werden {Fischtreppen} gebaut. {Überflutungsflächen} und {Auwälder} werden erhalten oder wiederhergestellt.",
+    extra: ["Staumauern", "Kläranlagen"],
     info: "Fischtreppen bauen und Überflutungsflächen/Auwälder erhalten oder wiederherstellen." },
   { topic: "trinkwasser", type: "order", q: "Renaturierung und Hochwasser: Bringe die Folgen in die richtige Reihenfolge.",
     items: ["Mehr Raum für den Fluss", "Wasser breitet sich aus", "Hochwasser wird abgeschwächt", "Weniger Schäden"],
     info: "Mehr Raum → Wasser breitet sich aus → Hochwasser abgeschwächt → weniger Schäden." },
-  { topic: "trinkwasser", type: "mc", q: "Welches Tier ist KEINE typische Art einer Au?",
-    options: ["Eisvogel", "Biber", "Huchen", "Hai"], answer: 3,
-    info: "Typische Arten einer Au sind Eisvogel, Biber und Huchen." },
 
   // ---------- C. Das Meer ----------
   { topic: "meer", type: "tf", q: "Das Meer hat mehrere Bereiche mit typischen abiotischen Umweltfaktoren – deshalb ist die Biodiversität hoch.",
@@ -161,13 +171,15 @@ const QUESTIONS = [
       ["Überfischung", "zu viel gefischt und Beifang"]
     ],
     info: "Überfischung und Verschmutzung sind die großen Gefahren für die Meere." },
-  { topic: "meer", type: "mc", q: "Was führt zur Korallenbleiche?",
-    options: ["Zu kaltes Wasser", "Erhöhte Wassertemperatur und Verschmutzung", "Zu viele Fische", "Zu viel Sonnenlicht in der Nacht"], answer: 1,
-    info: "Erhöhte Temperatur im Wasser und Verschmutzung lassen Korallen sterben." },
+  { topic: "meer", type: "order", q: "Korallenbleiche: Bringe die Folgen in die richtige Reihenfolge.",
+    items: ["Wasser wird wärmer und verschmutzt", "Korallen sterben (Korallenbleiche)", "Lebensraum für viele Organismen geht verloren", "Biodiversität sinkt"],
+    info: "Erhöhte Temperatur im Wasser und Verschmutzung lassen Korallen sterben. Damit geht Lebensraum verloren und die Biodiversität sinkt." },
   { topic: "meer", type: "tf", q: "Wenn Korallen sterben, steigt die Biodiversität.",
     answer: false, info: "Falsch – viele Organismen verlieren ihren Lebensraum, die Biodiversität sinkt." },
-  { topic: "meer", type: "tf", q: "Plastik im Meer kann über die Nahrungskette bis zum Menschen gelangen.",
-    answer: true, info: "Richtig – kleine Plastikteile werden gefressen und wandern die Nahrungskette hinauf." },
+  { topic: "meer", type: "gap", q: "Verschmutzung der Meere: Ergänze.",
+    text: "Bei einer {Ölpest} werden Tiere vergiftet und ihre Kiemen verkleben. {Plastik} gelangt über die {Nahrungskette} bis zum Menschen.",
+    extra: ["Fischtreppe", "Strömung"],
+    info: "Öl vergiftet Tiere und verklebt Kiemen. Kleine Plastikteile werden gefressen und wandern die Nahrungskette hinauf." },
 
   // ---------- D. Amphibien & Fische ----------
   { topic: "amphibien", type: "mc", q: "Wie nennt man Amphibien noch?",
@@ -187,9 +199,10 @@ const QUESTIONS = [
   { topic: "amphibien", type: "mc", q: "Wie heißt die Verwandlung von der Larve zum erwachsenen Tier?",
     options: ["Mutation", "Metamorphose", "Fotosynthese", "Evolution"], answer: 1,
     info: "Metamorphose = Verwandlung, z. B. von der Kaulquappe zum Frosch." },
-  { topic: "amphibien", type: "mc", q: "Wie heißt die Larve des Frosches?",
-    options: ["Raupe", "Made", "Kaulquappe", "Puppe"], answer: 2,
-    info: "Die Larve des Frosches heißt Kaulquappe." },
+  { topic: "amphibien", type: "gap", q: "Die Entwicklung des Frosches: Ergänze.",
+    text: "Die Larve des Frosches heißt {Kaulquappe}. Sie atmet mit {Kiemen}. Durch die {Metamorphose} wird sie zum Frosch, der mit {Lunge} und Haut atmet.",
+    extra: ["Raupe", "Schuppen"],
+    info: "Die Kaulquappe atmet mit Kiemen. Nach der Metamorphose atmet der Frosch mit Lunge und Haut." },
   { topic: "amphibien", type: "match", q: "Larve oder erwachsenes Tier? Ordne zu.",
     pairs: [
       ["Atmung mit Kiemen", "Larve"],
@@ -275,6 +288,42 @@ const QUESTIONS = [
     ],
     extra: ["Schuppen"],
     info: "Die Kaulquappe ist die Larve: Sie atmet mit Kiemen und hat einen Ruderschwanz. Durch die Metamorphose wird sie zum erwachsenen Frosch." },
+  { topic: "fluss", type: "label", q: "Wie sind die Tiere an die Strömung angepasst? Beschrifte das Bild.", image: "anpassung",
+    markers: [
+      { x: 70, y: 62, answer: "Strömung" },
+      { x: 225, y: 112, answer: "Stromlinienförmiger Körper" },
+      { x: 92, y: 196, answer: "Flacher Körper" },
+      { x: 238, y: 194, answer: "Saugnapf" }
+    ],
+    extra: ["Ruderschwanz"],
+    info: "Ein stromlinienförmiger Körper hat wenig Strömungswiderstand. Mit einem flachen Körper bleibt man am Grund. Mit Saugnäpfen hält man sich an Steinen fest." },
+  { topic: "trinkwasser", type: "label", q: "Woher kommt das Trinkwasser und was gefährdet es? Beschrifte das Bild.", image: "trinkwasser",
+    markers: [
+      { x: 116, y: 100, answer: "Quelle" },
+      { x: 110, y: 234, answer: "Grundwasser" },
+      { x: 178, y: 92, answer: "Dünger aus der Landwirtschaft" },
+      { x: 330, y: 140, answer: "Abwasser aus der Industrie" }
+    ],
+    extra: ["Gletscher"],
+    info: "Trinkwasser kommt aus Grundwasser und Quellen. Dünger und Abwasser können ins Grundwasser gelangen." },
+  { topic: "trinkwasser", type: "label", q: "Wie nutzt der Mensch den Fluss? Beschrifte das Bild.", image: "nutzung",
+    markers: [
+      { x: 80, y: 142, answer: "Schifffahrtsweg" },
+      { x: 189, y: 97, answer: "Wasserkraftwerk" },
+      { x: 268, y: 150, answer: "Freizeit (Schwimmen)" },
+      { x: 343, y: 70, answer: "Kühlwasser für Kraftwerke" }
+    ],
+    extra: ["Kläranlage"],
+    info: "Der Mensch nutzt Flüsse als Schifffahrtsweg, für Strom aus Wasserkraftwerken, in der Freizeit und als Kühlwasser." },
+  { topic: "amphibien", type: "label", q: "Froschlurch oder Schwanzlurch? Beschrifte das Bild.", image: "lurche",
+    markers: [
+      { x: 110, y: 140, answer: "Froschlurch" },
+      { x: 290, y: 168, answer: "Schwanzlurch" },
+      { x: 196, y: 180, answer: "Schwanz" },
+      { x: 340, y: 192, answer: "4 Beine" }
+    ],
+    extra: ["Flosse", "Kiemen"],
+    info: "Froschlurche: Unken, Kröten, Frösche. Schwanzlurche (Molche, Salamander) haben 4 Beine und einen Schwanz." },
 
   // ---------- Mehrfachauswahl ----------
   { topic: "kreislauf", type: "multi", q: "Wo ist Wasser gespeichert? Wähle alle richtigen Antworten.",
