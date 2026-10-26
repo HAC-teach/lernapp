@@ -6,16 +6,20 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Lernapps</title>
 <style>
-  :root { --bg: #f4f5f7; --card: #ffffff; --text: #3b4046; --muted: #7b838b; --border: #dfe3e7; --green: #3e9f4c; }
+  :root { --paper: #fffaf0; --grid: #f1e8d6; --card: #ffffff; --text: #3d3528; --muted: #857a66; --border: #e6dcc6;
+    --accent: #f2a541; --mark: #ffd96a; }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #16191c; --card: #1f2327; --text: #e2e5e8; --muted: #9aa2aa; --border: #353b41; --green: #5cbd69; }
+    :root { --paper: #1f1c17; --grid: #2a261f; --card: #28241e; --text: #ede5d6; --muted: #a89d88; --border: #3b352c;
+      --accent: #f0a24a; --mark: rgba(255, 200, 60, .35); }
   }
-  body { margin: 0; background: var(--bg); color: var(--text);
-    font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  body { margin: 0; color: var(--text); background-color: var(--paper);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 22px 22px; font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
   main { max-width: 480px; margin: 15vh auto 0; padding: 0 16px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-top: 4px solid var(--green);
-    border-radius: 10px; padding: 24px; text-align: center; }
-  h1 { font-size: 1.5rem; font-weight: 600; margin: 0 0 8px; }
+  .card { background: var(--card); border: 1px solid var(--border); border-top: 5px solid var(--accent);
+    border-radius: 8px; padding: 24px; text-align: center; box-shadow: 0 2px 0 var(--border); }
+  h1 { display: inline-block; font-size: 1.5rem; font-weight: 700; margin: 0 0 8px; padding: 0 4px;
+    background: linear-gradient(transparent 60%, var(--mark) 60%); }
   p { color: var(--muted); margin: 0; }
 </style>
 </head>

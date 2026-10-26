@@ -7,50 +7,61 @@
 <title>Gewässer Lernspiel</title>
 <style>
   :root {
-    --bg: #f4f5f7; --card: #ffffff; --text: #3b4046; --muted: #7b838b; --border: #dfe3e7;
-    --accent: #2f7fe0; --accent-soft: #e7f0fc; --green: #3e9f4c; --green-soft: #eaf5eb;
-    --ok: #3e9f4c; --ok-soft: #eaf5eb; --bad: #d4504a; --bad-soft: #fbeceb; --top: #fbfbfc;
+    --paper: #fffaf0; --grid: #f1e8d6; --card: #ffffff; --text: #3d3528; --muted: #857a66; --border: #e6dcc6;
+    --accent: #f2a541; --accent-ink: #3d2a0c; --accent-soft: #fdefd9; --mark: #ffd96a; --note: #fff1a8;
+    --ok: #3f9a6f; --ok-soft: #e3f4ea; --bad: #d0533f; --bad-soft: #fbe6e1; --top: #ffffff; --line: #f0b9b0;
+    --c: var(--accent); --ci: #c9741d;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #16191c; --card: #1f2327; --text: #e2e5e8; --muted: #9aa2aa; --border: #353b41;
-      --accent: #5d9df0; --accent-soft: #1e2e44; --green: #5cbd69; --green-soft: #1c3121;
-      --ok: #5cbd69; --ok-soft: #1c3121; --bad: #ee7c76; --bad-soft: #3c2323; --top: #1b1e22; }
+    :root { --paper: #1f1c17; --grid: #2a261f; --card: #28241e; --text: #ede5d6; --muted: #a89d88; --border: #3b352c;
+      --accent: #f0a24a; --accent-ink: #2a1a05; --accent-soft: #3b2c19; --mark: rgba(255, 200, 60, .35); --note: #3d3618;
+      --ok: #6cc795; --ok-soft: #1d3527; --bad: #ef8573; --bad-soft: #3d231e; --top: #24211b; --line: #6b3b36; --ci: #f5b56a; }
+  }
+  .c1 { --c: #f2a541; --ci: #c9741d; }
+  .c2 { --c: #5bb98c; --ci: #2f8a5e; }
+  .c3 { --c: #5a9be0; --ci: #2f6fb5; }
+  .c4 { --c: #e57a9b; --ci: #b84a6c; }
+  .c5 { --c: #9b86e0; --ci: #6a52b8; }
+  .all { --c: #f5c842; --ci: #9a7400; }
+  @media (prefers-color-scheme: dark) {
+    .c1 { --ci: #f5b56a; } .c2 { --ci: #7fd3aa; } .c3 { --ci: #8bbcf0; } .c4 { --ci: #f0a0b8; } .c5 { --ci: #bcaaf0; } .all { --ci: #f5d36a; }
   }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text);
-    font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  .top { background: var(--top); border-bottom: 1px solid var(--border); padding: 14px 16px;
-    font-size: .85rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  body { margin: 0; color: var(--text); background-color: var(--paper);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 22px 22px; font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .top { background: var(--top); border-bottom: 3px double var(--line); padding: 12px 16px; color: var(--muted); font-size: .9rem; font-weight: 600; }
   .top span { display: block; max-width: 720px; margin: 0 auto; }
   main { max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; }
-  h1 { font-size: 2rem; font-weight: 600; margin: 0 0 6px; }
-  h2 { font-size: 1.25rem; font-weight: 600; margin: 0 0 16px; }
+  h1 { display: inline-block; font-size: 2rem; font-weight: 700; margin: 0 0 8px; padding: 0 4px;
+    background: linear-gradient(transparent 60%, var(--mark) 60%); }
+  h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 16px; }
   .sub { color: var(--muted); margin: 0 0 24px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 20px; }
-  .grid { display: grid; gap: 14px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
+  .card { background: var(--card); border: 1px solid var(--border); border-top: 5px solid var(--c); border-radius: 8px;
+    padding: 20px; box-shadow: 0 2px 0 var(--border); }
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); }
   button { font: inherit; color: inherit; cursor: pointer; }
-  .topic { text-align: left; background: var(--card); border: 2px solid var(--border); border-radius: 10px; padding: 0;
-    display: flex; flex-direction: column; overflow: hidden; transition: border-color .15s; }
-  .topic:hover { border-color: var(--green); }
-  .topic .head { display: flex; gap: 12px; align-items: center; padding: 14px 16px; flex: 1; font-weight: 600; }
-  .topic small { display: block; color: var(--muted); font-size: .85rem; padding: 8px 16px;
-    background: var(--green-soft); border-top: 1px solid var(--border); }
-  .topic.all { grid-column: 1 / -1; border-color: var(--green); }
-  .num { flex: none; width: 34px; height: 34px; border-radius: 8px; background: var(--green); color: #fff;
-    display: grid; place-items: center; font-weight: 700; font-size: .95rem; }
-  .topic.all .num { font-size: .75rem; }
-  .btn { background: var(--accent); color: #fff; border: 0; border-radius: 8px; padding: 11px 20px;
-    font-weight: 600; font-size: .9rem; letter-spacing: .05em; text-transform: uppercase; }
-  .btn:hover:not(:disabled) { filter: brightness(1.07); }
+  .topic { text-align: left; background: var(--card); border: 1px solid var(--border); border-top: 5px solid var(--c);
+    border-radius: 8px; padding: 0; display: flex; flex-direction: column; box-shadow: 0 2px 0 var(--border);
+    transition: transform .15s, box-shadow .15s; }
+  .topic:hover { transform: translateY(-2px); box-shadow: 0 4px 0 var(--border); }
+  .topic .head { display: flex; gap: 12px; align-items: baseline; padding: 14px 16px; flex: 1; font-weight: 600; }
+  .topic small { display: block; color: var(--muted); font-size: .85rem; padding: 8px 16px; border-top: 1px dashed var(--border); }
+  .topic.all { grid-column: 1 / -1; }
+  .num { flex: none; color: var(--ci); font-weight: 800; font-size: 1.4rem; line-height: 1; min-width: 1.1em; }
+  .topic.all .num { font-size: 1rem; }
+  .btn { background: var(--accent); color: var(--accent-ink); border: 0; border-radius: 6px; padding: 11px 20px;
+    font-weight: 700; box-shadow: 0 2px 0 rgba(0, 0, 0, .15); }
+  .btn:hover:not(:disabled) { filter: brightness(1.05); }
+  .btn:active:not(:disabled) { transform: translateY(1px); box-shadow: 0 1px 0 rgba(0, 0, 0, .15); }
   .btn:disabled { opacity: .45; cursor: default; }
-  .btn.ghost { background: transparent; color: var(--accent); border: 1px solid var(--border); }
-  .btn.ghost:hover { border-color: var(--accent); filter: none; }
+  .btn.ghost { background: var(--card); color: var(--text); border: 1px solid var(--border); box-shadow: 0 2px 0 var(--border); }
   .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--muted); font-size: .95rem; }
-  .progress { height: 6px; background: var(--border); border-radius: 99px; overflow: hidden; margin-bottom: 20px; }
-  .progress div { height: 100%; background: var(--green); transition: width .3s; }
+  .progress { height: 8px; background: var(--card); border: 1px solid var(--border); border-radius: 99px; overflow: hidden; margin-bottom: 20px; }
+  .progress div { height: 100%; background: var(--c); transition: width .3s; }
   .q { font-size: 1.2rem; font-weight: 600; margin: 0 0 18px; }
   .opts { display: grid; gap: 10px; }
-  .opt { text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 12px 14px; }
+  .opt { text-align: left; background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 12px 14px; }
   .opt:hover:not(:disabled) { border-color: var(--accent); }
   .opt.sel { border-color: var(--accent); background: var(--accent-soft); box-shadow: inset 0 0 0 1px var(--accent); }
   .opt.ok { border-color: var(--ok); background: var(--ok-soft); box-shadow: inset 0 0 0 1px var(--ok); }
@@ -58,43 +69,44 @@
   .opt:disabled { cursor: default; }
   .tf { grid-template-columns: 1fr 1fr; }
   .tf .opt { text-align: center; font-weight: 600; padding: 18px; }
-  .seq { min-height: 52px; border: 1px dashed var(--muted); border-radius: 8px; padding: 8px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
+  .seq { min-height: 52px; border: 2px dashed var(--border); border-radius: 6px; padding: 8px; display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; }
   .seq:empty::before { content: "Tippe die Begriffe in der richtigen Reihenfolge an …"; color: var(--muted); padding: 6px; }
   .chip { background: var(--accent-soft); border: 1px solid transparent; border-radius: 6px; padding: 8px 12px; text-align: left; }
-  .chip .n { display: inline-block; min-width: 1.6em; font-weight: 700; color: var(--accent); }
+  .chip .n { display: inline-block; min-width: 1.6em; font-weight: 700; color: var(--ci); }
   .chip.ok { border-color: var(--ok); background: var(--ok-soft); }
   .chip.bad { border-color: var(--bad); background: var(--bad-soft); }
   .pool { display: flex; flex-wrap: wrap; gap: 8px; }
   .pool .opt { padding: 8px 12px; }
-  .row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px solid var(--border); }
+  .row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1px dashed var(--border); }
   .row:last-child { border-bottom: 0; }
   .row b { font-weight: 600; }
-  select { font: inherit; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 8px; padding: 9px 10px; width: 100%; }
+  select { font: inherit; color: var(--text); background: var(--card); border: 1px solid var(--border); border-radius: 6px; padding: 9px 10px; width: 100%; }
   select:focus { outline: 2px solid var(--accent-soft); border-color: var(--accent); }
   select.ok { border-color: var(--ok); background: var(--ok-soft); }
   select.bad { border-color: var(--bad); background: var(--bad-soft); }
   .fix { grid-column: 2; font-size: .9rem; color: var(--ok); }
-  .feedback { margin-top: 18px; border-radius: 8px; padding: 12px 14px; border-left: 4px solid; }
+  .feedback { margin-top: 18px; border-radius: 6px; padding: 12px 14px; border-left: 4px solid; }
   .feedback.ok { background: var(--ok-soft); border-color: var(--ok); }
   .feedback.bad { background: var(--bad-soft); border-color: var(--bad); }
   .feedback strong { display: block; }
   .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 18px; flex-wrap: wrap; }
-  .big { font-size: 3rem; font-weight: 700; color: var(--green); margin: 8px 0; }
+  .big { display: inline-block; font-size: 3rem; font-weight: 800; margin: 8px 0; padding: 0 6px;
+    background: linear-gradient(transparent 60%, var(--mark) 60%); }
   .center { text-align: center; }
   .review { margin-top: 20px; text-align: left; }
   .review li { margin-bottom: 10px; }
   .review span { color: var(--muted); display: block; font-size: .92rem; }
-  .streak { font-weight: 700; color: var(--green); }
-  .back { display: inline-block; color: var(--muted); text-decoration: none; font-size: .85rem; font-weight: 600;
-    letter-spacing: .05em; text-transform: uppercase; margin-bottom: 14px; }
-  .back:hover { color: var(--accent); }
+  .streak { font-weight: 700; color: var(--ci); }
+  .back { display: block; width: fit-content; color: var(--muted); text-decoration: none; font-size: .95rem; font-weight: 600; margin-bottom: 12px; }
+  .back:hover { color: var(--text); }
   .learn ul { margin: 0; padding-left: 1.2em; }
   .learn li { margin-bottom: 8px; }
-  .tip { margin-top: 16px; background: var(--green-soft); border-left: 4px solid var(--green); border-radius: 8px; padding: 10px 14px; }
+  .learn li::marker { color: var(--ci); }
+  .tip { margin-top: 18px; background: var(--note); border-radius: 2px; padding: 12px 14px; box-shadow: 0 2px 0 rgba(0, 0, 0, .08); }
   .dots { display: flex; gap: 6px; justify-content: center; margin-top: 16px; }
   .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
-  .dots i.on { background: var(--green); }
-  .skip { background: none; border: 0; color: var(--accent); text-decoration: underline; padding: 0; }
+  .dots i.on { background: var(--c); }
+  .skip { background: none; border: 0; color: var(--muted); text-decoration: underline; padding: 0; }
   footer { color: var(--muted); font-size: .85rem; text-align: center; margin-top: 32px; }
   @media (max-width: 480px) { .row { grid-template-columns: 1fr; } .fix { grid-column: 1; } h1 { font-size: 1.6rem; } }
 </style>
@@ -117,7 +129,11 @@ function saveBest(id, pct) {
   try { const b = loadBest(); if (!(b[id] >= pct)) { b[id] = pct; localStorage.setItem("gewaesser-best", JSON.stringify(b)); } } catch {}
 }
 
+// Farbklasse pro Thema (c1–c5), wiederholt sich ab dem 6. Thema
+const tc = id => { const i = TOPICS.findIndex(t => t.id === id); return i < 0 ? "" : "c" + (i % 5 + 1); };
+
 function home() {
+  app.className = "";
   const best = loadBest();
   const tile = (id, badge, title, count, cls = "") =>
     `<button class="topic ${cls}" data-id="${id}"><span class="head"><span class="num">${badge}</span>${esc(title)}</span>
@@ -128,7 +144,7 @@ function home() {
     <p class="sub">Wähle ein Thema: Zuerst lernst du mit den Karten, dann testest du dein Wissen im Quiz.</p>
     <div class="grid">
       ${tile("all", "Mix", "Alle Themen gemischt", QUESTIONS.length, "all")}
-      ${TOPICS.map((t, n) => tile(t.id, n + 1, t.title, QUESTIONS.filter(q => q.topic === t.id).length)).join("")}
+      ${TOPICS.map((t, n) => tile(t.id, n + 1, t.title, QUESTIONS.filter(q => q.topic === t.id).length, tc(t.id))).join("")}
     </div>
     <footer>Jede Runde: bis zu ${ROUND_SIZE} zufällige Fragen</footer>`;
   app.querySelectorAll(".topic").forEach(b => b.onclick = () => b.dataset.id === "all" ? start("all") : learn(b.dataset.id, 0));
@@ -138,6 +154,7 @@ function learn(id, i) {
   const cards = LESSONS[id] || [];
   if (!cards.length) return start(id);
   const t = TOPICS.find(t => t.id === id), c = cards[i], last = i === cards.length - 1;
+  app.className = tc(id);
   app.innerHTML = `
     <div class="bar"><button class="btn ghost" id="quit" style="padding:6px 12px">← Themen</button>
       <span>${esc(t.title)}</span>
@@ -171,6 +188,7 @@ function render() {
   const n = state.list.length;
   state.answered = false;
   state.pick = null;
+  app.className = tc(q.topic);
   app.innerHTML = `
     <div class="bar"><button class="btn ghost" id="quit" style="padding:6px 12px">← Themen</button>
       <span>Frage ${state.i + 1} / ${n}</span>
@@ -285,6 +303,7 @@ function next() {
 function result() {
   const n = state.list.length, pct = Math.round(state.score / n * 100);
   saveBest(state.id, pct);
+  app.className = tc(state.id);
   const msg = pct === 100 ? "Perfekt! Du bist ein Gewässer-Profi!" : pct >= 80 ? "Sehr gut gemacht!" : pct >= 50 ? "Gut! Mit etwas Übung schaffst du noch mehr." : "Wiederhole das Thema noch einmal – du schaffst das!";
   app.innerHTML = `
     <div class="card center">

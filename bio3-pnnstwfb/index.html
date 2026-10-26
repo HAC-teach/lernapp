@@ -6,30 +6,31 @@
 <meta name="robots" content="noindex, nofollow">
 <title>Biologie 3. Klasse</title>
 <style>
-  :root { --bg: #f4f5f7; --card: #ffffff; --text: #3b4046; --muted: #7b838b; --border: #dfe3e7;
-    --green: #3e9f4c; --green-soft: #eaf5eb; --top: #fbfbfc; }
+  :root { --paper: #fffaf0; --grid: #f1e8d6; --card: #ffffff; --text: #3d3528; --muted: #857a66; --border: #e6dcc6;
+    --mark: #ffd96a; --top: #ffffff; --line: #f0b9b0; }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #16191c; --card: #1f2327; --text: #e2e5e8; --muted: #9aa2aa; --border: #353b41;
-      --green: #5cbd69; --green-soft: #1c3121; --top: #1b1e22; }
+    :root { --paper: #1f1c17; --grid: #2a261f; --card: #28241e; --text: #ede5d6; --muted: #a89d88; --border: #3b352c;
+      --mark: rgba(255, 200, 60, .35); --top: #24211b; --line: #6b3b36; }
   }
+  .c1 { --c: #5a9be0; --ci: #2f6fb5; }
+  @media (prefers-color-scheme: dark) { .c1 { --ci: #8bbcf0; } }
   * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--text);
-    font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
-  .top { background: var(--top); border-bottom: 1px solid var(--border); padding: 14px 16px;
-    font-size: .85rem; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+  body { margin: 0; color: var(--text); background-color: var(--paper);
+    background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 22px 22px; font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  .top { background: var(--top); border-bottom: 3px double var(--line); padding: 12px 16px; color: var(--muted); font-size: .9rem; font-weight: 600; }
   .top span { display: block; max-width: 720px; margin: 0 auto; }
   main { max-width: 720px; margin: 0 auto; padding: 24px 16px 48px; }
-  h1 { font-size: 2rem; font-weight: 600; margin: 0 0 6px; }
+  h1 { display: inline-block; font-size: 2rem; font-weight: 700; margin: 0 0 8px; padding: 0 4px;
+    background: linear-gradient(transparent 60%, var(--mark) 60%); }
   .sub { color: var(--muted); margin: 0 0 24px; }
-  .list { display: grid; gap: 14px; }
-  .chapter { display: block; background: var(--card); border: 2px solid var(--border); border-radius: 10px;
-    overflow: hidden; color: inherit; text-decoration: none; transition: border-color .15s; }
-  a.chapter:hover { border-color: var(--green); }
-  .chapter .head { display: flex; gap: 12px; align-items: center; padding: 14px 16px; font-weight: 600; }
-  .chapter small { display: block; color: var(--muted); font-size: .9rem; padding: 8px 16px;
-    background: var(--green-soft); border-top: 1px solid var(--border); }
-  .num { flex: none; width: 34px; height: 34px; border-radius: 8px; background: var(--green); color: #fff;
-    display: grid; place-items: center; font-weight: 700; font-size: .95rem; }
+  .list { display: grid; gap: 16px; }
+  .chapter { display: block; background: var(--card); border: 1px solid var(--border); border-top: 5px solid var(--c);
+    border-radius: 8px; color: inherit; text-decoration: none; box-shadow: 0 2px 0 var(--border); transition: transform .15s, box-shadow .15s; }
+  a.chapter:hover { transform: translateY(-2px); box-shadow: 0 4px 0 var(--border); }
+  .chapter .head { display: flex; gap: 12px; align-items: baseline; padding: 14px 16px; font-weight: 600; font-size: 1.1rem; }
+  .chapter small { display: block; color: var(--muted); font-size: .9rem; padding: 8px 16px; border-top: 1px dashed var(--border); }
+  .num { flex: none; color: var(--ci); font-weight: 800; font-size: 1.5rem; line-height: 1; }
   .chapter.soon { opacity: .55; }
   @media (max-width: 480px) { h1 { font-size: 1.6rem; } }
 </style>
@@ -41,7 +42,7 @@
   <p class="sub">Wähle ein Kapitel. Du kannst die Themen durchklicken und danach ein Quiz machen.</p>
   <div class="list">
     <!-- Neues Kapitel: Ordner anlegen und hier einen Link ergänzen -->
-    <a class="chapter" href="gewaesser/"><span class="head"><span class="num">1</span>Gewässer</span>
+    <a class="chapter c1" href="gewaesser/"><span class="head"><span class="num">1</span>Gewässer</span>
       <small>Wasserkreislauf · Fließ- & stehende Gewässer · Trinkwasser · Meer · Amphibien</small></a>
   </div>
 </main>
