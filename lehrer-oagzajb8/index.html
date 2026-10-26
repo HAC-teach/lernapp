@@ -30,15 +30,21 @@
   .btn.p { background: var(--c); border-color: var(--c); color: #fff; }
   .btn:hover { filter: brightness(.97); }
   .empty { color: var(--muted); background: var(--card); border: 1px dashed var(--border); border-radius: 10px; padding: 20px; }
-  .news { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; }
-  .news h2 { margin: 0 0 4px; font-size: 1.05rem; }
-  .news ul { list-style: none; margin: 0; padding: 0; }
-  .news li { display: flex; gap: 4px 12px; align-items: baseline; flex-wrap: wrap; padding: 8px 0; border-top: 1px dashed var(--border); }
-  .news time { color: var(--muted); font-size: .85rem; font-weight: 600; min-width: 84px; }
-  .news .txt { flex: 1 1 260px; font-size: .95rem; }
-  .news .txt b { display: block; }
-  .news .btn { font-size: .8rem; padding: 3px 10px; }
-  .badge { background: var(--c); color: #fff; border-radius: 99px; font-size: .72rem; font-weight: 700; padding: 1px 8px; margin-left: 6px; }
+  .nav { display: flex; gap: 8px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
+  .newsbtn { font: inherit; font-size: .88rem; font-weight: 700; cursor: pointer; color: var(--text); background: #fff; border: 1px solid var(--border); border-radius: 99px; padding: 4px 12px; }
+  .badge { background: var(--c); color: #fff; border-radius: 99px; font-size: .72rem; font-weight: 700; padding: 1px 7px; margin-left: 4px; }
+  /* Neuigkeiten als kleines Fenster */
+  #news { width: min(480px, calc(100% - 24px)); max-height: min(70vh, 560px); padding: 0; border: 1px solid var(--border); border-radius: 10px; color: var(--text); }
+  #news::backdrop { background: rgba(0, 0, 0, .25); }
+  #news .hd { position: sticky; top: 0; display: flex; justify-content: space-between; align-items: center; background: #fff; border-bottom: 3px solid var(--c); padding: 10px 14px; }
+  #news h2 { margin: 0; font-size: 1rem; }
+  #news ul { list-style: none; margin: 0; padding: 4px 14px 10px; }
+  #news li { padding: 8px 0; border-top: 1px dashed var(--border); font-size: .88rem; }
+  #news li:first-child { border-top: 0; }
+  #news .wo { display: flex; gap: 8px; align-items: baseline; flex-wrap: wrap; }
+  #news time { color: var(--muted); font-size: .8rem; font-weight: 600; }
+  #news .btn { font-size: .78rem; padding: 2px 8px; margin-left: auto; }
+  #news p { margin: 2px 0 0; color: #4a4338; }
   .preview { position: sticky; top: 16px; }
   .preview p { margin: 0 0 8px; color: var(--muted); font-size: .9rem; font-weight: 600; }
   .phone { width: 100%; height: 680px; border: 8px solid var(--text); border-radius: 26px; overflow: hidden; background: #fff; }
@@ -50,15 +56,23 @@
 <body>
 <header><div class="in">
   <div class="brand"><span id="marke"></span><span>Lehrer-Ansicht · alle Fächer und Jahrgänge</span></div>
-  <div class="tabs" id="tabs"></div>
+  <div class="nav"><div class="tabs" id="tabs"></div><button class="newsbtn" id="newsbtn">Neuigkeiten</button></div>
 </div></header>
+<dialog id="news"><div class="hd"><h2 id="newstitle">Neuigkeiten</h2><button class="btn" id="newsclose">Schließen</button></div><ul id="newslist"></ul></dialog>
 <main class="in"><div class="layout"><div id="list"></div>
   <aside class="preview"><p id="ptitle">Vorschau</p><div class="phone" id="phone"><div class="ph">Tippe bei einem Kapitel auf „Vorschau“.</div></div></aside>
 </div></main>
 <script src="../marke.js"></script>
-<script src="apps.js"></script>
-<script src="neu.js"></script>
 <script>
+// apps.js und neu.js immer frisch laden (GitHub Pages lässt Browser Dateien sonst 10 Minuten zwischenspeichern)
+const load = src => new Promise((ok, fail) => {
+  const s = document.createElement("script");
+  s.src = `${src}?v=${Date.now()}`; s.onload = ok; s.onerror = fail;
+  document.head.appendChild(s);
+});
+Promise.all([load("apps.js"), load("neu.js").catch(() => {})]).then(init);
+
+function init() {
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const base = new URL("../", location.href).href;
 let cur = location.hash.slice(1);
@@ -78,18 +92,30 @@ async function count(url, el) {
   } catch { el.textContent = ""; }
 }
 
-// Neuigkeiten (neu.js) für das gewählte Fach und alle Fächer, die ersten 4 sofort sichtbar
-let newsAll = false;
+// Neuigkeiten (neu.js) nur des gewählten Fachs: Knopf im Kopf, Liste im Fenster
+const dlg = document.getElementById("news"), newsBtn = document.getElementById("newsbtn");
+const fresh = d => (Date.now() - new Date(d + "T00:00")) / 864e5 <= 14;
+const newsFor = id => (typeof NEUIGKEITEN === "undefined" ? [] : NEUIGKEITEN).filter(n => n.fach === id);
 function news(id) {
-  const items = (typeof NEUIGKEITEN === "undefined" ? [] : NEUIGKEITEN).filter(n => n.fach === id || n.fach === "alle");
-  if (!items.length) return "";
-  const fresh = d => (Date.now() - new Date(d + "T00:00")) / 864e5 <= 14;
-  const date = d => d.split("-").reverse().join(".");
-  const shown = newsAll ? items : items.slice(0, 4);
-  return `<section class="news"><h2>Neuigkeiten</h2><ul>${shown.map(n => `<li><time datetime="${esc(n.datum)}">${date(esc(n.datum))}</time>
-      <span class="txt"><b>${esc(n.wo)}${fresh(n.datum) ? `<span class="badge">neu</span>` : ""}</b>${esc(n.text)}</span>
-      ${n.ziel ? `<button class="btn" data-prev="${esc(base + n.ziel)}" data-name="${esc(n.wo)}">Vorschau</button>` : ""}</li>`).join("")}</ul>
-    ${items.length > 4 ? `<button class="btn" id="newsmore">${newsAll ? "Weniger anzeigen" : `Alle Neuigkeiten (${items.length})`}</button>` : ""}</section>`;
+  const items = newsFor(id), neu = items.filter(n => fresh(n.datum)).length;
+  newsBtn.hidden = !items.length;
+  newsBtn.innerHTML = `Neuigkeiten${neu ? `<span class="badge">${neu} neu</span>` : ""}`;
+  document.getElementById("newstitle").textContent = `Neuigkeiten · ${FAECHER.find(f => f.id === id).name}`;
+  document.getElementById("newslist").innerHTML = items.map(n => `<li><div class="wo"><time datetime="${esc(n.datum)}">${esc(n.datum.split("-").reverse().join("."))}</time>
+      <b>${esc(n.wo)}</b>${fresh(n.datum) ? `<span class="badge">neu</span>` : ""}
+      ${n.ziel ? `<button class="btn" data-prev="${esc(base + n.ziel)}" data-name="${esc(n.wo)}">Vorschau</button>` : ""}</div>
+    <p>${esc(n.text)}</p></li>`).join("");
+}
+newsBtn.onclick = () => dlg.showModal();
+document.getElementById("newsclose").onclick = () => dlg.close();
+dlg.onclick = e => {
+  if (e.target === dlg) return dlg.close(); // Klick neben das Fenster
+  const p = e.target.closest("[data-prev]");
+  if (p) { preview(p); dlg.close(); }
+};
+function preview(p) {
+  document.getElementById("ptitle").textContent = p.dataset.name;
+  document.getElementById("phone").innerHTML = `<iframe src="${esc(p.dataset.prev)}" title="Vorschau"></iframe>`;
 }
 
 function show(id) {
@@ -102,8 +128,9 @@ function show(id) {
   [...tabs.children].forEach(b => b.classList.toggle("on", b.dataset.id === id));
   document.getElementById("marke").innerHTML = marke(id);
   const list = document.getElementById("list");
-  if (!f.klassen.length) { list.innerHTML = news(id) + `<div class="empty">Für ${esc(f.name)} gibt es noch keine Lernspiele.</div>`; return; }
-  list.innerHTML = news(id) + f.klassen.map(k => {
+  news(id);
+  if (!f.klassen.length) { list.innerHTML = `<div class="empty">Für ${esc(f.name)} gibt es noch keine Lernspiele.</div>`; return; }
+  list.innerHTML = f.klassen.map(k => {
     const url = base + k.folder + "/";
     return `<section class="klasse"><h2>${esc(f.name)} · ${esc(k.name)}</h2>
       <div class="link"><span>Schüler-Link:</span><code>${esc(url)}</code><button class="btn" data-copy="${esc(url)}">Kopieren</button>
@@ -117,17 +144,14 @@ function show(id) {
 }
 
 document.getElementById("list").onclick = e => {
-  if (e.target.id === "newsmore") { newsAll = !newsAll; show(cur); return; }
   const c = e.target.closest("[data-copy]");
   if (c) { navigator.clipboard.writeText(c.dataset.copy).then(() => { c.textContent = "Kopiert ✓"; setTimeout(() => c.textContent = "Kopieren", 1500); }, () => {}); }
   const p = e.target.closest("[data-prev]");
-  if (p) {
-    document.getElementById("ptitle").textContent = p.dataset.name;
-    document.getElementById("phone").innerHTML = `<iframe src="${esc(p.dataset.prev)}" title="Vorschau"></iframe>`;
-  }
+  if (p) preview(p);
 };
 window.onhashchange = () => { const id = location.hash.slice(1); if (id !== cur && FAECHER.some(f => f.id === id)) show(id); };
 show(cur);
+}
 </script>
 </body>
 </html>
