@@ -16,6 +16,7 @@ bio2-ic0yjzio/              Biologie 2. Klasse
   index.html                Kapitelübersicht
   pflanzen-pilze/           Kapitel „1. Pflanzen und Pilze“ (wie unten, plus animation.js)
   zelle/                    Kapitel „2. Die Zelle“ (wie unten, plus animation.js)
+  sinnesorgane/             Kapitel „3. Sinnesorgane“ (wie unten, plus animation.js)
 bio3-pnnstwfb/              Biologie 3. Klasse
   index.html                Kapitelübersicht
   gewaesser/                Kapitel „1. Gewässer“

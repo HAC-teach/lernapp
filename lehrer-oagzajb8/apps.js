@@ -7,7 +7,8 @@ const FAECHER = [
     klassen: [
       { name: "2. Klasse", folder: "bio2-ic0yjzio", kapitel: [
         { name: "1. Pflanzen und Pilze", path: "pflanzen-pilze/" },
-        { name: "2. Die Zelle", path: "zelle/" }
+        { name: "2. Die Zelle", path: "zelle/" },
+        { name: "3. Sinnesorgane", path: "sinnesorgane/" }
       ] },
       { name: "3. Klasse", folder: "bio3-pnnstwfb", kapitel: [
         { name: "1. Gewässer", path: "gewaesser/" }
