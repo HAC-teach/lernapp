@@ -12,6 +12,7 @@ A static learning app for a biology class (Austrian AHS, topic "1. Gewässer"), 
 - All student-facing text is in German, written for lower-secondary students (short sentences, simple words).
 - Questions must be based on the slide content. Don't invent content beyond the slides without saying so.
 - Keep it phone-friendly and keep the dark mode working.
+- Never put personal information in the repository (it is public): no names, photos, grades, emails or other data of students, teachers or parents — not in code, questions, examples, commit messages or file names. Strip such details from slide content before using it.
 
 ## Structure / access
 
