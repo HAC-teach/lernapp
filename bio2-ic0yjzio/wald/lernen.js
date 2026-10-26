@@ -27,7 +27,7 @@ const LESSONS = {
         "ein Lebewesen wird vom nächsten gefressen",
         "Pflanze → Pflanzenfresser → Fleischfresser",
         "viele Nahrungsketten = Nahrungsnetz"
-      ] },
+      ], tip: "Der Pfeil → bedeutet „wird gefressen von“." },
     { title: "Erzeuger, Verbraucher, Zersetzer",
       points: [
         "Erzeuger (Produzenten): stellen Nährstoffe selbst her – Pflanzen (Fotosynthese)",
@@ -109,7 +109,7 @@ const LESSONS = {
         "Erstverbraucher: Eichhörnchen",
         "Zweitverbraucher: Marder",
         "Endverbraucher: Uhu"
-      ], tip: "Baum → Eichhörnchen → Marder → Uhu." }
+      ], tip: "Baum → Eichhörnchen → Marder → Uhu (→ = wird gefressen von)." }
   ],
   einfluesse: [
     { title: "Klima in Österreich (Sommer)",

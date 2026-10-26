@@ -133,10 +133,10 @@ function heroChain(L, ms) {
   const all = L.el(L.svg, "g", {}), r = 30 * s;
   steps.forEach(([make, name, role], i) => {
     const [x, y] = pos(i), t = 300 + i * 800;
-    // Pfeil zur nächsten Stufe (vom Pilz zurück zum Baum: der Kreis schließt sich)
+    // Pfeil zur nächsten Stufe = „wird gefressen von“; vom Pilz zurück zum Baum gestrichelt (Nährstoffe, nicht gefressen)
     const [nx, ny] = pos((i + 1) % 5), a = Math.atan2(ny - y, nx - x), x0 = x + Math.cos(a) * (r + 8), y0 = y + Math.sin(a) * (r + 8), x1 = nx - Math.cos(a) * (r + 10), y1 = ny - Math.sin(a) * (r + 10);
     const ah = 9, l = [x1 - Math.cos(a - .5) * ah, y1 - Math.sin(a - .5) * ah], rr = [x1 - Math.cos(a + .5) * ah, y1 - Math.sin(a + .5) * ah];
-    L.el(all, "path", { d: `M${x0} ${y0}L${x1} ${y1}M${l[0]} ${l[1]}L${x1} ${y1}L${rr[0]} ${rr[1]}`, stroke: i === 4 ? "#3f9a6f" : "#b0762a", "stroke-width": 3.5,
+    L.el(all, "path", { d: `M${x0} ${y0}L${x1} ${y1}M${l[0]} ${l[1]}L${x1} ${y1}L${rr[0]} ${rr[1]}`, stroke: i === 4 ? "#3f9a6f" : "#b0762a", "stroke-width": 3.5, "stroke-dasharray": i === 4 ? "7 7" : "none",
       fill: "none", "stroke-linecap": "round", "stroke-linejoin": "round" }).animate([{ opacity: 0 }, { opacity: 1 }], { duration: 350, delay: t + 550, fill: "both" });
     const holder = L.el(L.el(all, "g", { transform: `translate(${x} ${y})` }), "g", {});
     L.el(holder, "circle", { r, fill: "#ffffff", stroke: "#b0762a", "stroke-width": 2.5, opacity: .95 });

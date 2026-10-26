@@ -36,7 +36,7 @@ Static learning apps for biology classes (Austrian AHS), hosted on GitHub Pages.
 - `questions.js` – `TOPICS` (`{ id, title, color }` – each topic has its own colour; lighter/darker shades are computed) and `QUESTIONS`. Add or change questions here. Types:
   - `mc`: `options[]`, `answer` = index of the correct option
   - `tf`: `answer` = `true` / `false`
-  - `order`: `items[]` in the correct order (shuffled for display)
+  - `order`: `items[]` in the correct order (shuffled for display). Every food-chain task uses `chain: true`: items are shown side by side with arrows pointing right, and an arrow always means „wird gefressen von“ (also in `info` texts and learning cards)
   - `match`: `pairs[]` of `[term, answer]`; duplicate answers are fine (dropdowns use the unique set)
   - `multi`: `options[]`, `answers[]` = indices of ALL correct options (select all that apply)
   - `label`: `image` = key in `IMAGES` (bilder.js), `markers[]` = `{ x, y, answer }` in the image's 400×260 units, optional `extra[]` = wrong terms added to the choices. `x, y` is the point ON the part to label: the numbers never sit on the picture but in a margin left/right of it, with a leader line to that point (`pinLayout` in `index.html`; numbered left top-down, then right; at most 5 markers per side)

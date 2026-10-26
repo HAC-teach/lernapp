@@ -75,6 +75,10 @@
   .chip .n { display: inline-block; min-width: 1.6em; font-weight: 700; color: var(--ci); }
   .chip.ok { border-color: var(--ok); background: var(--ok-soft); }
   .chip.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .seq.chain { flex-direction: row; flex-wrap: wrap; align-items: center; }
+  .seq .arr { font-weight: 800; font-size: 1.3rem; color: var(--ci); }
+  .chain-key { color: var(--muted); margin: 0 0 8px; }
+  .chain-key b { color: var(--ci); font-size: 1.2rem; }
   .pool { display: flex; flex-wrap: wrap; gap: 8px; }
   .pool .opt { padding: 8px 12px; }
   .row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1.5px dashed var(--border); }
@@ -453,13 +457,15 @@ function renderTF(q, el, go) {
   };
 }
 
-function renderOrder(q, el, go) {
+function renderOrder(q, el, go) { // q.chain: Nahrungskette – nebeneinander, Pfeil nach rechts = „wird gefressen von“
   let pool = shuffle(q.items);
   while (pool.length > 1 && pool.every((x, i) => x === q.items[i])) pool = shuffle(q.items);
   const seq = [];
   const draw = () => {
     el.innerHTML = `
-      <div class="seq">${seq.map((s, i) => `<button class="chip" data-i="${i}"><span class="n">${i + 1}.</span>${esc(s)}</button>`).join("")}</div>
+      ${q.chain ? `<p class="chain-key"><b>→</b> bedeutet: wird gefressen von</p>` : ""}
+      <div class="seq${q.chain ? " chain" : ""}">${seq.map((s, i) => q.chain ? `${i ? `<span class="arr">→</span>` : ""}<button class="chip" data-i="${i}">${esc(s)}</button>`
+        : `<button class="chip" data-i="${i}"><span class="n">${i + 1}.</span>${esc(s)}</button>`).join("")}</div>
       <div class="pool">${pool.map((s, i) => `<button class="opt" data-i="${i}">${esc(s)}</button>`).join("")}</div>`;
     el.querySelectorAll(".pool .opt").forEach(b => b.onclick = () => { seq.push(pool.splice(+b.dataset.i, 1)[0]); draw(); });
     el.querySelectorAll(".seq .chip").forEach(b => b.onclick = () => { pool.push(seq.splice(+b.dataset.i, 1)[0]); draw(); });
