@@ -12,6 +12,7 @@ robots.txt                  Suchmaschinen aussperren
 marke.js                    Logo „Lernspiele“ mit Fach-Etikett (für alle Seiten; neue Fächer hier eintragen)
 lehrer-oagzajb8/            Lehrer-Ansicht (alle Fächer + Jahrgänge, nicht an Schüler weitergeben)
   apps.js                   Verzeichnis aller Lernspiele – bei neuem Kapitel/Jahrgang/Fach ergänzen
+  neu.js                    Neuigkeiten in der Lehrer-Ansicht – bei jeder Änderung oben einen Eintrag ergänzen
 bio2-ic0yjzio/              Biologie 2. Klasse
   index.html                Kapitelübersicht
   pflanzen-pilze/           Kapitel „1. Pflanzen und Pilze“ (wie unten, plus animation.js)

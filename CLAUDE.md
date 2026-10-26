@@ -24,7 +24,7 @@ Static learning apps for biology classes (Austrian AHS), hosted on GitHub Pages.
 
 - Root `index.html` is a neutral page that links nowhere. Each grade+subject lives in its own unguessable folder (e.g. `bio3-pnnstwfb/` = Biologie 3. Klasse); only that link goes to the students. Never link one grade's folder from another or from the root. All pages carry `noindex`; `robots.txt` disallows everything (never list folder names in it).
 - `<grade folder>/index.html` – chapter list. Each chapter is a subfolder (e.g. `gewaesser/`) with the files below.
-- `lehrer-oagzajb8/` – teacher view (only for the teacher, never give it to students; the only page allowed to link grade folders). Subject tabs, student link per grade, chapter preview, live question counts. Its `apps.js` (`FAECHER`) lists every subject, grade folder and chapter: whenever you add a chapter, grade or subject, add it there too.
+- `lehrer-oagzajb8/` – teacher view (only for the teacher, never give it to students; the only page allowed to link grade folders). Subject tabs, student link per grade, chapter preview, live question counts. Its `apps.js` (`FAECHER`) lists every subject, grade folder and chapter: whenever you add a chapter, grade or subject, add it there too. Its `neu.js` (`NEUIGKEITEN`) is the „Neuigkeiten“ list shown at the top of the teacher view: for EVERY change students or the teacher would notice (new chapter, new/changed questions, pictures, animations, design, features) add an entry at the top `{ datum, fach, wo, text, ziel? }` – German, short, written for the teacher; `ziel` = chapter folder for the preview button.
 
 ## Files (per chapter folder)
 

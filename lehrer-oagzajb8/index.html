@@ -30,6 +30,15 @@
   .btn.p { background: var(--c); border-color: var(--c); color: #fff; }
   .btn:hover { filter: brightness(.97); }
   .empty { color: var(--muted); background: var(--card); border: 1px dashed var(--border); border-radius: 10px; padding: 20px; }
+  .news { background: var(--card); border: 1px solid var(--border); border-radius: 10px; padding: 12px 16px; margin-bottom: 16px; }
+  .news h2 { margin: 0 0 4px; font-size: 1.05rem; }
+  .news ul { list-style: none; margin: 0; padding: 0; }
+  .news li { display: flex; gap: 4px 12px; align-items: baseline; flex-wrap: wrap; padding: 8px 0; border-top: 1px dashed var(--border); }
+  .news time { color: var(--muted); font-size: .85rem; font-weight: 600; min-width: 84px; }
+  .news .txt { flex: 1 1 260px; font-size: .95rem; }
+  .news .txt b { display: block; }
+  .news .btn { font-size: .8rem; padding: 3px 10px; }
+  .badge { background: var(--c); color: #fff; border-radius: 99px; font-size: .72rem; font-weight: 700; padding: 1px 8px; margin-left: 6px; }
   .preview { position: sticky; top: 16px; }
   .preview p { margin: 0 0 8px; color: var(--muted); font-size: .9rem; font-weight: 600; }
   .phone { width: 100%; height: 680px; border: 8px solid var(--text); border-radius: 26px; overflow: hidden; background: #fff; }
@@ -48,6 +57,7 @@
 </div></main>
 <script src="../marke.js"></script>
 <script src="apps.js"></script>
+<script src="neu.js"></script>
 <script>
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const base = new URL("../", location.href).href;
@@ -68,6 +78,20 @@ async function count(url, el) {
   } catch { el.textContent = ""; }
 }
 
+// Neuigkeiten (neu.js) für das gewählte Fach und alle Fächer, die ersten 4 sofort sichtbar
+let newsAll = false;
+function news(id) {
+  const items = (typeof NEUIGKEITEN === "undefined" ? [] : NEUIGKEITEN).filter(n => n.fach === id || n.fach === "alle");
+  if (!items.length) return "";
+  const fresh = d => (Date.now() - new Date(d + "T00:00")) / 864e5 <= 14;
+  const date = d => d.split("-").reverse().join(".");
+  const shown = newsAll ? items : items.slice(0, 4);
+  return `<section class="news"><h2>Neuigkeiten</h2><ul>${shown.map(n => `<li><time datetime="${esc(n.datum)}">${date(esc(n.datum))}</time>
+      <span class="txt"><b>${esc(n.wo)}${fresh(n.datum) ? `<span class="badge">neu</span>` : ""}</b>${esc(n.text)}</span>
+      ${n.ziel ? `<button class="btn" data-prev="${esc(base + n.ziel)}" data-name="${esc(n.wo)}">Vorschau</button>` : ""}</li>`).join("")}</ul>
+    ${items.length > 4 ? `<button class="btn" id="newsmore">${newsAll ? "Weniger anzeigen" : `Alle Neuigkeiten (${items.length})`}</button>` : ""}</section>`;
+}
+
 function show(id) {
   cur = id;
   try { localStorage.setItem("lehrer-fach", id); } catch {}
@@ -78,8 +102,8 @@ function show(id) {
   [...tabs.children].forEach(b => b.classList.toggle("on", b.dataset.id === id));
   document.getElementById("marke").innerHTML = marke(id);
   const list = document.getElementById("list");
-  if (!f.klassen.length) { list.innerHTML = `<div class="empty">Für ${esc(f.name)} gibt es noch keine Lernspiele.</div>`; return; }
-  list.innerHTML = f.klassen.map(k => {
+  if (!f.klassen.length) { list.innerHTML = news(id) + `<div class="empty">Für ${esc(f.name)} gibt es noch keine Lernspiele.</div>`; return; }
+  list.innerHTML = news(id) + f.klassen.map(k => {
     const url = base + k.folder + "/";
     return `<section class="klasse"><h2>${esc(f.name)} · ${esc(k.name)}</h2>
       <div class="link"><span>Schüler-Link:</span><code>${esc(url)}</code><button class="btn" data-copy="${esc(url)}">Kopieren</button>
@@ -93,6 +117,7 @@ function show(id) {
 }
 
 document.getElementById("list").onclick = e => {
+  if (e.target.id === "newsmore") { newsAll = !newsAll; show(cur); return; }
   const c = e.target.closest("[data-copy]");
   if (c) { navigator.clipboard.writeText(c.dataset.copy).then(() => { c.textContent = "Kopiert ✓"; setTimeout(() => c.textContent = "Kopieren", 1500); }, () => {}); }
   const p = e.target.closest("[data-prev]");
