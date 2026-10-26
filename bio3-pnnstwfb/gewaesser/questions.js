@@ -13,11 +13,11 @@
 
 // Jedes Thema hat eine eigene Farbe (color) und ein Motiv (TOPIC_ICONS in bilder.js).
 const TOPICS = [
-  { id: "kreislauf", title: "Wasserkreislauf", color: "#e8a33d" },
-  { id: "fluss", title: "Fließ- & stehende Gewässer", color: "#3a9e7e" },
-  { id: "trinkwasser", title: "Trinkwasser & Mensch", color: "#3aa0d8" },
-  { id: "meer", title: "Das Meer", color: "#2d5fa8" },
-  { id: "amphibien", title: "Amphibien & Fische", color: "#7aa83a" }
+  { id: "kreislauf", title: "A. Wasserkreislauf", color: "#e8a33d" },
+  { id: "fluss", title: "B. Fließ- und stehende Gewässer", color: "#3a9e7e" },
+  { id: "trinkwasser", title: "C. Trinkwasser und Mensch", color: "#3aa0d8" },
+  { id: "meer", title: "D. Das Meer", color: "#2d5fa8" },
+  { id: "amphibien", title: "E. Amphibien und Fische", color: "#7aa83a" }
 ];
 
 const QUESTIONS = [
@@ -101,7 +101,7 @@ const QUESTIONS = [
   { topic: "fluss", type: "tf", q: "Stehende Gewässer sind immer natürlich entstanden.",
     answer: false, info: "Falsch – sie können natürlich oder künstlich (vom Menschen, z. B. Stausee) entstanden sein." },
 
-  // ---------- Trinkwasser, Nutzung, Renaturierung ----------
+  // ---------- C. Trinkwasser und Mensch (Nutzung, Renaturierung) ----------
   { topic: "trinkwasser", type: "gap", q: "Trinkwasser: Ergänze den Lückentext.",
     text: "Unser Trinkwasser kommt aus {Grundwasser} und {Quellen}. Gefährlich sind {Dünger} aus der Landwirtschaft und {Abwasser} aus Industrie und Haushalt.",
     extra: ["Meerwasser", "Fischtreppen"],
@@ -155,7 +155,7 @@ const QUESTIONS = [
     items: ["Mehr Raum für den Fluss", "Wasser breitet sich aus", "Hochwasser wird abgeschwächt", "Weniger Schäden"],
     info: "Mehr Raum → Wasser breitet sich aus → Hochwasser abgeschwächt → weniger Schäden." },
 
-  // ---------- C. Das Meer ----------
+  // ---------- D. Das Meer ----------
   { topic: "meer", type: "tf", q: "Das Meer hat mehrere Bereiche mit typischen abiotischen Umweltfaktoren – deshalb ist die Biodiversität hoch.",
     answer: true, info: "Richtig – die vielen unterschiedlichen Lebensräume führen zu hoher Biodiversität." },
   { topic: "meer", type: "mc", q: "Was ist „Beifang“?",
@@ -182,7 +182,7 @@ const QUESTIONS = [
     extra: ["Fischtreppe", "Strömung"],
     info: "Öl vergiftet Tiere und verklebt Kiemen. Kleine Plastikteile werden gefressen und wandern die Nahrungskette hinauf." },
 
-  // ---------- D. Amphibien & Fische ----------
+  // ---------- E. Amphibien und Fische ----------
   { topic: "amphibien", type: "mc", q: "Wie nennt man Amphibien noch?",
     options: ["Kriechtiere", "Lurche", "Weichtiere", "Krebstiere"], answer: 1,
     info: "Amphibien werden auch Lurche genannt." },
