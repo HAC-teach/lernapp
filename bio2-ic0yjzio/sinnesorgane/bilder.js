@@ -19,6 +19,17 @@ function spiral(cx, cy, r0, turns, a0) {
   return d;
 }
 
+// Herz in anatomischer Form (Vorderansicht, Spitze zeigt nach links unten im Körper = rechts im Bild),
+// mit oberer Hohlvene, Aorta, Lungenarterie und Herzkranzgefäßen; Mittelpunkt bei 0,0, ca. 40 Einheiten breit
+const HEART = `<path d="M-9-7V-20" stroke="#4a6ad0" stroke-width="5" fill="none"/>
+  <path d="M-1-8V-16C-1-23 10-23 10-16V-11" stroke="#c84a46" stroke-width="5.5" fill="none"/>
+  <path d="M1-20l-1-5M5-22v-5" stroke="#c84a46" stroke-width="2.5" fill="none"/>
+  <path d="M-14-8C-19-1-17 9-8 14C-1 17 8 19 15 19C17 12 19 3 15-4C13-8 9-10 4-10C-3-11-10-11-14-8z" fill="#d0504a" stroke="#8a2a2a" stroke-width="2"/>
+  <path d="M-12-8C-19-8-21 2-16 5C-14 3-13-3-12-8z" fill="#b8403c" stroke="#8a2a2a" stroke-width="1.5"/>
+  <path d="M10-8C15-10 18-5 14-2C13-4 12-6 10-8z" fill="#b8403c" stroke="#8a2a2a" stroke-width="1.5"/>
+  <path d="M3-9C3-14 8-16 12-14" stroke="#5a78c8" stroke-width="5" fill="none" stroke-linecap="round"/>
+  <path d="M2-9C4 2 8 10 13 17M-13 2C-9 8-3 10 2 9" stroke="#f2a8a0" stroke-width="1.6" fill="none" stroke-linecap="round"/>`;
+
 const IMAGES = {
   // Organe im Körper: Gehirn, Lunge, Herz, Leber, Magen, Darm
   koerper: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Organe des Menschen">
@@ -34,7 +45,7 @@ const IMAGES = {
     <path d="M200 88v22M200 108l-14 8M200 108l14 8" stroke="#c9a0a0" stroke-width="5" fill="none" stroke-linecap="round"/>
     <ellipse cx="174" cy="132" rx="21" ry="33" fill="#f59ab0" stroke="#c2577a" stroke-width="2.5"/>
     <ellipse cx="226" cy="132" rx="21" ry="33" fill="#f59ab0" stroke="#c2577a" stroke-width="2.5"/>
-    <path d="M206 162c-17-10-19-25-9-28 5-1 8 2 9 6 1-4 4-7 9-6 10 3 8 18-9 28z" fill="#d04a4a" stroke="#9a2a2a" stroke-width="2"/>
+    <g transform="translate(204 150) scale(.78)">${HEART}</g>
     <path d="M150 174c10-10 40-12 52-6 2 10-10 20-30 20-14 0-24-4-22-14z" fill="#9a5a3a" stroke="#6a3a22" stroke-width="2"/>
     <path d="M214 170c12-4 30 0 30 14 0 14-14 22-28 18-6-2-4-8 2-10 8-2 12-6 10-12-2-4-10-4-14-4z" fill="#f2b48a" stroke="#c4702a" stroke-width="2"/>
     <path d="M168 208h64c9 0 9 12 0 12h-62c-9 0-9 12 0 12h62c9 0 9 12 0 12h-64" stroke="#d4875a" stroke-width="9" fill="none" stroke-linecap="round"/>

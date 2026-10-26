@@ -40,17 +40,27 @@ function shTissue(L, p = L.svg) {
   });
   return g;
 }
+// Herz in anatomischer Form (wie HEART in bilder.js): Hohlvene, Aorta, Herzkammern, Vorhof, Lungenarterie, Herzkranzgefäße
+const HEART_PARTS = [
+  { d: "M-9-7V-20", stroke: "#4a6ad0", "stroke-width": 5, fill: "none" },
+  { d: "M-1-8V-16C-1-23 10-23 10-16V-11", stroke: "#c84a46", "stroke-width": 5.5, fill: "none" },
+  { d: "M1-20l-1-5M5-22v-5", stroke: "#c84a46", "stroke-width": 2.5, fill: "none" },
+  { d: "M-14-8C-19-1-17 9-8 14C-1 17 8 19 15 19C17 12 19 3 15-4C13-8 9-10 4-10C-3-11-10-11-14-8z", fill: "#d0504a", stroke: "#8a2a2a", "stroke-width": 2 },
+  { d: "M-12-8C-19-8-21 2-16 5C-14 3-13-3-12-8z", fill: "#b8403c", stroke: "#8a2a2a", "stroke-width": 1.5 },
+  { d: "M10-8C15-10 18-5 14-2C13-4 12-6 10-8z", fill: "#b8403c", stroke: "#8a2a2a", "stroke-width": 1.5 },
+  { d: "M3-9C3-14 8-16 12-14", stroke: "#5a78c8", "stroke-width": 5, fill: "none", "stroke-linecap": "round" },
+  { d: "M2-9C4 2 8 10 13 17M-13 2C-9 8-3 10 2 9", stroke: "#f2a8a0", "stroke-width": 1.6, fill: "none", "stroke-linecap": "round" }
+];
 function shHeart(L, p = L.svg) {
-  const g = L.el(p, "g", {});
-  L.el(g, "path", { d: "M0 18C-22 4-22-14-10-16C-4-17 0-12 0-8C0-12 4-17 10-16C22-14 22 4 0 18z", fill: "#e0565a", stroke: "#a83a3a", "stroke-width": 2.2 });
-  L.el(g, "path", { d: "M-10-9c-4 2-6 6-5 10", stroke: "#f59a9a", "stroke-width": 2, fill: "none", "stroke-linecap": "round" });
+  const g = L.el(p, "g", {}), inner = L.el(g, "g", { transform: "translate(0 3)" });
+  HEART_PARTS.forEach(a => L.el(inner, "path", a));
   return g;
 }
 function shSystem(L, p = L.svg) { // Herz mit Blutgefäßen (Blutkreislauf)
   const g = L.el(p, "g", {});
-  L.el(g, "path", { d: "M3-2C10-24 26-20 23-4C21 10 12 16 4 10", stroke: "#d04a4a", "stroke-width": 3, fill: "none", "stroke-linecap": "round" });
-  L.el(g, "path", { d: "M-3-2C-10-24-26-20-23-4C-21 10-12 16-4 10", stroke: "#4a6ad0", "stroke-width": 3, fill: "none", "stroke-linecap": "round" });
-  L.el(g, "path", { d: "M0 12C-13 4-13-7-6-8C-3-9 0-6 0-4C0-6 3-9 6-8C13-7 13 4 0 12z", fill: "#e0565a", stroke: "#a83a3a", "stroke-width": 1.8 });
+  L.el(g, "path", { d: "M4-10C12-26 28-20 24-4C21 10 12 16 6 12", stroke: "#d04a4a", "stroke-width": 3, fill: "none", "stroke-linecap": "round" });
+  L.el(g, "path", { d: "M-6-10C-12-26-28-20-24-4C-21 10-12 16-6 12", stroke: "#4a6ad0", "stroke-width": 3, fill: "none", "stroke-linecap": "round" });
+  shHeart(L, g).setAttribute("transform", "scale(.62) translate(0 4)");
   return g;
 }
 function shPerson(L, p = L.svg) {
