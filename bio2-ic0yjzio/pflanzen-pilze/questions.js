@@ -15,12 +15,12 @@
 // Jedes Thema hat eine eigene Farbe (color) und ein Motiv (TOPIC_ICONS in bilder.js).
 // Die Folien-Themen „Bäume“ und „Pilze“ sind hier aufgeteilt (A–C bzw. E–F).
 const TOPICS = [
-  { id: "baeume", title: "A. Bau des Baumes", color: "#9a6b3a" },
-  { id: "laub", title: "B. Laubbäume", color: "#5f9a3a" },
-  { id: "nadel", title: "C. Nadelbäume", color: "#5c7a2a" },
-  { id: "sporen", title: "D. Sporenpflanzen", color: "#2f8f7a" },
-  { id: "pilze", title: "E. Pilze: Bau und Vermehrung", color: "#c0603a" },
-  { id: "pilzleben", title: "F. Pilze: Ernährung und Sammeln", color: "#b8862a" }
+  { id: "baeume", title: "I. Bau des Baumes", color: "#9a6b3a" },
+  { id: "laub", title: "II. Laubbäume", color: "#5f9a3a" },
+  { id: "nadel", title: "III. Nadelbäume", color: "#5c7a2a" },
+  { id: "sporen", title: "IV. Sporenpflanzen", color: "#2f8f7a" },
+  { id: "pilze", title: "V. Pilze: Bau und Vermehrung", color: "#c0603a" },
+  { id: "pilzleben", title: "VI. Pilze: Ernährung und Sammeln", color: "#b8862a" }
 ];
 
 const QUESTIONS = [
@@ -76,12 +76,12 @@ const QUESTIONS = [
     info: "Durch die Blattadern werden Nährstoffe und Wasser transportiert." },
   { topic: "laub", type: "label", q: "Welche Blattform ist das? Beschrifte die Blätter.",
     image: "blattformen",
-    markers: [{ x: 50, y: 30, answer: "herzförmig" }, { x: 150, y: 30, answer: "gelappt" }, { x: 250, y: 30, answer: "gefiedert" }, { x: 350, y: 30, answer: "gefingert" }],
+    markers: [{ x: 50, y: 140, answer: "herzförmig" }, { x: 150, y: 140, answer: "gelappt" }, { x: 250, y: 140, answer: "gefiedert" }, { x: 350, y: 140, answer: "gefingert" }],
     extra: ["lanzettlich"],
     info: "Herzförmig, gelappt, gefiedert und gefingert – an der Blattform erkennt man den Baum." },
   { topic: "laub", type: "label", q: "Welcher Blattrand ist das? Beschrifte die Blätter.",
     image: "blattraender",
-    markers: [{ x: 50, y: 30, answer: "gesägt" }, { x: 150, y: 30, answer: "gezähnt" }, { x: 250, y: 30, answer: "ganzrandig" }, { x: 350, y: 30, answer: "gebuchtet" }],
+    markers: [{ x: 50, y: 140, answer: "gesägt" }, { x: 150, y: 140, answer: "gezähnt" }, { x: 250, y: 140, answer: "ganzrandig" }, { x: 350, y: 140, answer: "gebuchtet" }],
     info: "Gesägt (kleine schräge Zacken), gezähnt (größere spitze Zähne), ganzrandig (glatt) und gebuchtet (runde Einbuchtungen)." },
   { topic: "laub", type: "match", q: "Ordne die Bäume ihren Blättern zu.",
     pairs: [["Sommer-Linde", "herzförmig"], ["Rotbuche", "eiförmig und ganzrandig"], ["Stiel-Eiche", "Blattrand gebuchtet"],

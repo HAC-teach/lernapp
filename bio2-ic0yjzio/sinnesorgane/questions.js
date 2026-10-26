@@ -18,11 +18,11 @@
 // Übliches Unterstufen-Schulwissen (auf den Folien nur als Bild oder Arbeitsblatt): die Organe des Menschen,
 // die Namen der drei Hautschichten und Alltagsbeispiele für Reflexe und Geschmacksrichtungen.
 const TOPICS = [
-  { id: "ebenen", title: "A. Vom Atom zum Menschen", color: "#d08a2a" },
-  { id: "nerven", title: "B. Gehirn und Nerven", color: "#7a62b8" },
-  { id: "auge", title: "C. Das Auge", color: "#3a86b0" },
-  { id: "ohr", title: "D. Das Ohr", color: "#3f9a6f" },
-  { id: "haut", title: "E. Haut, Nase und Zunge", color: "#c2577a" }
+  { id: "ebenen", title: "I. Vom Atom zum Menschen", color: "#d08a2a" },
+  { id: "nerven", title: "II. Gehirn und Nerven", color: "#7a62b8" },
+  { id: "auge", title: "III. Das Auge", color: "#3a86b0" },
+  { id: "ohr", title: "IV. Das Ohr", color: "#3f9a6f" },
+  { id: "haut", title: "V. Haut, Nase und Zunge", color: "#c2577a" }
 ];
 
 const QUESTIONS = [

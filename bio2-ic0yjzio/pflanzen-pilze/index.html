@@ -128,6 +128,14 @@
   .pin.cur { outline: 3px solid var(--c); outline-offset: 2px; animation: pulse 1s infinite alternate; }
   .pin.ok { background: var(--ok); border-color: var(--ok); color: #fff; }
   .pin.bad { background: var(--bad); border-color: var(--bad); color: #fff; }
+  .figure.lbl { padding: 0 10%; background: #ffffff; }
+  .leads { position: absolute; inset: 0; height: 100%; pointer-events: none; }
+  .lead line { stroke: var(--ink); stroke-width: 1.6; }
+  .lead line.halo { stroke: #ffffff; stroke-width: 4.5; }
+  .lead circle { fill: var(--ink); stroke: #ffffff; stroke-width: 1.5; }
+  .lead.cur line:not(.halo) { stroke: var(--ci); stroke-width: 2.4; } .lead.cur circle { fill: var(--ci); }
+  .lead.ok line:not(.halo) { stroke: var(--ok); } .lead.ok circle { fill: var(--ok); }
+  .lead.bad line:not(.halo) { stroke: var(--bad); } .lead.bad circle { fill: var(--bad); }
   @keyframes pulse { to { outline-offset: 5px; } }
   .chooser { background: var(--soft); border-radius: 6px; padding: 12px; margin-bottom: 12px; }
   .chooser b { display: block; margin-bottom: 8px; }
@@ -341,22 +349,54 @@ function renderMulti(q, el, go) {
   };
 }
 
-// Beschriftung: Marker im Bild antippen, dann einen Begriff auswählen
+// Beschriftung: Nummern stehen im Rand links/rechts neben dem Bild, eine Linie zeigt auf die Stelle –
+// so verdecken sie nie das, was beschriftet werden soll
+function pinLayout(markers) {
+  const GAP = 46, TOP = 17, BOTTOM = 243;
+  let side = markers.map(m => m.x < 200 ? 0 : 1);
+  if (side.filter(s => s === 0).length > 5 || side.filter(s => s === 1).length > 5) { // zu voll: nach x halbieren
+    const byX = markers.map((m, i) => i).sort((a, b) => markers[a].x - markers[b].x);
+    byX.forEach((i, k) => side[i] = k < byX.length / 2 ? 0 : 1);
+  }
+  const order = [], pos = [];
+  [0, 1].forEach(s => {
+    const idx = markers.map((m, i) => i).filter(i => side[i] === s).sort((a, b) => markers[a].y - markers[b].y);
+    const ys = idx.map(i => Math.min(BOTTOM, Math.max(TOP, markers[i].y)));
+    for (let k = 1; k < ys.length; k++) ys[k] = Math.max(ys[k], ys[k - 1] + GAP);
+    for (let k = ys.length - 1; k >= 0 && ys[k] > BOTTOM - (ys.length - 1 - k) * GAP; k--) ys[k] = BOTTOM - (ys.length - 1 - k) * GAP;
+    const px = s ? 425 : -25, cross = (a, b, c, d) => { // schneiden sich die Strecken a–b und c–d?
+      const o = (p, q, r) => Math.sign((q.x - p.x) * (r.y - p.y) - (q.y - p.y) * (r.x - p.x));
+      return o(a, b, c) * o(a, b, d) < 0 && o(c, d, a) * o(c, d, b) < 0;
+    };
+    for (let n = 0, swapped = true; swapped && n < 20; n++) { // sich kreuzende Linien durch Tauschen der Plätze entwirren
+      swapped = false;
+      for (let k = 0; k < idx.length; k++) for (let l = k + 1; l < idx.length; l++)
+        if (cross({ x: px, y: ys[k] }, markers[idx[k]], { x: px, y: ys[l] }, markers[idx[l]])) { [idx[k], idx[l]] = [idx[l], idx[k]]; swapped = true; }
+    }
+    idx.forEach((i, k) => { order.push(i); pos.push({ x: px, y: ys[k] }); });
+  });
+  return { ms: order.map(i => markers[i]), pos }; // nummeriert: links von oben nach unten, dann rechts
+}
+
 function renderLabel(q, el, go) {
-  const opts = shuffle([...new Set(q.markers.map(m => m.answer).concat(q.extra || []))]);
-  const pick = q.markers.map(() => null);
+  const { ms, pos } = pinLayout(q.markers);
+  const opts = shuffle([...new Set(ms.map(m => m.answer).concat(q.extra || []))]);
+  const pick = ms.map(() => null);
   let cur = 0, graded = false;
   const draw = () => {
-    const pinCls = i => graded ? (pick[i] === q.markers[i].answer ? " ok" : " bad") : (pick[i] ? " set" : "") + (cur === i ? " cur" : "");
+    const cls = i => graded ? (pick[i] === ms[i].answer ? " ok" : " bad") : (pick[i] ? " set" : "") + (cur === i ? " cur" : "");
     el.innerHTML = `
-      <p class="hint">Tippe auf einen Punkt im Bild und wähle den passenden Begriff.</p>
-      <div class="lab"><div class="figure">${IMAGES[q.image]}
-        ${q.markers.map((m, i) => `<button class="pin${pinCls(i)}" data-i="${i}" style="left:${m.x / 4}%;top:${m.y / 2.6}%"
+      <p class="hint">Tippe auf eine Nummer am Bildrand und wähle den passenden Begriff.</p>
+      <div class="lab"><div class="figure lbl"><div class="art">${IMAGES[q.image]}</div>
+        <svg class="leads" viewBox="-50 0 500 260" aria-hidden="true">${ms.map((m, i) => `<g class="lead${cls(i)}">
+          <line class="halo" x1="${pos[i].x}" y1="${pos[i].y}" x2="${m.x}" y2="${m.y}"/><line x1="${pos[i].x}" y1="${pos[i].y}" x2="${m.x}" y2="${m.y}"/>
+          <circle cx="${m.x}" cy="${m.y}" r="4.5"/></g>`).join("")}</svg>
+        ${ms.map((m, i) => `<button class="pin${cls(i)}" data-i="${i}" style="left:${(pos[i].x + 50) / 5}%;top:${pos[i].y / 2.6}%"
           aria-label="Punkt ${i + 1}" ${graded ? "disabled" : ""}>${i + 1}</button>`).join("")}
       </div><div>
       ${!graded && cur != null ? `<div class="chooser"><b>Was gehört zu Punkt ${cur + 1}?</b>
         <div class="pool">${opts.map((o, k) => `<button class="opt${pick[cur] === o ? " sel" : ""}" data-k="${k}">${esc(o)}</button>`).join("")}</div></div>` : ""}
-      <div class="legend">${q.markers.map((m, i) => {
+      <div class="legend">${ms.map((m, i) => {
         const res = graded ? (pick[i] === m.answer ? " ok" : " bad") : cur === i ? " cur" : "";
         return `<button class="lrow${res}" data-i="${i}" ${graded ? "disabled" : ""}><span class="pnum">${i + 1}</span>
           <span>${pick[i] ? esc(pick[i]) : "<em>noch nicht beschriftet</em>"}${graded && pick[i] !== m.answer ? `<small>Richtig: ${esc(m.answer)}</small>` : ""}</span></button>`;
@@ -375,7 +415,7 @@ function renderLabel(q, el, go) {
   draw();
   state.grade = () => {
     graded = true; draw();
-    return { ok: q.markers.every((m, i) => pick[i] === m.answer), correct: q.markers.map((m, i) => `${i + 1} = ${m.answer}`).join("; ") };
+    return { ok: ms.every((m, i) => pick[i] === m.answer), correct: ms.map((m, i) => `${i + 1} = ${m.answer}`).join("; ") };
   };
 }
 

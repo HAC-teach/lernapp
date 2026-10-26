@@ -15,12 +15,12 @@
 // Jedes Thema hat eine eigene Farbe (color) und ein Motiv (TOPIC_ICONS in bilder.js).
 // Das Folien-Thema „Trinkwasser und Mensch“ ist hier in C und D aufgeteilt.
 const TOPICS = [
-  { id: "kreislauf", title: "A. Wasserkreislauf", color: "#e8a33d" },
-  { id: "fluss", title: "B. Fließ- und stehende Gewässer", color: "#3a9e7e" },
-  { id: "trinkwasser", title: "C. Trinkwasser und Kläranlage", color: "#3aa0d8" },
-  { id: "flussbau", title: "D. Flüsse verändern", color: "#b5704a" },
-  { id: "meer", title: "E. Das Meer", color: "#2d5fa8" },
-  { id: "amphibien", title: "F. Amphibien und Fische", color: "#7aa83a" }
+  { id: "kreislauf", title: "I. Wasserkreislauf", color: "#e8a33d" },
+  { id: "fluss", title: "II. Fließ- und stehende Gewässer", color: "#3a9e7e" },
+  { id: "trinkwasser", title: "III. Trinkwasser und Kläranlage", color: "#3aa0d8" },
+  { id: "flussbau", title: "IV. Flüsse verändern", color: "#b5704a" },
+  { id: "meer", title: "V. Das Meer", color: "#2d5fa8" },
+  { id: "amphibien", title: "VI. Amphibien und Fische", color: "#7aa83a" }
 ];
 
 const QUESTIONS = [

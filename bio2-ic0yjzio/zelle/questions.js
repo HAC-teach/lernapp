@@ -17,11 +17,11 @@
 // „C. Mikroskope“: Auf den Folien steht dazu nur ein Verweis auf Buch und Arbeitsblatt.
 // Die Inhalte (Teile, Funktionsweise, Handhabung des Lichtmikroskops) sind übliches Unterstufen-Schulwissen.
 const TOPICS = [
-  { id: "zellen", title: "A. Zellen und Leben", color: "#c2577a" },
-  { id: "zellbau", title: "B. Tier- und Pflanzenzelle", color: "#d9822b" },
-  { id: "mikroskop", title: "C. Mikroskope", color: "#3a86b0" },
-  { id: "mikro", title: "D. Einzeller und Bakterien", color: "#7a62b8" },
-  { id: "bakterien", title: "E. Nützliche und gefährliche Bakterien", color: "#4f9a5a" }
+  { id: "zellen", title: "I. Zellen und Leben", color: "#c2577a" },
+  { id: "zellbau", title: "II. Tier- und Pflanzenzelle", color: "#d9822b" },
+  { id: "mikroskop", title: "III. Mikroskope", color: "#3a86b0" },
+  { id: "mikro", title: "IV. Einzeller und Bakterien", color: "#7a62b8" },
+  { id: "bakterien", title: "V. Nützliche und gefährliche Bakterien", color: "#4f9a5a" }
 ];
 
 const QUESTIONS = [

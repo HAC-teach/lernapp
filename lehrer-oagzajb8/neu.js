@@ -3,6 +3,10 @@
 // text = was sich geändert hat (für die Lehrkraft), ziel = optional Kapitelordner für die Vorschau.
 // Einträge der letzten 14 Tage bekommen das Kennzeichen „neu“.
 const NEUIGKEITEN = [
+  { datum: "2026-10-26", fach: "bio", wo: "2. und 3. Klasse · alle Kapitel",
+    text: "Beschriften: Die Nummern stehen jetzt am Bildrand und zeigen mit einer Linie auf die Stelle – sie verdecken nichts mehr. Bei den Blattformen und Blatträndern zeigen die Linien direkt auf die Blätter." },
+  { datum: "2026-10-26", fach: "bio", wo: "2. und 3. Klasse · alle Kapitel",
+    text: "Die Themen sind jetzt römisch nummeriert (I., II., III. …) statt mit Buchstaben (A., B., C. …)." },
   { datum: "2026-10-26", fach: "bio", wo: "3. Klasse · 1. Gewässer", ziel: "bio3-pnnstwfb/gewaesser/",
     text: "Gekürzt: höchstens 5 Lernkarten mit kurzen Stichworten und höchstens 10 Fragen pro Thema, keine doppelten Fragen mehr. „Trinkwasser und Mensch“ ist jetzt geteilt in C. Trinkwasser und Kläranlage und D. Flüsse verändern." },
   { datum: "2026-10-26", fach: "bio", wo: "2. Klasse · 3. Sinnesorgane", ziel: "bio2-ic0yjzio/sinnesorgane/",
