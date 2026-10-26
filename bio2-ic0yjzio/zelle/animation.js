@@ -138,6 +138,11 @@ const FX = {
   done: { zellen: L => rise(L, 32, shCell), mikro: L => rise(L, 30, shMicrobe), all: L => rise(L, 34, shAny) },
   perfect: { zellen: heroTissue, mikro: heroSwarm, all: (L, ms) => { heroTissue(L, ms); rise(L, 14, shMicrobe, 2600); } }
 };
+// Aufgeteilte Themen verwenden die Animation ihres Folien-Themas (Zellen bzw. Mikroorganismen).
+for (const kind of ["done", "perfect"]) {
+  FX[kind].zellbau = FX[kind].zellen;
+  FX[kind].bakterien = FX[kind].mikro;
+}
 
 function fxEnd(kind, topic) {
   const ms = kind === "perfect" ? 6500 : 5200, L = fxLayer(ms);

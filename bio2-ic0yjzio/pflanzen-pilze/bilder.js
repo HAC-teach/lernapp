@@ -155,6 +155,9 @@ const IMAGES = {
 // Motive pro Thema (viewBox 0 0 48 48, nur Linien in der Themenfarbe) für Kacheln und Überschriften
 const TOPIC_ICONS = {
   baeume: `<circle cx="24" cy="18" r="12" /><path d="M24 30v13M17 43h14M24 35l-5-4M24 33l5-4" />`,
+  laub: `<path d="M10 38C10 20 22 9 40 8c0 18-11 30-29 30z" /><path d="M10 38L32 16M19 29h8M24 24v-7" />`,
+  nadel: `<path d="M24 5l-8 12h5l-8 11h6l-8 11h26l-8-11h6l-8-11h5z" /><path d="M24 39v5" />`,
   sporen: `<path d="M22 44c0-12 0-20 6-26a7 7 0 1 0-8-5 3.5 3.5 0 0 0 5 2" /><path d="M22 38l-7-3M22 31l-6-4M23 26l-5-5M22 38l7-1M23 31l6-2" />`,
-  pilze: `<path d="M8 25c0-10 7-17 16-17s16 7 16 17z" /><path d="M19 25v14c0 3 10 3 10 0V25" /><circle cx="18" cy="17" r="1.6" /><circle cx="29" cy="15" r="1.6" />`
+  pilze: `<path d="M8 25c0-10 7-17 16-17s16 7 16 17z" /><path d="M19 25v14c0 3 10 3 10 0V25" /><circle cx="18" cy="17" r="1.6" /><circle cx="29" cy="15" r="1.6" />`,
+  pilzleben: `<path d="M6 24h36l-5 17H11z" /><path d="M13 24c0-12 22-12 22 0" /><path d="M15 24c0-6 4-10 9-10s9 4 9 10" /><path d="M16 31h16M14 36h20" />`
 };

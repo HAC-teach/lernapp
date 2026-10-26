@@ -87,6 +87,8 @@ const IMAGES = {
 // Motive für die Themen (viewBox 0 0 48 48, nur Linien)
 const TOPIC_ICONS = {
   zellen: `<path d="M7 24c0-10 8-17 18-16s16 8 15 17-8 16-17 15S7 34 7 24z" /><circle cx="22" cy="23" r="5.5" /><path d="M30 31c2-1.5 4.5-1 5.5 1M29 14c2 0 4 1 5 3" />`,
+  zellbau: `<rect x="7" y="9" width="34" height="30" rx="3" /><rect x="11" y="13" width="26" height="22" rx="2" /><circle cx="19" cy="21" r="4" /><ellipse cx="29" cy="29" rx="4" ry="2.4" /><ellipse cx="30" cy="18" rx="3" ry="1.8" />`,
   mikroskop: `<path d="M20 6h8v8h-8zM18 14h12v14H18zM22 28v5M26 28v5" /><path d="M14 36h22M17 12C9 16 8 30 12 42M8 43h28" />`,
-  mikro: `<rect x="14" y="17" width="26" height="14" rx="7" /><path d="M14 24c-2-3-4 3-6 0s-3-3-5 0" /><path d="M20 24c2.5-3 5 3 7.5 0s5 3 7.5 0" />`
+  mikro: `<rect x="14" y="17" width="26" height="14" rx="7" /><path d="M14 24c-2-3-4 3-6 0s-3-3-5 0" /><path d="M20 24c2.5-3 5 3 7.5 0s5 3 7.5 0" />`,
+  bakterien: `<circle cx="24" cy="24" r="17" /><circle cx="24" cy="24" r="13" /><rect x="14" y="17" width="9" height="5" rx="2.5" /><rect x="25" y="27" width="9" height="5" rx="2.5" /><circle cx="30" cy="18" r="1.8" /><circle cx="17" cy="30" r="1.8" />`
 };

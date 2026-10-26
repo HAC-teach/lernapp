@@ -1,6 +1,7 @@
 // Lernkarten zum Thema "3. Sinnesorgane" (Inhalt aus Sinnesorgane_PPP.pptx)
 // LESSONS[topicId] = Liste von Karten: { title, points: [...], tip? }
 // Die Karten werden vor dem Quiz zum Durchklicken angezeigt.
+// Höchstens 5 Karten pro Thema, nur das Wichtigste in kurzen Stichworten.
 // Die Organe des Menschen (Karte „Wichtige Organe“) und die Namen der drei Hautschichten stehen auf den Folien
 // nur als Bild bzw. Arbeitsblatt – sie sind übliches Unterstufen-Schulwissen.
 
@@ -8,172 +9,147 @@ const LESSONS = {
   ebenen: [
     { title: "Vom Kleinen zum Großen",
       points: [
-        "Unser Körper ist in Stufen aufgebaut – von ganz klein bis ganz groß.",
-        "Zellen: die Grundeinheit aller Lebewesen.",
-        "Gewebe: viele Zellen mit gemeinsamer Funktion.",
-        "Organe: Gewebe mit gemeinsamer Funktion.",
-        "Organsystem: Organe mit gemeinsamer Aufgabe.",
-        "Alle Organsysteme zusammen ergeben den ganzen Menschen."
-      ],
-      tip: "Merke die Reihenfolge: Zelle → Gewebe → Organ → Organsystem → Mensch." },
-    { title: "Ein Beispiel: das Herz",
+        "Zelle: Grundeinheit",
+        "Gewebe: Zellen mit gemeinsamer Funktion",
+        "Organ: Gewebe mit gemeinsamer Funktion",
+        "Organsystem: Organe mit gemeinsamer Aufgabe",
+        "alle Organsysteme → Mensch"
+      ], tip: "Zelle → Gewebe → Organ → Organsystem → Mensch." },
+    { title: "Beispiel Herz",
       points: [
-        "Viele Herzmuskelzellen bilden zusammen das Muskelgewebe.",
-        "Aus Muskelgewebe und anderen Geweben besteht das Herz – ein Organ.",
-        "Herz und Blutgefäße arbeiten zusammen: Sie bilden ein Organsystem, den Blutkreislauf."
+        "Herzmuskelzellen → Muskelgewebe",
+        "Muskelgewebe + andere Gewebe → Organ Herz",
+        "Herz + Blutgefäße → Organsystem Blutkreislauf"
       ] },
     { title: "Wichtige Organe",
       points: [
-        "Gehirn: die Steuerzentrale des Körpers.",
-        "Herz: pumpt das Blut durch den Körper.",
-        "Lunge: nimmt beim Atmen Sauerstoff auf.",
-        "Magen und Darm: verdauen die Nahrung.",
-        "Leber: reinigt das Blut von Giftstoffen.",
-        "Haut: das größte Organ des Körpers."
+        "Gehirn: Steuerzentrale",
+        "Herz: pumpt Blut",
+        "Lunge: nimmt Sauerstoff auf",
+        "Magen, Darm: verdauen · Leber: reinigt das Blut",
+        "Haut: größtes Organ"
       ] }
   ],
   nerven: [
-    { title: "Unsere Sinnesorgane",
+    { title: "Fünf Sinnesorgane",
       points: [
         "Augen: Sehen",
-        "Ohren: Hören (und Gleichgewicht)",
+        "Ohren: Hören (+ Gleichgewicht)",
         "Nase: Riechen",
         "Zunge: Schmecken",
         "Haut: Fühlen"
-      ],
-      tip: "Fünf Sinnesorgane – fünf Sinne. Mehr dazu in den nächsten Themen!" },
+      ] },
     { title: "Das Gehirn",
       points: [
-        "Das Gehirn ist die Steuer- und Kontrollzentrale des Körpers.",
-        "Es verarbeitet Sinnesreize.",
-        "Es steuert unsere Bewegungen.",
-        "Mit dem Gehirn denken, lernen und erinnern wir uns."
+        "Steuer- und Kontrollzentrale",
+        "verarbeitet Reize, steuert Bewegungen",
+        "denken, lernen, erinnern"
       ] },
-    { title: "So nehmen wir etwas wahr",
+    { title: "Vom Reiz zur Bewegung",
       points: [
-        "1. Sinnesorgane (Haut, Augen …) nehmen Reize auf.",
-        "2. Die Reize werden in elektrische Nervenimpulse umgewandelt.",
-        "3. Nerven leiten die Impulse zum Gehirn.",
-        "4. Das Gehirn verarbeitet die Informationen.",
-        "5. Das Gehirn entscheidet über die Reaktion.",
-        "6. Nerven leiten das Signal zu den Muskeln.",
-        "7. Die Muskeln führen die Bewegung aus."
+        "Sinnesorgan nimmt Reiz auf",
+        "→ elektrische Nervenimpulse",
+        "Nerven → Gehirn: verarbeitet, entscheidet",
+        "Nerven → Muskeln: Bewegung"
       ] },
-    { title: "Reaktionen und Reflexe",
+    { title: "Reaktion und Reflex",
       points: [
-        "Reaktion: schnell, läuft über das Gehirn.",
-        "Reflex: noch schneller und unwillkürlich – du denkst nicht darüber nach.",
-        "Ein Reflex läuft über das Rückenmark, nicht über das Gehirn.",
-        "Reflexe haben eine Schutzfunktion, zum Beispiel das Zurückziehen der Hand von einer heißen Herdplatte."
-      ],
-      tip: "Reflex = Rückenmark. Beide Wörter beginnen mit R!" }
+        "Reaktion: schnell, über das Gehirn",
+        "Reflex: noch schneller, ohne Nachdenken",
+        "Reflex läuft über das Rückenmark",
+        "Schutz, z. B. Hand weg von der heißen Herdplatte"
+      ], tip: "Reflex = Rückenmark. Beide Wörter beginnen mit R!" }
   ],
   auge: [
-    { title: "Die wichtigsten Teile des Auges",
+    { title: "Teile des Auges",
       points: [
-        "Hornhaut: lässt Licht ins Auge.",
-        "Linse: bündelt das Licht.",
-        "Netzhaut: fängt das Bild auf.",
-        "Sehnerv: leitet die Informationen ans Gehirn."
+        "Hornhaut: lässt Licht hinein",
+        "Linse: bündelt das Licht",
+        "Netzhaut: fängt das Bild auf",
+        "Sehnerv: leitet ans Gehirn"
       ] },
-    { title: "So entsteht ein Bild im Auge",
+    { title: "So entsteht ein Bild",
       points: [
-        "Licht fällt durch die Hornhaut und die Linse.",
-        "Die Linse bündelt das Licht.",
-        "Auf der Netzhaut entsteht ein Bild.",
-        "Das Bild steht auf dem Kopf!",
-        "Das Gehirn dreht das Bild wieder um."
+        "Licht → Hornhaut → Linse → Netzhaut",
+        "Bild auf der Netzhaut steht Kopf",
+        "Gehirn dreht es um"
       ] },
-    { title: "Nah- und Fernsicht",
+    { title: "Nah und fern",
       points: [
-        "Für nahe Dinge wird die Linse rund.",
-        "Für ferne Dinge wird die Linse flach.",
-        "Die Augenmuskeln verändern die Form der Linse."
+        "nah: Linse rund",
+        "fern: Linse flach",
+        "Augenmuskeln verändern die Linse"
       ] },
     { title: "Sehschwächen",
       points: [
-        "Kurzsichtig: Nahe Dinge sind scharf, ferne Dinge unscharf.",
-        "Weitsichtig: Ferne Dinge sind scharf, nahe Dinge unscharf.",
-        "Brillen gleichen die unscharfe Sicht aus."
-      ],
-      tip: "Kurzsichtig = man sieht nur auf kurze Entfernung scharf." },
+        "kurzsichtig: nah scharf, fern unscharf",
+        "weitsichtig: fern scharf, nah unscharf",
+        "Brille gleicht aus"
+      ] },
     { title: "Schutz der Augen",
       points: [
-        "Augenlider und Wimpern schützen vor Staub und Schmutz.",
-        "Augenbrauen schützen vor Schweiß.",
-        "Tränendrüsen produzieren Tränenflüssigkeit. Sie hält die Augen feucht."
+        "Lider, Wimpern: gegen Staub und Schmutz",
+        "Augenbrauen: gegen Schweiß",
+        "Tränenflüssigkeit: hält feucht"
       ] }
   ],
   ohr: [
     { title: "Die Ohren",
       points: [
-        "Mit den Ohren hören wir Geräusche und Töne.",
-        "Die Ohren helfen uns auch beim Gleichgewicht.",
-        "Das Ohr hat drei Teile: äußeres Ohr, Mittelohr und Innenohr."
+        "Hören + Gleichgewicht",
+        "3 Teile: äußeres Ohr, Mittelohr, Innenohr"
       ] },
-    { title: "Das äußere Ohr",
+    { title: "Äußeres Ohr und Mittelohr",
       points: [
-        "1. Die Ohrmuschel sammelt den Schall.",
-        "2. Der Gehörgang leitet den Schall weiter.",
-        "3. Das Trommelfell beginnt zu schwingen."
+        "Ohrmuschel: sammelt Schall",
+        "Gehörgang: leitet weiter",
+        "Trommelfell: schwingt",
+        "Hammer, Amboss, Steigbügel: verstärken, leiten weiter"
       ] },
-    { title: "Das Mittelohr",
+    { title: "Innenohr",
       points: [
-        "4. Die Gehörknöchelchen heißen Hammer, Amboss und Steigbügel.",
-        "5. Sie verstärken die Schwingungen.",
-        "6. Sie leiten die Schwingungen ins Innenohr weiter."
-      ] },
-    { title: "Das Innenohr",
-      points: [
-        "7. Die Schnecke wandelt den Schall in Nervenimpulse um.",
-        "8. Der Hörnerv leitet die Signale zum Gehirn.",
-        "9. Die Bogengänge sind wichtig für das Gleichgewicht."
+        "Schnecke: Schall → Nervenimpulse",
+        "Hörnerv: zum Gehirn",
+        "Bogengänge: Gleichgewicht"
       ] },
     { title: "Wie laut ist das?",
       points: [
-        "Flüstern: 20 dB",
-        "Regen: 40 dB",
-        "Stark befahrene Straße: 60–80 dB",
-        "Hundegebell: 70–90 dB",
-        "Presslufthammer: 100–110 dB"
+        "gemessen in Dezibel (dB)",
+        "Flüstern 20 · Regen 40 · Straße 60–80",
+        "Hundegebell 70–90 · Presslufthammer 100–110"
       ] },
-    { title: "Lärm und Lautstärke",
+    { title: "Lärm schadet",
       points: [
-        "Die Lautstärke wird in Dezibel (dB) gemessen.",
-        "Ab 80 dB kann es schädlich sein.",
-        "Sehr laute Geräusche können das Gehör zerstören.",
-        "Folgen von Lärm: Hörschäden, Schlaf- und Konzentrationsstörungen, Ohrgeräusche (Tinnitus)."
-      ],
-      tip: "Schütze deine Ohren: Musik nicht zu laut hören!" }
+        "ab 80 dB schädlich",
+        "Hörschäden, Ohrgeräusche (Tinnitus)",
+        "Schlaf- und Konzentrationsstörungen"
+      ], tip: "Schütze deine Ohren: Musik nicht zu laut hören!" }
   ],
   haut: [
     { title: "Die Haut",
       points: [
-        "Die Haut ist das größte Organ des Körpers.",
-        "Sie schützt vor Hitze, Kälte und Keimen.",
-        "Mit der Haut fühlen wir Schmerz, Druck und Wärme. So nehmen wir die Umwelt wahr.",
-        "Die Haut hat 3 Schichten: Oberhaut, Lederhaut und Unterhaut."
+        "größtes Organ",
+        "schützt vor Hitze, Kälte, Keimen",
+        "fühlt Schmerz, Druck, Wärme",
+        "3 Schichten: Oberhaut, Lederhaut, Unterhaut"
       ] },
     { title: "Schmecken und Riechen",
       points: [
-        "Die Sinne Schmecken und Riechen arbeiten zusammen.",
-        "Die Reize gelangen ins Gehirn. Erst dort entstehen Geschmack und Geruch.",
-        "Bei einer Erkältung schmeckt man weniger."
+        "arbeiten zusammen",
+        "Geschmack und Geruch entstehen im Gehirn",
+        "Erkältung → man schmeckt weniger"
       ] },
     { title: "Die Zunge",
       points: [
-        "Auf der Zunge erkennen Geschmacksknospen die Geschmacksstoffe.",
-        "Geschmacksknospen enthalten Sinneszellen.",
-        "Werden sie von Essen oder Trinken gereizt, werden Signale ans Gehirn geleitet.",
-        "Geschmacksrichtungen: süß, salzig, sauer, bitter, umami."
-      ],
-      tip: "Umami ist japanisch und heißt ungefähr „würzig, herzhaft“." },
+        "Geschmacksknospen mit Sinneszellen",
+        "Signale ans Gehirn",
+        "süß, salzig, sauer, bitter, umami"
+      ], tip: "Umami ist japanisch und heißt ungefähr „würzig, herzhaft“." },
     { title: "Die Nase",
       points: [
-        "Die Nase enthält die Riechschleimhaut.",
-        "Sie erkennt Duftstoffe.",
-        "Die Duftstoffe reizen Sinneszellen.",
-        "Die Informationen gehen ans Gehirn."
+        "Riechschleimhaut erkennt Duftstoffe",
+        "Duftstoffe reizen Sinneszellen",
+        "Infos ans Gehirn"
       ] }
   ]
 };

@@ -132,6 +132,11 @@ const FX = {
   perfect: { baeume: heroTree, sporen: heroFern, pilze: heroRing,
              all: (L, ms) => { heroTree(L, ms); sprout(L, Math.round(L.W / 90), 600); } }
 };
+// Aufgeteilte Themen verwenden die Animation ihres Folien-Themas (Bäume bzw. Pilze).
+for (const kind of ["done", "perfect"]) {
+  FX[kind].laub = FX[kind].nadel = FX[kind].baeume;
+  FX[kind].pilzleben = FX[kind].pilze;
+}
 
 function fxEnd(kind, topic) {
   const ms = kind === "perfect" ? 6500 : 5200, L = fxLayer(ms);

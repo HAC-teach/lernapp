@@ -3,6 +3,14 @@
 // text = was sich geändert hat (für die Lehrkraft), ziel = optional Kapitelordner für die Vorschau.
 // Einträge der letzten 14 Tage bekommen das Kennzeichen „neu“.
 const NEUIGKEITEN = [
+  { datum: "2026-10-26", fach: "bio", wo: "3. Klasse · 1. Gewässer", ziel: "bio3-pnnstwfb/gewaesser/",
+    text: "Gekürzt: höchstens 5 Lernkarten mit kurzen Stichworten und höchstens 10 Fragen pro Thema, keine doppelten Fragen mehr. „Trinkwasser und Mensch“ ist jetzt geteilt in C. Trinkwasser und Kläranlage und D. Flüsse verändern." },
+  { datum: "2026-10-26", fach: "bio", wo: "2. Klasse · 3. Sinnesorgane", ziel: "bio2-ic0yjzio/sinnesorgane/",
+    text: "Gekürzt: höchstens 5 Lernkarten mit kurzen Stichworten und höchstens 10 Fragen pro Thema, keine doppelten Fragen mehr." },
+  { datum: "2026-10-26", fach: "bio", wo: "2. Klasse · 2. Die Zelle", ziel: "bio2-ic0yjzio/zelle/",
+    text: "Gekürzt: höchstens 5 Lernkarten mit kurzen Stichworten und höchstens 10 Fragen pro Thema, keine doppelten Fragen mehr. Neue Aufteilung: A. Zellen und Leben, B. Tier- und Pflanzenzelle, C. Mikroskope, D. Einzeller und Bakterien, E. Nützliche und gefährliche Bakterien." },
+  { datum: "2026-10-26", fach: "bio", wo: "2. Klasse · 1. Pflanzen und Pilze", ziel: "bio2-ic0yjzio/pflanzen-pilze/",
+    text: "Gekürzt: höchstens 5 Lernkarten mit kurzen Stichworten und höchstens 10 Fragen pro Thema, keine doppelten Fragen mehr. Neue Aufteilung: A. Bau des Baumes, B. Laubbäume, C. Nadelbäume, D. Sporenpflanzen, E. Pilze: Bau und Vermehrung, F. Pilze: Ernährung und Sammeln." },
   { datum: "2026-10-26", fach: "bio", wo: "Lehrer-Ansicht",
     text: "Neuigkeiten öffnen sich über einen eigenen Knopf und zeigen nur das gewählte Fach. Die Kapitelliste lädt immer die aktuelle Version." },
   { datum: "2026-10-26", fach: "bio", wo: "2. Klasse · 3. Sinnesorgane", ziel: "bio2-ic0yjzio/sinnesorgane/",
