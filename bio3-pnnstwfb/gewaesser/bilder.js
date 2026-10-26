@@ -1,0 +1,136 @@
+// Bilder für die Beschriftungsaufgaben (Fragetyp "label")
+// Alle Bilder sind selbst gezeichnete SVGs mit viewBox 0 0 400 260.
+// Die Marker-Koordinaten in questions.js beziehen sich auf diese 400 × 260 Einheiten.
+
+const IMAGES = {
+  // Wasserkreislauf: Meer, Sonne, Wolke, Regen, Berg mit Gletscher, Boden mit Grundwasser
+  kreislauf: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Wasserkreislauf">
+    <defs><marker id="kA" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto-start-reverse">
+      <path d="M0 0L10 5L0 10z" fill="#2f6fb5"/></marker></defs>
+    <rect width="400" height="260" fill="#e8f4fc"/>
+    <circle cx="40" cy="38" r="20" fill="#ffd23f"/>
+    <g stroke="#ffd23f" stroke-width="3" stroke-linecap="round">
+      <path d="M40 8v-6M40 68v6M10 38h-6M70 38h6M19 17l-4-4M61 59l4 4M61 17l4-4M19 59l-4 4"/></g>
+    <polygon points="245,190 330,58 415,190" fill="#a9a39a"/>
+    <polygon points="311,88 330,58 349,88 340,82 330,92 320,82" fill="#ffffff"/>
+    <rect x="150" y="180" width="250" height="80" fill="#c9a77c"/>
+    <rect x="150" y="178" width="250" height="9" fill="#7cb860"/>
+    <rect x="150" y="232" width="250" height="28" fill="#6fa8dc"/>
+    <path d="M0 176H175L160 260H0z" fill="#4a90d9"/>
+    <path d="M0 182q10-5 20 0t20 0 20 0 20 0 20 0 20 0 20 0 20 0" stroke="#ffffff" stroke-width="2" fill="none" opacity=".6"/>
+    <path d="M290 170Q250 186 166 181" stroke="#4a90d9" stroke-width="8" fill="none" stroke-linecap="round"/>
+    <g fill="#ffffff" stroke="#c8d3dc" stroke-width="2">
+      <circle cx="228" cy="58" r="17"/><circle cx="250" cy="46" r="22"/><circle cx="274" cy="56" r="17"/>
+      <rect x="226" y="54" width="50" height="20" rx="10" stroke="none"/></g>
+    <g stroke="#4a90d9" stroke-width="3" stroke-linecap="round" stroke-dasharray="7 7">
+      <path d="M228 84l-8 60M244 84l-8 60M260 84l-8 60M276 84l-8 60"/></g>
+    <g stroke="#2f6fb5" stroke-width="3" fill="none" marker-end="url(#kA)">
+      <path d="M50 168q-8-14 0-26t0-26 0-22"/><path d="M85 168q-8-14 0-26t0-26 0-22"/><path d="M120 168q-8-14 0-26t0-26 0-22"/>
+      <path d="M130 78Q170 52 204 56" stroke-dasharray="5 5"/>
+      <path d="M290 192v26"/><path d="M318 192v26"/>
+      <path d="M220 246H178"/></g>
+  </svg>`,
+
+  // Fließgewässer: Quelle im Gebirge bis zur Mündung ins Meer
+  fluss: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Abschnitte eines Fließgewässers">
+    <rect width="400" height="260" fill="#e8f4fc"/>
+    <rect y="100" width="400" height="160" fill="#a8d38a"/>
+    <polygon points="0,120 45,28 95,92 140,40 205,125 0,125" fill="#a9a39a"/>
+    <polygon points="33,52 45,28 57,52 50,48 45,55 40,48" fill="#ffffff"/>
+    <polygon points="128,64 140,40 152,64 146,60 140,67 134,60" fill="#ffffff"/>
+    <path d="M290 260Q320 214 400 196V260z" fill="#4a90d9"/>
+    <g fill="none" stroke="#4a90d9" stroke-linecap="round">
+      <path d="M60 98C75 120 70 140 95 160" stroke-width="3"/>
+      <path d="M95 160C120 180 150 150 200 185" stroke-width="6"/>
+      <path d="M200 185C240 215 270 200 318 228" stroke-width="11"/></g>
+    <circle cx="60" cy="97" r="5" fill="#4a90d9"/>
+    <g fill="#4f8a3c"><circle cx="40" cy="160" r="12"/><circle cx="215" cy="140" r="11"/><circle cx="240" cy="150" r="9"/>
+      <circle cx="120" cy="215" r="12"/><circle cx="350" cy="140" r="10"/><circle cx="190" cy="235" r="10"/></g>
+  </svg>`,
+
+  // Kläranlage: Haushalt → mechanische Reinigung → biologische Reinigung → Fluss, darunter Schlammbehandlung
+  klaeranlage: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Kläranlage">
+    <rect width="400" height="260" fill="#f4f7f2"/>
+    <path d="M345 0C368 80 322 160 350 260H400V0z" fill="#4a90d9"/>
+    <path d="M370 120l12-6v12z M362 120q10-8 20 0q-10 8-20 0" fill="#2f6fb5"/>
+    <g fill="#e9c891" stroke="#8a6d45" stroke-width="2">
+      <rect x="12" y="68" width="30" height="26"/><rect x="46" y="74" width="24" height="20"/></g>
+    <g fill="#c4553d"><polygon points="8,70 27,52 46,70"/><polygon points="43,76 58,62 73,76"/></g>
+    <g stroke="#8b949c" stroke-width="7" fill="none">
+      <path d="M58 94V104H92"/><path d="M168 104H202"/><path d="M302 104H348"/><path d="M250 138V168"/><path d="M220 208H190"/></g>
+    <rect x="90" y="72" width="80" height="62" rx="4" fill="#b9d4ea" stroke="#5d7a93" stroke-width="2"/>
+    <g stroke="#555" stroke-width="2"><path d="M128 76v54M136 76v54M144 76v54M152 76v54"/></g>
+    <g fill="#8a6d45"><circle cx="108" cy="110" r="5"/><rect x="113" y="92" width="9" height="6"/><circle cx="118" cy="120" r="4"/></g>
+    <rect x="200" y="68" width="102" height="70" rx="10" fill="#8fc1e3" stroke="#5d7a93" stroke-width="2"/>
+    <g fill="#5bb98c"><ellipse cx="222" cy="94" rx="6" ry="3"/><ellipse cx="248" cy="118" rx="6" ry="3"/><ellipse cx="282" cy="90" rx="6" ry="3"/>
+      <ellipse cx="270" cy="122" rx="5" ry="3"/><ellipse cx="232" cy="124" rx="5" ry="3"/></g>
+    <g fill="none" stroke="#ffffff" stroke-width="1.5"><circle cx="238" cy="84" r="3"/><circle cx="262" cy="100" r="4"/><circle cx="214" cy="112" r="3"/><circle cx="290" cy="112" r="3"/></g>
+    <ellipse cx="250" cy="208" rx="30" ry="40" fill="#a7907a" stroke="#6f5a46" stroke-width="2"/>
+    <rect x="148" y="190" width="42" height="36" rx="4" fill="#d5d9dd" stroke="#6b737a" stroke-width="2"/>
+    <path d="M172 194l-10 15h8l-6 14 14-18h-8l6-11z" fill="#ffd23f" stroke="#a07c00" stroke-width="1"/>
+  </svg>`,
+
+  // Veränderter und naturnaher Fluss: begradigter Abschnitt, Staumauer, Fischtreppe, Mäander, Auwald
+  flussbau: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Veränderter und naturnaher Fluss">
+    <rect width="400" height="260" fill="#9ccf7a"/>
+    <ellipse cx="250" cy="180" rx="150" ry="70" fill="#c3e4a8"/>
+    <rect x="0" y="34" width="152" height="6" fill="#9a9a9a"/><rect x="0" y="76" width="152" height="6" fill="#9a9a9a"/>
+    <rect x="0" y="40" width="152" height="36" fill="#4a90d9"/>
+    <path d="M164 58C220 58 230 140 190 150S150 230 240 230S330 150 400 170" fill="none" stroke="#4a90d9" stroke-width="14"/>
+    <g fill="#4a90d9" stroke="#777" stroke-width="2">
+      <rect x="146" y="88" width="14" height="9"/><rect x="154" y="100" width="14" height="9"/><rect x="162" y="112" width="14" height="9"/></g>
+    <rect x="150" y="26" width="14" height="64" fill="#6f6f6f"/>
+    <g><g fill="#6b4a2b"><rect x="70" y="170" width="4" height="12"/><rect x="92" y="196" width="4" height="12"/><rect x="58" y="206" width="4" height="12"/>
+      <rect x="112" y="226" width="4" height="12"/><rect x="356" y="222" width="4" height="12"/><rect x="290" y="232" width="4" height="12"/></g>
+      <g fill="#3f7d2e"><circle cx="72" cy="166" r="11"/><circle cx="94" cy="192" r="12"/><circle cx="60" cy="202" r="10"/>
+      <circle cx="114" cy="222" r="11"/><circle cx="358" cy="218" r="11"/><circle cx="292" cy="228" r="10"/></g></g>
+  </svg>`,
+
+  // Gefährdung der Meere: Ölpest, Schleppnetz, Plastik, Korallenbleiche, verbaute Küste
+  meer: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Gefährdung der Meere">
+    <rect width="400" height="74" fill="#e8f4fc"/>
+    <rect y="72" width="400" height="188" fill="#3f86cf"/>
+    <rect y="150" width="400" height="110" fill="#2f6fb5" opacity=".5"/>
+    <path d="M0 240Q50 228 100 238T200 236T300 240T400 234V260H0z" fill="#e3cf9a"/>
+    <path d="M320 74L340 48H400V74z" fill="#e3cf9a"/>
+    <g fill="#ffffff" stroke="#8b949c" stroke-width="1.5"><rect x="346" y="14" width="18" height="36"/><rect x="370" y="22" width="24" height="28"/></g>
+    <g fill="#8fc1e3"><rect x="350" y="20" width="4" height="4"/><rect x="356" y="20" width="4" height="4"/><rect x="350" y="30" width="4" height="4"/>
+      <rect x="356" y="30" width="4" height="4"/><rect x="376" y="28" width="4" height="4"/><rect x="384" y="28" width="4" height="4"/></g>
+    <polygon points="28,60 124,60 114,78 38,78" fill="#8b2e24"/><rect x="96" y="46" width="16" height="14" fill="#ffffff"/>
+    <ellipse cx="82" cy="92" rx="46" ry="8" fill="#1d1d1d" opacity=".85"/>
+    <polygon points="186,62 228,62 222,76 192,76" fill="#e0e0e0" stroke="#777" stroke-width="1.5"/><rect x="202" y="48" width="4" height="14" fill="#777"/>
+    <g stroke="#d8d8d8" stroke-width="1.5" fill="none"><path d="M220 74L250 214M196 74L232 214"/></g>
+    <path d="M226 212H300L292 236H232z" fill="none" stroke="#e8e8e8" stroke-width="2"/>
+    <g stroke="#e8e8e8" stroke-width="1"><path d="M240 212v24M254 212v24M268 212v24M282 212v24M228 224H296"/></g>
+    <g fill="#f2a541"><rect x="146" y="132" width="16" height="7" rx="2" transform="rotate(-20 154 135)"/>
+      <rect x="170" y="148" width="14" height="6" rx="2" transform="rotate(30 177 151)"/></g>
+    <path d="M150 158q8-6 14 0t10 6-14 4z" fill="#ffffff" opacity=".85"/>
+    <g stroke="#f4f1ea" stroke-width="5" stroke-linecap="round" fill="none">
+      <path d="M60 238V206M60 220l-12-10M60 214l12-12M90 238V210M90 222l10-10M90 226l-10-8M122 240V218M122 228l8-8"/></g>
+  </svg>`,
+
+  // Metamorphose beim Frosch: Kaulquappe mit Kiemen und Ruderschwanz → erwachsener Frosch
+  metamorphose: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Metamorphose beim Frosch">
+    <defs><marker id="mA" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="5" markerHeight="5" orient="auto">
+      <path d="M0 0L10 5L0 10z" fill="#857a66"/></marker></defs>
+    <rect width="200" height="260" fill="#d6ecf8"/>
+    <rect x="200" width="200" height="260" fill="#eef6e6"/>
+    <path d="M200 205Q300 196 400 205V260H200z" fill="#a8d38a"/>
+    <g transform="translate(-24 -40) scale(1.3)">
+    <path d="M102 128C130 112 150 142 176 122C150 152 128 134 102 140z" fill="#6b5847"/>
+    <ellipse cx="80" cy="132" rx="27" ry="19" fill="#5b4a3a"/>
+    <circle cx="66" cy="126" r="4" fill="#ffffff"/><circle cx="66" cy="126" r="2" fill="#000000"/>
+    <g stroke="#c4553d" stroke-width="3" stroke-linecap="round" fill="none">
+      <path d="M74 116l-14-26M67 103l-10-3M64 97l1-9M70 108l7-9"/><path d="M86 115l4-28M88 102l-8-7M89 94l7-6M88 108l8-4"/></g></g>
+    <path d="M98 80L108 78" stroke="#857a66" stroke-width="1.5"/>
+    <path d="M214 132H252" stroke="#857a66" stroke-width="3" marker-end="url(#mA)"/>
+    <ellipse cx="290" cy="172" rx="28" ry="13" fill="#4f8a3c"/>
+    <ellipse cx="310" cy="160" rx="44" ry="30" fill="#6aa84f"/>
+    <ellipse cx="346" cy="138" rx="25" ry="18" fill="#6aa84f"/>
+    <g fill="#ffffff"><circle cx="340" cy="120" r="8"/><circle cx="358" cy="122" r="7"/></g>
+    <g fill="#000000"><circle cx="341" cy="120" r="3.5"/><circle cx="359" cy="122" r="3"/></g>
+    <path d="M335 166l6 26h12" stroke="#4f8a3c" stroke-width="6" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+    <g fill="#ffffff" opacity=".55"><ellipse cx="298" cy="148" rx="8" ry="4"/><ellipse cx="320" cy="142" rx="5" ry="3"/></g>
+    <g fill="#4f8a3c" opacity=".7"><circle cx="292" cy="160" r="4"/><circle cx="315" cy="170" r="3"/></g>
+  </svg>`
+};

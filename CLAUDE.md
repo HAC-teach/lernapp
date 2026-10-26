@@ -11,7 +11,7 @@ A static learning app for a biology class (Austrian AHS, topic "1. Gewässer"), 
 - Keep it fully static: plain HTML/CSS/JS, no build step, no frameworks, no npm, no external CDNs. It must work when served from GitHub Pages as-is.
 - All student-facing text is in German, written for lower-secondary students (short sentences, simple words).
 - Questions must be based on the slide content. Don't invent content beyond the slides without saying so.
-- Keep it phone-friendly and keep the dark mode working.
+- Keep it phone-friendly. The design is always light (white background, `color-scheme: light only`) – no dark mode, don't follow the browser/OS colour scheme.
 - Never put personal information in the repository (it is public): no names, photos, grades, emails or other data of students, teachers or parents — not in code, questions, examples, commit messages or file names. Strip such details from slide content before using it.
 
 ## Structure / access
@@ -22,12 +22,15 @@ A static learning app for a biology class (Austrian AHS, topic "1. Gewässer"), 
 ## Files (per chapter folder)
 
 - `lernen.js` – `LESSONS[topicId]` = learning cards `{ title, points[], tip? }`, shown before the quiz of that topic. Content comes from the slides.
-- `index.html` – the whole app (UI, styles, logic). Rounds of `ROUND_SIZE` (10) random questions; best scores stored in `localStorage` under `gewaesser-best`.
+- `bilder.js` – `IMAGES[name]` = self-drawn inline SVGs (viewBox 0 0 400 260) for `label` questions. Don't copy pictures from the slides (copyright); draw simple SVGs instead.
+- `index.html` – the whole app (UI, styles, logic). Rounds of `ROUND_SIZE` (10) random questions; best scores stored in `localStorage` under `gewaesser-best`. Also contains the „Millionenshow“ mode (mixed topics, only `mc` questions, max 15, 3 jokers, best prize under `show`).
 - `questions.js` – `TOPICS` and `QUESTIONS`. Add or change questions here. Types:
   - `mc`: `options[]`, `answer` = index of the correct option
   - `tf`: `answer` = `true` / `false`
   - `order`: `items[]` in the correct order (shuffled for display)
   - `match`: `pairs[]` of `[term, answer]`; duplicate answers are fine (dropdowns use the unique set)
+  - `multi`: `options[]`, `answers[]` = indices of ALL correct options (select all that apply)
+  - `label`: `image` = key in `IMAGES` (bilder.js), `markers[]` = `{ x, y, answer }` in the image's 400×260 units, optional `extra[]` = wrong terms added to the choices
   - every question has `topic` (a `TOPICS` id), `q`, and an `info` explanation shown after answering
 - `README.md` – short German guide for publishing.
 

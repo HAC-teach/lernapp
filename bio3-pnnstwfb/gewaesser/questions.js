@@ -4,6 +4,10 @@
 //   tf    – Richtig/Falsch: answer = true | false
 //   order – Reihenfolge: items[] in der richtigen Reihenfolge (werden gemischt angezeigt)
 //   match – Zuordnen: pairs[] = [[Begriff, Erklärung], ...]
+//   multi – Mehrfachauswahl: options[], answers[] = Indizes ALLER richtigen Antworten
+//   label – Bild beschriften: image = Name aus IMAGES (bilder.js), markers[] = { x, y, answer }
+//           (x/y im Bild mit 400 × 260 Einheiten), extra[] = zusätzliche falsche Begriffe zur Auswahl
+// Die Millionenshow verwendet nur mc-Fragen.
 // "info" wird nach dem Beantworten als Erklärung angezeigt.
 
 const TOPICS = [
@@ -200,5 +204,101 @@ const QUESTIONS = [
     answer: true, info: "Richtig – erwachsene Amphibien atmen mit Lunge und Haut." },
   { topic: "amphibien", type: "mc", q: "Womit atmen Fische unter Wasser?",
     options: ["Mit der Lunge", "Mit Kiemen", "Nur mit der Haut", "Mit der Schwimmblase"], answer: 1,
-    info: "Fische nehmen mit den Kiemen den im Wasser gelösten Sauerstoff auf." }
+    info: "Fische nehmen mit den Kiemen den im Wasser gelösten Sauerstoff auf." },
+
+  // ---------- Beschriftungsaufgaben (Bilder in bilder.js) ----------
+  { topic: "kreislauf", type: "label", q: "Beschrifte die Schritte des Wasserkreislaufs.", image: "kreislauf",
+    markers: [
+      { x: 85, y: 128, answer: "Verdunstung" },
+      { x: 250, y: 44, answer: "Kondensation" },
+      { x: 248, y: 118, answer: "Niederschlag" },
+      { x: 304, y: 208, answer: "Versickerung" }
+    ],
+    extra: ["Mündung"],
+    info: "Verdunstung über dem Meer → Kondensation (Wolken) → Niederschlag → Versickerung im Boden." },
+  { topic: "kreislauf", type: "label", q: "Wo ist das Wasser gespeichert? Beschrifte das Bild.", image: "kreislauf",
+    markers: [
+      { x: 60, y: 222, answer: "Meer" },
+      { x: 330, y: 76, answer: "Gletscher" },
+      { x: 365, y: 246, answer: "Grundwasser" },
+      { x: 210, y: 182, answer: "Fließgewässer" }
+    ],
+    extra: ["Wolke"],
+    info: "Wasser ist in Meeren, Gletschern und im Grundwasser gespeichert. Grundwasser und Fließgewässer bringen es zurück ins Meer." },
+  { topic: "fluss", type: "label", q: "Beschrifte die Abschnitte des Fließgewässers.", image: "fluss",
+    markers: [
+      { x: 60, y: 97, answer: "Quelle" },
+      { x: 74, y: 130, answer: "Oberlauf" },
+      { x: 138, y: 167, answer: "Mittellauf" },
+      { x: 256, y: 207, answer: "Unterlauf" },
+      { x: 330, y: 232, answer: "Mündung" }
+    ],
+    extra: ["Mäander"],
+    info: "Quelle → Oberlauf → Mittellauf → Unterlauf → Mündung. Flussabwärts wird der Fluss breiter." },
+  { topic: "trinkwasser", type: "label", q: "Beschrifte die Kläranlage.", image: "klaeranlage",
+    markers: [
+      { x: 40, y: 82, answer: "Abwasser aus dem Haushalt" },
+      { x: 112, y: 104, answer: "Mechanische Reinigung" },
+      { x: 251, y: 104, answer: "Biologische Reinigung" },
+      { x: 250, y: 210, answer: "Schlammbehandlung" },
+      { x: 368, y: 175, answer: "Fluss" }
+    ],
+    extra: ["Wasserkraftwerk"],
+    info: "Zuerst werden grobe Stoffe herausgefiltert, dann reinigen Mikroorganismen das Wasser. Danach fließt es in den Fluss. Aus dem Schlamm entsteht Gas für Strom." },
+  { topic: "trinkwasser", type: "label", q: "Verbauter oder naturnaher Fluss? Beschrifte das Bild.", image: "flussbau",
+    markers: [
+      { x: 70, y: 58, answer: "Begradigter Fluss" },
+      { x: 157, y: 40, answer: "Staumauer" },
+      { x: 161, y: 104, answer: "Fischtreppe" },
+      { x: 166, y: 194, answer: "Mäander (Flussschlinge)" },
+      { x: 92, y: 196, answer: "Auwald" }
+    ],
+    extra: ["Kläranlage"],
+    info: "Begradigte Flüsse und Staumauern sind Folgen der Verbauung. Fischtreppen, Mäander und Auwälder gehören zu einem naturnahen Fluss." },
+  { topic: "meer", type: "label", q: "Beschrifte die Gefahren für das Meer.", image: "meer",
+    markers: [
+      { x: 82, y: 92, answer: "Ölpest" },
+      { x: 262, y: 224, answer: "Schleppnetz" },
+      { x: 160, y: 146, answer: "Plastik" },
+      { x: 90, y: 214, answer: "Korallenbleiche" },
+      { x: 370, y: 36, answer: "Verbauung der Küste" }
+    ],
+    extra: ["Fischtreppe"],
+    info: "Überfischung (Schleppnetze) und Verschmutzung (Öl, Plastik, Tourismus) gefährden die Meere. Wärmeres Wasser führt zur Korallenbleiche." },
+  { topic: "amphibien", type: "label", q: "Beschrifte die Entwicklung des Frosches.", image: "metamorphose",
+    markers: [
+      { x: 120, y: 77, answer: "Kiemen" },
+      { x: 172, y: 124, answer: "Ruderschwanz" },
+      { x: 78, y: 140, answer: "Larve (Kaulquappe)" },
+      { x: 233, y: 114, answer: "Metamorphose" },
+      { x: 305, y: 166, answer: "Erwachsenes Tier" }
+    ],
+    extra: ["Schuppen"],
+    info: "Die Kaulquappe ist die Larve: Sie atmet mit Kiemen und hat einen Ruderschwanz. Durch die Metamorphose wird sie zum erwachsenen Frosch." },
+
+  // ---------- Mehrfachauswahl ----------
+  { topic: "kreislauf", type: "multi", q: "Wo ist Wasser gespeichert? Wähle alle richtigen Antworten.",
+    options: ["In Meeren", "Im Grundwasser", "In Gletschern", "In Gesteinen", "In der Sonne"], answers: [0, 1, 2, 3],
+    info: "Wasser ist in Meeren, im Grundwasser, in Gletschern und in Gesteinen gespeichert." },
+  { topic: "fluss", type: "multi", q: "Welche sind stehende Gewässer? Wähle alle richtigen Antworten.",
+    options: ["Tümpel", "Bach", "Teich", "Weiher", "Fluss", "Stausee"], answers: [0, 2, 3, 5],
+    info: "Stehende Gewässer: Tümpel, Teich, Weiher, See und Stausee. Bach und Fluss sind Fließgewässer." },
+  { topic: "fluss", type: "multi", q: "Welche Faktoren sind ABIOTISCH (unbelebt)? Wähle alle richtigen Antworten.",
+    options: ["Licht", "Temperatur", "Strömung", "Symbiose", "Sauerstoffgehalt"], answers: [0, 1, 2, 4],
+    info: "Abiotisch = unbelebt, z. B. Licht, Temperatur, Strömung und Sauerstoff. Symbiose ist ein biotischer Faktor." },
+  { topic: "trinkwasser", type: "multi", q: "Wie nutzt der Mensch Flüsse? Wähle alle richtigen Antworten.",
+    options: ["Als Schifffahrtsweg", "Für Strom aus Wasserkraftwerken", "Für die Freizeit", "Als Kühlwasser", "Als Wüste"], answers: [0, 1, 2, 3],
+    info: "Nutzung durch den Menschen: Schifffahrt, Stromgewinnung, Freizeit und Kühlwasser für Industrie und Wärmekraftwerke." },
+  { topic: "trinkwasser", type: "multi", q: "Welche Tiere sind typisch für eine Au? Wähle alle richtigen Antworten.",
+    options: ["Eisvogel", "Biber", "Huchen", "Hai", "Koralle"], answers: [0, 1, 2],
+    info: "Typische Arten einer Au sind Eisvogel, Biber und Huchen." },
+  { topic: "meer", type: "multi", q: "Was gefährdet die Meere? Wähle alle richtigen Antworten.",
+    options: ["Überfischung", "Ölpest", "Plastik", "Verbauung der Küsten", "Fischtreppen"], answers: [0, 1, 2, 3],
+    info: "Überfischung und Verschmutzung (Öl, Plastik, Tourismus) sind Gefahren für die Meere." },
+  { topic: "amphibien", type: "multi", q: "Welche Tiere sind Froschlurche? Wähle alle richtigen Antworten.",
+    options: ["Unke", "Kröte", "Frosch", "Molch", "Salamander"], answers: [0, 1, 2],
+    info: "Froschlurche: Unken, Kröten, Frösche. Molche und Salamander sind Schwanzlurche." },
+  { topic: "amphibien", type: "multi", q: "Wie ist die Haut von Amphibien? Wähle alle richtigen Antworten.",
+    options: ["dünn", "feucht", "mit vielen Drüsen", "schuppig", "trocken"], answers: [0, 1, 2],
+    info: "Die Haut von Amphibien ist dünn, feucht und hat viele Drüsen." }
 ];

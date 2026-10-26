@@ -14,6 +14,7 @@ bio3-pnnstwfb/              Biologie 3. Klasse
   gewaesser/                Kapitel „1. Gewässer“
     index.html              Lernkarten + Quiz
     lernen.js               Lernkarten pro Thema
+    bilder.js               Bilder (SVG) für Beschriftungsaufgaben
     questions.js            Quizfragen
 ```
 
