@@ -223,3 +223,12 @@ const IMAGES = {
     <g fill="#f5c400"><circle cx="258" cy="166" r="4"/><circle cx="280" cy="172" r="4"/><circle cx="300" cy="164" r="4"/><circle cx="320" cy="172" r="4"/><circle cx="340" cy="164" r="3"/><circle cx="210" cy="176" r="3"/></g>
   </svg>`
 };
+
+// Motive pro Thema (viewBox 0 0 48 48, nur Linien in der Themenfarbe) für Kacheln und Überschriften
+const TOPIC_ICONS = {
+  kreislauf: `<path d="M14 30a9 9 0 0 1 1-18 12 12 0 0 1 23 3 7.5 7.5 0 0 1-1 15z" /><path d="M18 36l-2 6M26 36l-2 6M34 36l-2 6" />`,
+  fluss: `<path d="M6 16c6-5 10 5 16 0s10 5 16 0 8 3 10 2" /><path d="M6 26c6-5 10 5 16 0s10 5 16 0 8 3 10 2" /><path d="M6 36c6-5 10 5 16 0s10 5 16 0 8 3 10 2" />`,
+  trinkwasser: `<path d="M24 6C18 16 12 22 12 30a12 12 0 0 0 24 0c0-8-6-14-12-24z" /><path d="M18 31a6 6 0 0 0 6 6" />`,
+  meer: `<path d="M8 22c5 0 8-8 14-8s7 6 10 6" /><path d="M4 34c4 0 6-3 10-3s6 3 10 3 6-3 10-3 6 3 10 3" /><path d="M30 10l4-3 1 4" />`,
+  amphibien: `<circle cx="16" cy="14" r="5" /><circle cx="32" cy="14" r="5" /><path d="M8 26c0-8 32-8 32 0 0 9-8 14-16 14S8 35 8 26z" /><path d="M17 29q7 5 14 0" />`
+};

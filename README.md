@@ -9,6 +9,7 @@ Jeder Jahrgang (pro Fach) hat einen eigenen Ordner mit schwer erratbarem Namen. 
 ```
 index.html                  neutrale Startseite („Link von der Lehrkraft verwenden“)
 robots.txt                  Suchmaschinen aussperren
+marke.js                    Logo „Lernspiele“ mit Fach-Etikett (für alle Seiten; neue Fächer hier eintragen)
 lehrer-oagzajb8/            Lehrer-Ansicht (alle Fächer + Jahrgänge, nicht an Schüler weitergeben)
   apps.js                   Verzeichnis aller Lernspiele – bei neuem Kapitel/Jahrgang/Fach ergänzen
 bio3-pnnstwfb/              Biologie 3. Klasse

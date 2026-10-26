@@ -11,12 +11,13 @@
 // Die Millionenshow verwendet nur mc-Fragen.
 // "info" wird nach dem Beantworten als Erklärung angezeigt.
 
+// Jedes Thema hat eine eigene Farbe (color) und ein Motiv (TOPIC_ICONS in bilder.js).
 const TOPICS = [
-  { id: "kreislauf", title: "Wasserkreislauf" },
-  { id: "fluss", title: "Fließ- & stehende Gewässer" },
-  { id: "trinkwasser", title: "Trinkwasser & Mensch" },
-  { id: "meer", title: "Das Meer" },
-  { id: "amphibien", title: "Amphibien & Fische" }
+  { id: "kreislauf", title: "Wasserkreislauf", color: "#e8a33d" },
+  { id: "fluss", title: "Fließ- & stehende Gewässer", color: "#3a9e7e" },
+  { id: "trinkwasser", title: "Trinkwasser & Mensch", color: "#3aa0d8" },
+  { id: "meer", title: "Das Meer", color: "#2d5fa8" },
+  { id: "amphibien", title: "Amphibien & Fische", color: "#7aa83a" }
 ];
 
 const QUESTIONS = [

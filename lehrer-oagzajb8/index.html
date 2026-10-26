@@ -12,9 +12,8 @@
   body { margin: 0; color: var(--text); background: #faf8f4; font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
   header { background: #fff; border-bottom: 3px solid var(--c); }
   .in { max-width: 1100px; margin: 0 auto; padding: 0 16px; }
-  .brand { display: flex; align-items: baseline; gap: 10px; flex-wrap: wrap; padding: 14px 0 10px; }
-  .brand b { font-size: 1.5rem; font-weight: 800; letter-spacing: -.02em; }
-  .brand span { color: var(--muted); font-weight: 600; font-size: .9rem; }
+  .brand { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; padding: 12px 0 10px; }
+  .brand > span:last-child { color: var(--muted); font-weight: 600; font-size: .9rem; }
   .tabs { display: flex; gap: 6px; flex-wrap: wrap; padding-bottom: 12px; }
   .tabs button { font: inherit; font-weight: 700; cursor: pointer; border: 2px solid var(--tc); color: var(--tc); background: #fff; border-radius: 99px; padding: 4px 16px; }
   .tabs button.on { background: var(--tc); color: #fff; }
@@ -41,12 +40,13 @@
 </head>
 <body>
 <header><div class="in">
-  <div class="brand"><b>Lernspiele</b><span>Lehrer-Ansicht · alle Fächer und Jahrgänge</span></div>
+  <div class="brand"><span id="marke"></span><span>Lehrer-Ansicht · alle Fächer und Jahrgänge</span></div>
   <div class="tabs" id="tabs"></div>
 </div></header>
 <main class="in"><div class="layout"><div id="list"></div>
   <aside class="preview"><p id="ptitle">Vorschau</p><div class="phone" id="phone"><div class="ph">Tippe bei einem Kapitel auf „Vorschau“.</div></div></aside>
 </div></main>
+<script src="../marke.js"></script>
 <script src="apps.js"></script>
 <script>
 const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
@@ -76,6 +76,7 @@ function show(id) {
   document.documentElement.style.setProperty("--c", f.color);
   document.documentElement.style.setProperty("--soft", f.soft);
   [...tabs.children].forEach(b => b.classList.toggle("on", b.dataset.id === id));
+  document.getElementById("marke").innerHTML = marke(id);
   const list = document.getElementById("list");
   if (!f.klassen.length) { list.innerHTML = `<div class="empty">Für ${esc(f.name)} gibt es noch keine Lernspiele.</div>`; return; }
   list.innerHTML = f.klassen.map(k => {

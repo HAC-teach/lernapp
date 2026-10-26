@@ -12,6 +12,7 @@ A static learning app for a biology class (Austrian AHS, topic "1. Gewässer"), 
 - All student-facing text is in German, written for lower-secondary students (short sentences, simple words).
 - Questions must be based on the slide content. Don't invent content beyond the slides without saying so.
 - Keep it phone-friendly. The design is always light (white background, `color-scheme: light only`) – no dark mode, don't follow the browser/OS colour scheme.
+- Design „Forscherheft“ on all pages: graph-paper background, highlighter headings, cards with tape, topics as sticky notes in the topic colour. Branding: logo „Lernspiele“ + subject label from the shared root `marke.js` (`<span data-marke="bio">` + script tag; new subjects go into `FACH` there).
 - Never put personal information in the repository (it is public): no names, photos, grades, emails or other data of students, teachers or parents — not in code, questions, examples, commit messages or file names. Strip such details from slide content before using it.
 
 ## Structure / access
@@ -23,9 +24,9 @@ A static learning app for a biology class (Austrian AHS, topic "1. Gewässer"), 
 ## Files (per chapter folder)
 
 - `lernen.js` – `LESSONS[topicId]` = learning cards `{ title, points[], tip? }`, shown before the quiz of that topic. Content comes from the slides.
-- `bilder.js` – `IMAGES[name]` = self-drawn inline SVGs (viewBox 0 0 400 260) for `label` questions. Don't copy pictures from the slides (copyright); draw simple SVGs instead.
-- `index.html` – the whole app (UI, styles, logic). A topic quiz (and „Alle Themen gemischt“) asks ALL questions of the topic in random order – no round limit; best scores stored in `localStorage` under `gewaesser-best`. Also contains the „Millionenshow“ mode (mixed topics, only `mc` questions, max 15 – keep at least 15 `mc` questions, 3 jokers, best prize under `show`).
-- `questions.js` – `TOPICS` and `QUESTIONS`. Add or change questions here. Types:
+- `bilder.js` – `IMAGES[name]` = self-drawn inline SVGs (viewBox 0 0 400 260) for `label` questions. Don't copy pictures from the slides (copyright); draw simple SVGs instead. `TOPIC_ICONS[topicId]` = line motif per topic (viewBox 0 0 48 48, stroke only) for topic tiles and headings.
+- `index.html` – the whole app (UI, styles, logic). A topic quiz (and „Alle Themen gemischt“) asks ALL questions of the topic in random order – no round limit; best scores stored in `localStorage` under `gewaesser-best`. Also contains the „Millionenshow“ mode (mixed topics, only `mc` questions, max 15 – keep at least 15 `mc` questions, 3 jokers, best prize under `show`). At the end of a quiz an animation plays (no sound, theme „Unter Wasser“): bubbles when finished, rising water + jumping fish when everything is right (also on a Millionenshow win). It is skipped with `prefers-reduced-motion`.
+- `questions.js` – `TOPICS` (`{ id, title, color }` – each topic has its own colour; lighter/darker shades are computed) and `QUESTIONS`. Add or change questions here. Types:
   - `mc`: `options[]`, `answer` = index of the correct option
   - `tf`: `answer` = `true` / `false`
   - `order`: `items[]` in the correct order (shuffled for display)

@@ -5,25 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
 <meta name="color-scheme" content="light only">
-<title>Lernapps</title>
+<title>Lernspiele</title>
 <style>
-  :root { --card: #ffffff; --text: #3d3528; --muted: #857a66; --border: #e6dcc6;
-    --accent: #f2a541; --mark: #ffd96a; }
-  body { margin: 0; color: var(--text); background: #ffffff; font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; }
+  :root { --text: #2f2a22; --ink: #2f2a22; --muted: #7c7466; --grid: #e9eef5; }
+  body { margin: 0; color: var(--text); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #ffffff; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 22px 22px; }
   main { max-width: 480px; margin: 15vh auto 0; padding: 0 16px; }
-  .card { background: var(--card); border: 1px solid var(--border); border-top: 5px solid var(--accent);
-    border-radius: 8px; padding: 24px; text-align: center; box-shadow: 0 2px 0 var(--border); }
-  h1 { display: inline-block; font-size: 1.5rem; font-weight: 700; margin: 0 0 8px; padding: 0 4px;
-    background: linear-gradient(transparent 60%, var(--mark) 60%); }
+  .card { position: relative; background: #fff; border: 1.5px solid var(--ink); border-radius: 4px 14px 6px 12px / 12px 6px 14px 4px;
+    padding: 28px 24px 24px; text-align: center; }
+  .card::before { content: ""; position: absolute; top: -11px; left: 40%; width: 76px; height: 21px; background: #ffd96a; opacity: .8; transform: rotate(-3deg); }
+  .logo { font-size: 1.3rem; margin-bottom: 12px; }
   p { color: var(--muted); margin: 0; }
 </style>
 </head>
 <body>
 <main>
   <div class="card">
-    <h1>Lernapps</h1>
+    <div class="logo" data-marke=""></div>
     <p>Bitte öffne den Link, den du von deiner Lehrkraft bekommen hast.</p>
   </div>
 </main>
+<script src="marke.js"></script>
 </body>
 </html>
