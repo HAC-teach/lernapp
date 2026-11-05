@@ -26,7 +26,8 @@ const LESSONS = {
         "Gehirn: Steuerzentrale",
         "Herz: pumpt Blut",
         "Lunge: nimmt Sauerstoff auf",
-        "Magen, Darm: verdauen · Leber: reinigt das Blut",
+        "Magen, Dünndarm, Dickdarm: verdauen · Leber: reinigt das Blut",
+        "Nieren: bilden Harn · Harnblase: speichert Harn",
         "Haut: größtes Organ"
       ] }
   ],
@@ -131,7 +132,8 @@ const LESSONS = {
         "größtes Organ",
         "schützt vor Hitze, Kälte, Keimen",
         "fühlt Schmerz, Druck, Wärme",
-        "3 Schichten: Oberhaut, Lederhaut, Unterhaut"
+        "3 Schichten: Oberhaut, Lederhaut, Unterhaut",
+        "darin: Haare, Talgdrüsen, Schweißdrüsen, Blutgefäße, Sinneskörperchen"
       ] },
     { title: "Schmecken und Riechen",
       points: [

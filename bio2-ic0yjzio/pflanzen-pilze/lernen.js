@@ -52,7 +52,8 @@ const LESSONS = {
     { title: "Laubbäume bestimmen",
       points: [
         "an Blättern und Früchten",
-        "Blattform: eiförmig, herzförmig, gelappt, gefiedert, gefingert",
+        "Einfache Blätter: lanzettlich, eiförmig, verkehrt eiförmig, elliptisch, kreisrund, dreieckig, herzförmig, gelappt",
+        "Zusammengesetzte Blätter: paarig, unpaarig oder doppelt gefiedert, gefingert",
         "Blattrand: gesägt, gezähnt, ganzrandig, gebuchtet",
         "Blattstellung: wechselständig, gegenständig, quirlständig, grundständig"
       ] },

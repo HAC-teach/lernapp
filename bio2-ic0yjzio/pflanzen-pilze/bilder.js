@@ -2,22 +2,74 @@
 // Alle Bilder sind selbst gezeichnete SVGs mit viewBox 0 0 400 260.
 // Die Marker-Koordinaten in questions.js beziehen sich auf diese 400 × 260 Einheiten.
 
-// Blatt mit verschiedenem Blattrand (Spitze oben): Abweichung vom glatten Rand je nach Art
-function leafEdge(cx, kind) {
-  const frac = x => x - Math.floor(x);
-  const off = {
-    gesaegt: t => 5 * frac(t * 22 / (2 * Math.PI)),
-    gezaehnt: t => 9 * (1 - Math.abs(2 * frac(t * 12 / (2 * Math.PI)) - 1)),
-    ganz: () => 0,
-    gebuchtet: t => 12 * Math.abs(Math.sin(t * 6)) - 6
-  }[kind];
-  let d = "";
-  for (let i = 0; i <= 240; i++) {
-    const t = i / 240 * 2 * Math.PI, w = Math.sin(t) * (1 - .35 * Math.cos(t)), o = Math.sin(t / 2) * off(t);
-    d += (i ? "L" : "M") + (cx + (34 + o) * w).toFixed(1) + " " + (150 - (88 + o) * Math.cos(t)).toFixed(1);
+// Einfaches Blatt: Grund bei (cx, by), Spitze oben. d = Umriss (Grund bei 0 0, Spitze bei etwa 0 -90),
+// adern = [y, Länge] der Seitenadern, spitze = oberes Ende der Mittelader, stiel = Länge des Stiels
+function blattUmriss(cx, by, { d, adern, pfad, spitze }, stiel) {
+  const seiten = pfad || adern.map(([y, w]) => `M0 ${y}L${w} ${y - 12}M0 ${y}L${-w} ${y - 12}`).join("");
+  return `<g transform="translate(${cx} ${by})">
+    <path d="${d}" fill="#7ab55c" stroke="#4f8a3c" stroke-width="2" stroke-linejoin="round"/>
+    <path d="${seiten}" stroke="#4f8a3c" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M0 ${spitze}V${stiel}" stroke="#4f8a3c" stroke-width="3" stroke-linecap="round"/></g>`;
+}
+const BLATTFORM = {
+  lanzettlich: { d: "M0-90C14-60 17-22 0 0C-17-22-14-60 0-90Z", adern: [[-25, 8], [-42, 8], [-58, 6]], spitze: -82 },
+  eifoermig: { d: "M0-90C20-70 36-40 32-22C28-6 12 0 0 0C-12 0-28-6-32-22C-36-40-20-70 0-90Z", adern: [[-18, 24], [-36, 24], [-54, 11]], spitze: -82 },
+  verkehrt: { d: "M0-90C14-90 34-80 34-58C34-36 14-14 0 0C-14-14-34-36-34-58C-34-80-14-90 0-90Z", adern: [[-16, 16], [-34, 24], [-52, 26], [-68, 18]], spitze: -84 },
+  kreisrund: { d: "M0-78A38 38 0 1 1 0-2A38 38 0 1 1 0-78Z", adern: [[-16, 28], [-34, 30], [-52, 26]], spitze: -72 },
+  elliptisch: { d: "M0-90C36-70 36-20 0 0C-36-20-36-70 0-90Z", adern: [[-18, 20], [-36, 22], [-54, 14]], spitze: -82 },
+  // gelappt wie ein Ahornblatt: fünf spitze Lappen, die Adern laufen vom Blattgrund in die Lappen
+  gelappt: { d: "M0-90L9-72L16-76L13-60L9-46L20-56L24-68L30-58L44-66L38-48L44-42L30-36L16-30L28-26L44-24L34-14L20-10L8-8L0-3L-8-8L-20-10L-34-14L-44-24L-28-26L-16-30L-30-36L-44-42L-38-48L-44-66L-30-58L-24-68L-20-56L-9-46L-13-60L-16-76L-9-72Z", pfad: "M0-6L36-58M0-6L-36-58M0-6L36-24M0-6L-36-24", adern: [], spitze: -82 },
+  dreieckig: { d: "M0-90C10-68 28-34 38-12C24-4 10-2 0 0C-10-2-24-4-38-12C-28-34-10-68 0-90Z", adern: [[-10, 26], [-26, 20], [-44, 12]], spitze: -82 },
+  herz: { d: "M0-90C14-70 38-40 36-16C34 2 10 4 0-12C-10 4-34 2-36-16C-38-40-14-70 0-90Z", adern: [[-14, 26], [-32, 24], [-50, 15]], spitze: -82 }
+};
+
+// Gefiedertes Blatt: Blattachse von oben bis unten, Blättchenpaare bei ys, ende = Endblättchen an der Spitze
+function fiederBlatt(cx, oben, unten, ys, rx, ry, ende) {
+  const a = 18 * Math.PI / 180, dx = (rx + 1) * Math.cos(a), dy = (rx + 1) * Math.sin(a), n = v => v.toFixed(1);
+  const form = `fill="#7ab55c" stroke="#4f8a3c" stroke-width="${rx < 10 ? 1 : 2}"`;
+  const paare = ys.map(y => [-1, 1].map(s =>
+    `<ellipse cx="${n(cx + s * dx)}" cy="${n(y - dy)}" rx="${rx}" ry="${ry}" transform="rotate(${-s * 18} ${n(cx + s * dx)} ${n(y - dy)})" ${form}/>`).join("")).join("");
+  const spitze = ende ? `<ellipse cx="${cx}" cy="${oben - rx}" rx="${ry}" ry="${rx}" ${form}/>` : "";
+  return `${paare}${spitze}<path d="M${cx} ${oben}V${unten}" stroke="#4f8a3c" stroke-width="${rx < 10 ? 1.5 : 3}" stroke-linecap="round"/>`;
+}
+
+// Doppelt gefiedert: Die Seitenzweige der Blattachse sind selbst wieder gefiedert
+function doppeltGefiedert(cx, oben, unten, ys) {
+  const zweig = fiederBlatt(0, -32, 0, [-9, -18, -27], 6, 2.8, true);
+  const zweige = ys.map(y => [-72, 72].map(r => `<g transform="translate(${cx} ${y}) rotate(${r})">${zweig}</g>`).join("")).join("");
+  return `${zweige}<g transform="translate(${cx} ${oben})">${zweig}</g><path d="M${cx} ${oben}V${unten}" stroke="#4f8a3c" stroke-width="3" stroke-linecap="round"/>`;
+}
+
+// Gefingert: Alle Teilblättchen gehen von einem Punkt am Ende des Stiels aus
+function gefingertesBlatt(cx, y, unten) {
+  const finger = [-66, -33, 0, 33, 66].map(r => `<g transform="translate(${cx} ${y}) rotate(${r}) scale(.92)">
+    <path d="M0 0C-5-14-15-38-11-54C-8-66 8-66 11-54C15-38 5-14 0 0Z" fill="#7ab55c" stroke="#4f8a3c" stroke-width="2.4"/>
+    <path d="M0 0V-58" stroke="#4f8a3c" stroke-width="1.8" stroke-linecap="round"/></g>`).join("");
+  return `${finger}<path d="M${cx} ${y}V${unten}" stroke="#4f8a3c" stroke-width="3" stroke-linecap="round"/>`;
+}
+
+// Halbes Blatt, damit der Blattrand groß zu sehen ist: Mittelader bei cx, Rand rechts davon
+function halbBlatt(cx, oben, unten, art, stiel) {
+  const H = unten - oben, W = 62;
+  const breite = t => W * Math.pow(Math.max(0, Math.sin(Math.PI * Math.pow(t, .85))), .8);
+  const huelle = t => Math.pow(Math.max(0, Math.sin(Math.PI * t)), .5);
+  const p = (t, o = 0) => `${(cx + breite(t) + o * huelle(t)).toFixed(1)} ${(oben + t * H).toFixed(1)}`;
+  let d = `M${cx} ${oben}`;
+  if (art === "ganzrandig" || art === "gebuchtet") {
+    for (let i = 1; i <= 120; i++) { const t = i / 120; d += `L${p(t, art === "gebuchtet" ? 7 * Math.cos(2 * Math.PI * 5.5 * t) : 0)}`; }
+  } else if (art === "gesaegt") { // kleine Zacken, die schräg zur Blattspitze zeigen
+    const n = 15;
+    for (let k = 0; k < n; k++) d += `L${p((k + .2) / n, 7)}L${p((k + 1) / n)}`;
+  } else { // gezähnt: größere spitze Zähne mit runden Buchten dazwischen
+    const n = 8;
+    d += `L${p(.5 / n, 14)}`;
+    for (let k = 1; k < n; k++) d += `Q${p(k / n, -14)} ${p((k + .5) / n, 14)}`;
+    d += `L${p(1)}`;
   }
-  return `<path d="${d}Z" fill="#7ab55c" stroke="#4f8a3c" stroke-width="2"/>
-    <path d="M${cx} 70V250" stroke="#4f8a3c" stroke-width="3" stroke-linecap="round"/>`;
+  const adern = [.22, .38, .54, .7, .85].map(t => `M${cx} ${(oben + t * H).toFixed(1)}L${(cx + .8 * breite(t - .1)).toFixed(1)} ${(oben + (t - .1) * H).toFixed(1)}`).join("");
+  return `<path d="${d}Z" fill="#7ab55c" stroke="#4f8a3c" stroke-width="2" stroke-linejoin="round"/>
+    <path d="${adern}" stroke="#4f8a3c" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+    <path d="M${cx} ${oben}V${unten + stiel}" stroke="#4f8a3c" stroke-width="3.5" stroke-linecap="round"/>`;
 }
 
 // Farnwedel: Fiederblättchen entlang einer gebogenen Mittelrippe (quadratische Kurve)
@@ -94,29 +146,29 @@ const IMAGES = {
       <path d="M210 56L174 36M210 84L158 60M210 112L152 92M210 140L166 126"/></g>
   </svg>`,
 
-  // Blattformen: herzförmig, gelappt, gefiedert, gefingert
-  blattformen: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vier verschiedene Blattformen">
+  // Einfache Blätter: Die inneren Spalten sitzen etwas tiefer, damit ihre Linien unter den äußeren Blättern durchlaufen
+  blattformen: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Acht einfache Blattformen">
     <rect width="400" height="260" fill="#eef6fb"/>
-    <g stroke="#d9d1c2" stroke-width="1.5" stroke-dasharray="4 4"><path d="M100 10V250M200 10V250M300 10V250"/></g>
-    <g fill="#7ab55c" stroke="#4f8a3c" stroke-width="2" stroke-linejoin="round">
-      <path d="M50 64C88 100 98 162 74 200C64 212 52 206 50 174C48 206 36 212 26 200C2 162 12 100 50 64Z"/>
-      <path d="M150 58L160 92L186 76L178 112L204 120L180 140L190 170L158 160L150 196L142 160L110 170L120 140L96 120L122 112L114 76L140 92Z"/>
-      <ellipse cx="250" cy="70" rx="8" ry="15"/>
-      <g transform="translate(250 104)"><ellipse cx="-20" cy="0" rx="19" ry="8" transform="rotate(-20 -20 0)"/><ellipse cx="20" cy="0" rx="19" ry="8" transform="rotate(20 20 0)"/></g>
-      <g transform="translate(250 136)"><ellipse cx="-20" cy="0" rx="19" ry="8" transform="rotate(-20 -20 0)"/><ellipse cx="20" cy="0" rx="19" ry="8" transform="rotate(20 20 0)"/></g>
-      <g transform="translate(250 168)"><ellipse cx="-20" cy="0" rx="19" ry="8" transform="rotate(-20 -20 0)"/><ellipse cx="20" cy="0" rx="19" ry="8" transform="rotate(20 20 0)"/></g>
-      <g transform="translate(250 200)"><ellipse cx="-20" cy="0" rx="19" ry="8" transform="rotate(-20 -20 0)"/><ellipse cx="20" cy="0" rx="19" ry="8" transform="rotate(20 20 0)"/></g>
-      <g transform="translate(350 168)"><ellipse cx="0" cy="-40" rx="9" ry="32"/><ellipse cx="0" cy="-38" rx="9" ry="30" transform="rotate(36)"/>
-        <ellipse cx="0" cy="-38" rx="9" ry="30" transform="rotate(-36)"/><ellipse cx="0" cy="-30" rx="8" ry="24" transform="rotate(72)"/>
-        <ellipse cx="0" cy="-30" rx="8" ry="24" transform="rotate(-72)"/></g></g>
-    <g stroke="#4f8a3c" stroke-width="3" stroke-linecap="round"><path d="M50 176V245M150 196V245M250 84V245M350 168V245"/></g>
+    ${blattUmriss(50, 94, BLATTFORM.herz, 12)}${blattUmriss(150, 112, BLATTFORM.lanzettlich, 14)}
+    ${blattUmriss(250, 112, BLATTFORM.kreisrund, 14)}${blattUmriss(350, 94, BLATTFORM.gelappt, 12)}
+    ${blattUmriss(50, 224, BLATTFORM.eifoermig, 10)}${blattUmriss(150, 242, BLATTFORM.dreieckig, 14)}
+    ${blattUmriss(250, 242, BLATTFORM.elliptisch, 14)}${blattUmriss(350, 224, BLATTFORM.verkehrt, 10)}
   </svg>`,
 
-  // Blattränder: gesägt, gezähnt, ganzrandig, gebuchtet
+  // Zusammengesetzte Blätter: unpaarig gefiedert, paarig gefiedert, doppelt gefiedert, gefingert
+  blattformen2: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vier zusammengesetzte Blattformen">
+    <rect width="400" height="260" fill="#eef6fb"/>
+    ${fiederBlatt(50, 46, 222, [78, 118, 158], 20, 9, true)}
+    ${fiederBlatt(150, 46, 256, [52, 112, 172, 236], 20, 9, false)}
+    ${doppeltGefiedert(248, 52, 256, [96, 146, 196, 240])}
+    ${gefingertesBlatt(344, 92, 222)}
+  </svg>`,
+
+  // Blattränder als halbe Blätter: gezähnt, ganzrandig, gebuchtet, gesägt
   blattraender: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vier verschiedene Blattränder">
     <rect width="400" height="260" fill="#eef6fb"/>
-    <g stroke="#d9d1c2" stroke-width="1.5" stroke-dasharray="4 4"><path d="M100 10V250M200 10V250M300 10V250"/></g>
-    ${leafEdge(50, "gesaegt")}${leafEdge(150, "gezaehnt")}${leafEdge(250, "ganz")}${leafEdge(350, "gebuchtet")}
+    ${halbBlatt(18, 8, 200, "gezaehnt", 14)}${halbBlatt(116, 30, 245, "ganzrandig", 11)}
+    ${halbBlatt(216, 30, 245, "gebuchtet", 11)}${halbBlatt(316, 8, 200, "gesaegt", 14)}
   </svg>`,
 
   // Farn: Wedel, eingerollter junger Wedel, Sporenbehälter (Lupe auf der Blattunterseite), Wurzel
