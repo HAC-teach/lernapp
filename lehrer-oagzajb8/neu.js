@@ -3,6 +3,8 @@
 // text = was sich geändert hat (für die Lehrkraft), ziel = optional Kapitelordner für die Vorschau.
 // Einträge der letzten 14 Tage bekommen das Kennzeichen „neu“.
 const NEUIGKEITEN = [
+  { datum: "2026-11-08", fach: "de", wo: "2. Klasse · Grammatik · Das Verb: Modus und Modalverben", ziel: "de2-eev6p9y1/grammatik/verb-modus-modalverben/",
+    text: "Neues Lernspiel mit den Themen I. Der Imperativ und II. Modalverben (je mit Höflichkeit). Lernkarten mit der Bildung, je 15 Fragen, Millionenshow und die Animation „Wörterwirbel“. Regeln aus dem Schulbuch, alle Beispiele neu ausgedacht. Nicht im Buch und für die Bildung ergänzt: Ihr-Form, Sonderfälle des Imperativs (nimm, fahr, sammle, warte), Stellung der Nennform und Formen wie „du darfst“." },
   { datum: "2026-11-08", fach: "de", wo: "2. Klasse", ziel: "de2-eev6p9y1/",
     text: "Struktur für Deutsch angelegt: Kapitel Textsorten (Lernspiele Anleitungen und Rezepte), Kapitel Grammatik (Lernspiele Das Verb: Aktiv/Passiv und Das Verb: Modus und Modalverben) und Kapitel Rechtschreibung. Die Inhalte der Lernspiele kommen noch dazu." },
   { datum: "2026-11-05", fach: "bio", wo: "2. Klasse · 3. Sinnesorgane", ziel: "bio2-ic0yjzio/sinnesorgane/",

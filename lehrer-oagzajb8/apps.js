@@ -1,6 +1,7 @@
 // Verzeichnis aller Lernspiele für die Lehrer-Ansicht.
 // Neues Kapitel / neuer Jahrgang / neues Fach: hier eintragen.
 // folder = Jahrgangsordner im Repo, path = Kapitelordner darin.
+// spiele = fertige Lernspiele in Unterordnern (bei Kapiteln, die eine Liste mehrerer Lernspiele sind, z. B. Deutsch).
 const FAECHER = [
   {
     id: "bio", name: "Biologie", color: "#3f9a6f", soft: "#e3f4ea",
@@ -22,7 +23,7 @@ const FAECHER = [
     klassen: [
       { name: "2. Klasse", folder: "de2-eev6p9y1", kapitel: [
         { name: "1. Textsorten", path: "textsorten/" },
-        { name: "2. Grammatik", path: "grammatik/" },
+        { name: "2. Grammatik", path: "grammatik/", spiele: ["verb-modus-modalverben/"] },
         { name: "3. Rechtschreibung", path: "rechtschreibung/" }
       ] }
     ]
