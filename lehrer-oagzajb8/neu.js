@@ -4,7 +4,7 @@
 // Einträge der letzten 14 Tage bekommen das Kennzeichen „neu“.
 const NEUIGKEITEN = [
   { datum: "2026-11-08", fach: "de", wo: "2. Klasse", ziel: "de2-eev6p9y1/",
-    text: "Struktur für Deutsch angelegt: Bereich „Textsorten“ mit den Kapiteln Anleitungen und Rezepte, Bereich „Rechtschreibung und Grammatik“ mit den Kapiteln Das Verb: Aktiv/Passiv und Das Verb: Modus und Modalverben. Die Lernspiele kommen noch dazu." },
+    text: "Struktur für Deutsch angelegt: Kapitel Textsorten (Lernspiele Anleitungen und Rezepte), Kapitel Grammatik (Lernspiele Das Verb: Aktiv/Passiv und Das Verb: Modus und Modalverben) und Kapitel Rechtschreibung. Die Inhalte der Lernspiele kommen noch dazu." },
   { datum: "2026-11-05", fach: "bio", wo: "2. Klasse · 3. Sinnesorgane", ziel: "bio2-ic0yjzio/sinnesorgane/",
     text: "Beschriftungsbilder neu gezeichnet. Organe des Menschen: jetzt 10 Organe (neu Luftröhre, Niere, Harnblase, der Darm ist in Dünndarm und Dickdarm geteilt), die Speiseröhre ist strichliert eingezeichnet. Auge: mit Lichtstrahlen und dem Bild auf dem Kopf, „Lichtstrahl“ wird mitbeschriftet. Ohr: Hammer, Amboss und Steigbügel werden einzeln beschriftet. Haut: außer den drei Schichten auch Haar, Talgdrüse, Schweißdrüse, Blutgefäß und Sinneskörperchen. Begriffe, die nicht auf den Folien stehen, stammen aus deinen Vorlagen; die Lernkarten sind angepasst." },
   { datum: "2026-11-05", fach: "bio", wo: "2. Klasse · 1. Pflanzen und Pilze", ziel: "bio2-ic0yjzio/pflanzen-pilze/",

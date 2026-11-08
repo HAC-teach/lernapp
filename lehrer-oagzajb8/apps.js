@@ -21,10 +21,9 @@ const FAECHER = [
     id: "de", name: "Deutsch", color: "#c8483b", soft: "#fbe6e1",
     klassen: [
       { name: "2. Klasse", folder: "de2-eev6p9y1", kapitel: [
-        { name: "Textsorten · Anleitungen", path: "anleitungen/" },
-        { name: "Textsorten · Rezepte", path: "rezepte/" },
-        { name: "Grammatik · Das Verb: Aktiv/Passiv", path: "verb-aktiv-passiv/" },
-        { name: "Grammatik · Das Verb: Modus und Modalverben", path: "verb-modus-modalverben/" }
+        { name: "1. Textsorten", path: "textsorten/" },
+        { name: "2. Grammatik", path: "grammatik/" },
+        { name: "3. Rechtschreibung", path: "rechtschreibung/" }
       ] }
     ]
   }
