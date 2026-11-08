@@ -86,7 +86,9 @@ tabs.onclick = e => { const b = e.target.closest("button"); if (b) show(b.datase
 // Fragen zählen (liest questions.js des Kapitels, immer die aktuelle Version)
 async function count(url, el) {
   try {
-    const t = await (await fetch(url + "questions.js", { cache: "no-store" })).text();
+    const r = await fetch(url + "questions.js", { cache: "no-store" });
+    if (!r.ok) { el.textContent = "Noch keine Lernspiele"; return; }
+    const t = await r.text();
     const n = (t.match(/\btopic:/g) || []).length, mc = (t.match(/type:\s*"mc"/g) || []).length;
     el.textContent = `${n} Fragen · davon ${mc} Multiple Choice`;
   } catch { el.textContent = ""; }
