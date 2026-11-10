@@ -3,6 +3,8 @@
 // text = was sich geändert hat (für die Lehrkraft), ziel = optional Kapitelordner für die Vorschau.
 // Einträge der letzten 14 Tage bekommen das Kennzeichen „neu“.
 const NEUIGKEITEN = [
+  { datum: "2026-11-10", fach: "de", wo: "2. Klasse · Kapitelliste", ziel: "de2-eev6p9y1/",
+    text: "Korrigiert: Beim Kapitel Rechtschreibung stand noch „Noch keine Lernspiele“. Jetzt stehen dort die beiden Lernspiele: Nomen und Großschreibung · Doppelkonsonanten und Dehnungs-h." },
   { datum: "2026-11-10", fach: "de", wo: "2. Klasse · Grammatik · Das Verb: Aktiv/Passiv", ziel: "de2-eev6p9y1/grammatik/verb-aktiv-passiv/",
     text: "Neues Lernspiel mit den Themen I. Aktiv und Passiv erkennen und II. Das Vorgangspassiv bilden. Die Aufgaben folgen den Mustern aus dem Buch: Aktiv oder Passiv zuordnen (auch Passiv oder Futur I) und Sätze ins Vorgangspassiv setzen (auch ohne Subjekt mit „es“ und mit Modalverb). Lernkarten mit der Bildung, je 15 Fragen, Millionenshow und die Animation „Wörterwirbel“. Regeln aus dem Schulbuch, alle Beispiele neu ausgedacht. Nicht im Merkkasten und für die Bildung ergänzt: Partizip II am Satzende, „von“ für die handelnde Person, „man“ fällt weg, den → der, wird/werden, Passiv mit Modalverb. Das Zustandspassiv wird nur genannt." },
   { datum: "2026-11-10", fach: "de", wo: "2. Klasse · Rechtschreibung · Doppelkonsonanten und Dehnungs-h", ziel: "de2-eev6p9y1/rechtschreibung/doppelkonsonanten-dehnungs-h/",
