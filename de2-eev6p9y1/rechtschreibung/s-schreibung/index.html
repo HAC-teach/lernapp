@@ -144,7 +144,7 @@
   .lvdots { display: inline-flex; gap: 3px; vertical-align: middle; }
   .lvdots i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ci); }
   .lvdots i.on { background: var(--ci); }
-  .levels { display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr); }
+  .levels { display: grid; gap: 12px; grid-template-columns: repeat(2, 1fr); }
   .lvl { background: var(--soft); border: 1.5px solid var(--ink); border-radius: 6px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px;
     box-shadow: 2px 2px 0 var(--ink); }
   .lvl:hover { background: var(--mid); }
@@ -161,6 +161,7 @@
     .thead svg { width: 72px; height: 72px; }
     .opts:not(.tf) { grid-template-columns: 1fr 1fr; }
     .satz { font-size: 1.7rem; }
+    .levels { grid-template-columns: repeat(4, 1fr); }
   }
   @media (max-width: 480px) { .row { grid-template-columns: 1fr; } .fix { grid-column: 1; } h1 { font-size: 1.6rem; } .top .info { display: none; }
     .levels { grid-template-columns: 1fr; } .lvl { flex-direction: row; justify-content: space-between; } .satz { font-size: 1.3rem; } }
@@ -176,12 +177,12 @@
 <script src="bilder.js"></script>
 <script src="animation.js"></script>
 <script>
-// Ablauf: Thema → Lernkarten → Schwierigkeit (leicht/mittel/schwer) → Runde mit ROUND Aufgaben aus dem Pool dieser Stufe.
+// Ablauf: Thema → Lernkarten → Schwierigkeit (leicht/mittel/schwer/sehr schwer) → Runde mit ROUND Aufgaben aus dem Pool dieser Stufe.
 // Aufgaben aus der letzten Runde kommen erst wieder dran, wenn die neuen aufgebraucht sind – so gibt es jedes Mal andere.
 // Falsch gelöste Aufgaben kommen in derselben Runde noch genau REPEATS-mal.
 const app = document.getElementById("app");
 const ROUND = 15, REPEATS = 2;
-const LEVELS = [{ n: 1, name: "leicht" }, { n: 2, name: "mittel" }, { n: 3, name: "schwer" }];
+const LEVELS = [{ n: 1, name: "leicht" }, { n: 2, name: "mittel" }, { n: 3, name: "schwer" }, { n: 4, name: "sehr schwer" }];
 const KEY = SPIEL.key;
 let state = null;
 document.title = SPIEL.title + " Lernspiel";
@@ -192,7 +193,7 @@ const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;",
 const store = (k, v) => { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "{}"); localStorage.setItem(k, JSON.stringify(v)); } catch { return {}; } };
 const loadBest = () => store(KEY + "-best");
 function saveBest(id, pct) { const b = loadBest(); if (!(b[id] >= pct)) { b[id] = pct; store(KEY + "-best", b); } }
-const lvDots = n => `<span class="lvdots" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= n ? "on" : ""}"></i>`).join("")}</span>`;
+const lvDots = n => `<span class="lvdots" aria-hidden="true">${LEVELS.map(l => l.n).map(k => `<i class="${k <= n ? "on" : ""}"></i>`).join("")}</span>`;
 const levelName = n => LEVELS.find(l => l.n === n).name;
 
 // Themenfarben: aus TOPICS[].color werden helle und dunkle Abstufungen berechnet
@@ -214,7 +215,7 @@ function home() {
   const best = loadBest();
   const tile = (id, n, cls = "") =>
     `<button class="topic ${cls}" data-id="${id}" style="${themeVars(colorOf(id))}"><span class="head">${topicIcon(id) || `<span class="num">${n}</span>`}${esc(topicTitle(id))}</span>
-      <small>${id === "all" ? "" : `${(LESSONS[id] || []).length} Lernkarten · `}3 Stufen${bestLine(best, id)}</small></button>`;
+      <small>${id === "all" ? "" : `${(LESSONS[id] || []).length} Lernkarten · `}${LEVELS.length} Stufen${bestLine(best, id)}</small></button>`;
   const ftile = (id, n) => {
     const texts = textsOf(id), N = texts.length ? errCount(texts[0]) : 0;
     return texts.length ? `<button class="topic ft" data-id="${id}" style="${themeVars(colorOf(id))}"><span class="head">${topicIcon(id) || `<span class="num">${n}</span>`}${esc(topicTitle(id))}</span>
@@ -223,7 +224,7 @@ function home() {
   app.innerHTML = `
     <a class="back" href="../">← Rechtschreibung</a>
     <h1><span class="hl">${esc(SPIEL.title)}</span></h1>
-    <p class="sub">Wähle ein Thema: Zuerst lernst du mit den Karten. Dann wählst du, wie schwer es sein soll: leicht, mittel oder schwer.</p>
+    <p class="sub">Wähle ein Thema: Zuerst lernst du mit den Karten. Dann wählst du, wie schwer es sein soll: leicht, mittel, schwer oder sehr schwer.</p>
     <div class="grid">
       ${tile("all", "Mix", "all")}
       ${TOPICS.map((t, n) => tile(t.id, n + 1)).join("")}

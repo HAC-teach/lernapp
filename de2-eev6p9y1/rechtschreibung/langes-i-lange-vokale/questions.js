@@ -1,6 +1,6 @@
 // Aufgaben zu „Langes i und lange Vokale“ (Deutsch, 2. Klasse, Rechtschreibung)
 // Inhalt: übliches Schulwissen der Unterstufe, alle Beispielsätze selbst ausgedacht.
-// level: 1 = leicht, 2 = mittel, 3 = schwer. Pro Runde kommen 15 Aufgaben aus dem Pool einer Stufe (jedes Mal andere).
+// level: 1 = leicht, 2 = mittel, 3 = schwer, 4 = sehr schwer. Pro Runde kommen 15 Aufgaben aus dem Pool einer Stufe (jedes Mal andere).
 // Aufgabentypen:
 //   wahl  – Übungssatz: {a|*b} wird zu einer Stelle, die die Kinder durch Antippen umschalten.
 //           Am Anfang steht die erste Möglichkeit da (immer die einfache: nur der Selbstlaut); * = richtig.
@@ -197,5 +197,67 @@ const QUESTIONS = [
     info: "Ich will mehr Eis. – Wir fahren ans Meer. Lies den ganzen Satz!" },
   { topic: "lang", level: 3, type: "mc", q: "Warum schreibt man „Säle“ nicht mit ää?",
     options: ["Umlaute werden nie verdoppelt.", "Weil das ä kurz ist.", "Weil es ein Nomen ist.", "Weil nach S nie ää steht."], answer: 0,
-    info: "Saal → Säle, Paar → Pärchen, Boot → Bötchen: ä, ö, ü stehen immer einfach." }
+    info: "Saal → Säle, Paar → Pärchen, Boot → Bötchen: ä, ö, ü stehen immer einfach." },
+
+  // ---------- I. Langes i · sehr schwer ----------
+  { topic: "langi", level: 4, type: "wahl", text: "Ich w{*i|ie|ih}derspreche dir nicht w{i|*ie|ih}der, das verspreche ich d{*i|ie|ih}r.", info: "wider (= gegen): widersprechen mit einfachem i. wieder (= noch einmal) mit ie. dir: einfaches i." },
+  { topic: "langi", level: 4, type: "wahl", text: "Mit ernster M{i|*ie|ih}ne steckt er eine neue M{*i|ie|ih}ne in den Kugelschreiber.", info: "Die Miene (Gesichtsausdruck) mit ie. Die Mine (im Stift) mit einfachem i." },
+  { topic: "langi", level: 4, type: "wahl", text: "Der St{i|*ie|ih}l der Lampe ist aus Holz, das passt gut zum St{*i|ie|ih}l des Zimmers.", info: "Der Stiel (zum Halten) mit ie. Der Stil (wie etwas aussieht oder gemacht ist) mit einfachem i." },
+  { topic: "langi", level: 4, type: "wahl", text: "Der Lehrer g{*i|ie|ih}bt uns ausg{i|*ie|ih}big Zeit zum Üben.", info: "gibt ist ein Merkwort: langes i, aber einfaches i. ausgiebig mit ie." },
+  { topic: "langi", level: 4, type: "wahl", text: "Was gesch{i|ie|ih|*ieh}t, wenn der Hauptmann bef{i|ie|ih|*ieh}lt und n{i|*ie|ih|ieh}mand gehorcht?", info: "geschehen → geschieht, befehlen → befiehlt: Das h bleibt → ieh. niemand mit ie." },
+  { topic: "langi", level: 4, type: "wahl", text: "Sie l{i|ie|ih|*ieh} m{*i|ie|ih|ieh}r {i|ie|*ih|ieh}r Fahrrad und bl{i|*ie|ih|ieh}b zu Hause.", info: "lieh (von leihen) mit ieh. mir: einfaches i. ihr mit ih. blieb mit ie." },
+  { topic: "langi", level: 4, type: "wahl", text: "Sie f{*i|ie|ih}ng den Ball, l{i|*ie|ih}f los und g{*i|ie|ih}ng erst nach dem Sp{i|*ie|ih}l heim.", info: "fing, ging: Das i ist kurz → einfaches i. lief, Spiel: langes i → ie." },
+  { topic: "langi", level: 4, type: "wahl", text: "In den Fer{*i|ie|ih}en zeichnen wir eine lange Lin{*i|ie|ih}e auf die Straße und sp{i|*ie|ih}len dort.", info: "Fe-ri-en, Li-ni-e: i und e spricht man getrennt → einfaches i, dann e. spielen: langes i → ie." },
+  { topic: "langi", level: 4, type: "wahl", text: "Die Melod{i|*ie|ih} gefällt dem Publ{*i|ie|ih}kum, nur der Krit{*i|ie|ih}ker schüttelt den Kopf.", info: "Melodie: Fremdwort mit ie am Ende. Publikum, Kritiker: einfaches i." },
+  { topic: "langi", level: 4, type: "wahl", text: "Der B{*i|ie|ih}ber baut am Fluss, der {*I|Ie|Ih}gel schläft t{i|*ie|ih}f im Laub.", info: "Biber und Igel sind Merkwörter: langes i, aber einfaches i. tief mit ie." },
+  { topic: "langi", level: 4, type: "wahl", text: "Ich erw{*i|ie|ih}dere den Gruß und sehe mein Sp{i|*ie|ih}gelbild im Schaufenster.", info: "erwidern (= antworten) kommt von wider → einfaches i. Spiegel mit ie." },
+  { topic: "langi", level: 4, type: "wahl", text: "Das Kl{*i|ie|ih}ma ändert sich, und über diese Kr{*i|ie|ih}se diskut{i|*ie|ih}ren v{i|*ie|ih}le Menschen.", info: "Klima, Krise: Fremdwörter mit einfachem i. diskutieren: -ieren immer mit ie. viele mit ie." },
+  { topic: "langi", level: 4, type: "wahl", text: "V{i|*ie|ih}rzig Kinder und nur ein V{i|*ie|ih}rtel der Torte? Das reicht n{i|*ie|ih}mals!", info: "vierzig und Viertel kommen von vier → ie, auch wenn man das i kurz spricht. niemals mit ie." },
+  { topic: "langi", level: 4, type: "wahl", text: "Die Batter{i|*ie|ih} im Masch{*i|ie|ih}nenraum ist leer, das pass{i|*ie|ih}rt hoffentlich nicht w{i|*ie|ih}der.", info: "Batterie: Fremdwort mit ie am Ende. Maschine: einfaches i. passiert: -ieren mit ie. wieder (= noch einmal) mit ie." },
+  { topic: "langi", level: 4, type: "wahl", text: "Trotz W{*i|ie|ih}derstand w{i|*ie|ih}derholt sie {i|ie|*ih}re Frage, bis man {i|ie|*ih}r antwortet.", info: "Widerstand (wider = gegen) mit einfachem i. wiederholen (= noch einmal) mit ie. ihre, ihr mit ih." },
+  { topic: "langi", level: 4, type: "match", q: "wieder (= noch einmal) oder wider (= gegen)? Was fehlt?",
+    pairs: [["w_derholen", "ie"], ["w_dersprechen", "i"], ["der W_derstand", "i"], ["das W_dersehen", "ie"], ["erw_dern (antworten)", "i"]],
+    info: "wiederholen, Wiedersehen: noch einmal → ie. widersprechen, Widerstand, erwidern: gegen → einfaches i." },
+  { topic: "langi", level: 4, type: "mc", q: "Welche Reihe ist ganz richtig geschrieben?",
+    options: ["sie sieht – er lieh – es zieht – sie befiehlt", "sie sieht – er lie – es zieht – sie befiehlt", "sie siht – er lieh – es zieht – sie befiehlt", "sie sieht – er lieh – es zieht – sie befielt"], answer: 0,
+    info: "sehen, leihen, ziehen, befehlen: Das h aus der Grundform bleibt → ieh." },
+  { topic: "langi", level: 4, type: "multi", q: "Welche Wörter sind richtig geschrieben?",
+    options: ["er gibt", "sie fieng", "die Linie", "die Ferieen", "vierzig"], answers: [0, 2, 4],
+    info: "gibt (Merkwort), Linie, vierzig stimmen. Richtig wäre: sie fing (kurzes i), die Ferien." },
+  { topic: "langi", level: 4, type: "tf", q: "In „Ferien“ und „Familie“ steht ie für ein langes i.", answer: false,
+    info: "Hier spricht man i und e getrennt: Fe-ri-en, Fa-mi-li-e. Das ist kein ie wie in „Biene“." },
+  { topic: "langi", level: 4, type: "mc", q: "Warum schreibt man „er fing“ mit einfachem i, aber „er fiel“ mit ie?",
+    options: ["Das i in „fing“ ist kurz, in „fiel“ ist es lang.", "Nach f steht immer ein einfaches i.", "„fing“ ist ein Fremdwort.", "Vor g steht nie ie."], answer: 0,
+    info: "Kurzes i → i: fing, ging, hing. Langes i → ie: fiel, lief, rief, blieb." },
+
+  // ---------- II. Lange Vokale · sehr schwer ----------
+  { topic: "lang", level: 4, type: "wahl", text: "Der St{a|*aa|ah}t baut in jeder St{*a|aa|ah}dt neue Schulen.", info: "Der Staat (das Land) mit aa. Die Stadt: kurzes a → einfaches a." },
+  { topic: "lang", level: 4, type: "wahl", text: "Der B{*o|oo|oh}te bringt die Post mit einem der beiden B{o|*oo|oh}te über den S{e|*ee|eh}.", info: "Der Bote (bringt etwas) mit einfachem o. Die Boote mit oo. See mit ee." },
+  { topic: "lang", level: 4, type: "wahl", text: "Ihre L{e|ee|*eh}re beim Tischler dauert drei J{a|aa|*ah}re, am Abend herrscht in der Werkstatt L{e|*ee|eh}re.", info: "Die Lehre (Ausbildung) mit h. Die Leere (nichts ist da) mit ee. Jahre mit h." },
+  { topic: "lang", level: 4, type: "wahl", text: "Das H{e|*ee|eh}r des Königs zog von weit h{*e|ee|eh}r über die Berge.", info: "Das Heer (viele Soldaten) mit ee. her (von weit her) mit einfachem e." },
+  { topic: "lang", level: 4, type: "wahl", text: "Er sieht seinem Bruder {ä|*äh}nlich, sie sind n{*ä|äh}mlich Zwillinge und werden allm{ä|*äh}lich erwachsen.", info: "ähnlich und allmählich mit h. nämlich kommt von Name → ohne h." },
+  { topic: "lang", level: 4, type: "wahl", text: "Im M{*ä|äh}rchen schneidet die F{e|*ee|eh} dem Riesen ein H{*ä|äh}rchen ab.", info: "Märchen ohne h. Fee mit ee. Haar → Härchen: Umlaute werden nie verdoppelt." },
+  { topic: "lang", level: 4, type: "wahl", text: "Mit der Sch{*e|ee|eh}re schneidet er qu{*e|ee|eh}r durch das Papier und macht keinen F{e|ee|*eh}ler.", info: "Schere und quer: langes e, einfach geschrieben. Fehler mit h." },
+  { topic: "lang", level: 4, type: "wahl", text: "Im K{a|aa|*ah}n liegt ein {A|*Aa|Ah}l, den der Fischer im T{*a|aa|ah}l gefangen hat.", info: "Kahn mit h. Aal mit aa. Tal: langes a, einfach geschrieben." },
+  { topic: "lang", level: 4, type: "wahl", text: "Ich habe eine Id{e|*ee|eh}: Wir trinken im Z{o|*oo|oh} einen Kaff{e|*ee|eh} und ein Glas T{e|*ee|eh}.", info: "Idee, Kaffee, Tee mit ee. Zoo mit oo." },
+  { topic: "lang", level: 4, type: "wahl", text: "Die Nuss ist h{o|oo|*oh}l, also h{*o|oo|oh}le ich mir eine andere aus dem M{o|*oo|oh}s.", info: "hohl (= innen leer) mit h. holen mit einfachem o. Moos mit oo." },
+  { topic: "lang", level: 4, type: "wahl", text: "Das Festm{a|aa|*ah}l findet dieses M{*a|aa|ah}l im großen S{a|*aa|ah}l statt.", info: "Das Mahl (Essen) mit h. dieses Mal mit einfachem a. Saal mit aa." },
+  { topic: "lang", level: 4, type: "wahl", text: "Am Ufer liegen zwei B{o|*oo|oh}te und ein kleines B{*ö|öh}tchen, daneben w{o|oo|*oh}nt ein Fischer.", info: "Boote mit oo. Boot → Bötchen: Umlaute werden nie verdoppelt. wohnt mit h." },
+  { topic: "lang", level: 4, type: "wahl", text: "Unter dem Schn{e|*ee|eh} wächst schon Kl{e|*ee|eh}, und nach dem ersten R{*e|ee|eh}gen wird die Wiese grün.", info: "Schnee, Klee mit ee. Regen: langes e, einfach geschrieben." },
+  { topic: "lang", level: 4, type: "wahl", text: "Dem Kind laufen Tr{*ä|äh}nen über das Gesicht, weil ihm ein Z{a|aa|*ah}n f{e|ee|*eh}lt.", info: "Träne ohne h. Zahn und fehlt mit h." },
+  { topic: "lang", level: 4, type: "wahl", text: "Die K{*ö|öh}nigin setzt die Kr{*o|oo|oh}ne auf und fährt ein p{a|*aa|ah}r Tage mit der B{a|aa|*ah}n.", info: "Königin, Krone: einfach geschrieben. ein paar mit aa. Bahn mit h." },
+  { topic: "lang", level: 4, type: "match", q: "Die Wörter klingen gleich oder ähnlich. Welche Schreibung passt?",
+    pairs: [["der St_t (Land)", "aa"], ["der B_te (bringt die Post)", "o"], ["die B_te (auf dem See)", "oo"], ["das H_r (viele Soldaten)", "ee"], ["die L_re (Ausbildung)", "eh"]],
+    info: "Staat, Bote, Boote, Heer, Lehre." },
+  { topic: "lang", level: 4, type: "mc", q: "Welche Reihe ist ganz richtig geschrieben?",
+    options: ["das Haar – das Härchen – die Haare", "das Haar – das Häärchen – die Haare", "das Har – das Härchen – die Haare", "das Haar – das Härchen – die Hahre"], answer: 0,
+    info: "Haar und Haare mit aa. Beim Umlaut bleibt nur ein ä: Härchen." },
+  { topic: "lang", level: 4, type: "multi", q: "Welche Wörter sind richtig geschrieben?",
+    options: ["nämlich", "die Scheere", "das Märchen", "die Trähne", "ähnlich"], answers: [0, 2, 4],
+    info: "nämlich, Märchen, ähnlich stimmen. Richtig wäre: die Schere, die Träne." },
+  { topic: "lang", level: 4, type: "tf", q: "Für ein langes u schreibt man nie uu.", answer: true,
+    info: "Verdoppelt werden nur a, e und o: Saal, Meer, Boot. Langes u: Schule, Blume – oder mit h: Uhr, Stuhl." },
+  { topic: "lang", level: 4, type: "mc", q: "Welcher Satz ist ganz richtig geschrieben?",
+    options: ["Im Saal trinken ein paar Gäste Tee.", "Im Sahl trinken ein paar Gäste Tee.", "Im Saal trinken ein par Gäste Tee.", "Im Saal trinken ein paar Gäste Teh."], answer: 0,
+    info: "Saal und paar mit aa, Tee mit ee." }
 ];

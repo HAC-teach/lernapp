@@ -3,6 +3,8 @@
 // text = was sich geändert hat (für die Lehrkraft), ziel = optional Kapitelordner für die Vorschau.
 // Einträge der letzten 14 Tage bekommen das Kennzeichen „neu“.
 const NEUIGKEITEN = [
+  { datum: "2026-11-10", fach: "de", wo: "2. Klasse · Rechtschreibung · alle 4 Lernspiele", ziel: "de2-eev6p9y1/rechtschreibung/",
+    text: "Neue vierte Stufe „sehr schwer“ in allen Rechtschreibspielen (Nomen und Großschreibung, Doppelkonsonanten und Dehnungs-h, Langes i und lange Vokale, s-Schreibung). Je Thema 20 neue Aufgaben, pro Runde wieder 15. Die Sätze sind länger, haben mehr Stellen und enthalten Stolperfallen: gleich klingende Wörter (Masse – Maße, wider – wieder, Miene – Mine, Staat – Stadt, hohl – holen), Wechsel in der Wortfamilie (kommen – kam, nehmen – genommen), Fremdwörter (Paket, Hotel, Pizza, Klima), drei gleiche Buchstaben (Schifffahrt, Brennnessel) und bei der Großschreibung z. B. höfliche Anrede (Sie, Ihnen), ein Paar – ein paar, schuld – die Schuld, Wiener – italienisch, die grünen (Äpfel), Jung und Alt, bei Rot. Das geht zum Teil über die Lernkarten hinaus – die Erklärung nach jeder Aufgabe nennt die Regel. Übliches Schulwissen, alle Sätze selbst ausgedacht." },
   { datum: "2026-11-10", fach: "de", wo: "2. Klasse · Gliederung", ziel: "de2-eev6p9y1/gliederung/",
     text: "Neues Kapitel 4. Gliederung angelegt. Hier üben die Kinder später, wie man einen Text gliedert – jeweils passend zur Textsorte. Bisher gibt es die beiden Platzhalter Anleitungen und Rezepte („Hier kommt bald das Lernspiel.“). Texte und Lernspiele kommen noch dazu." },
   { datum: "2026-11-10", fach: "de", wo: "2. Klasse · Rechtschreibung · s-Schreibung", ziel: "de2-eev6p9y1/rechtschreibung/s-schreibung/",

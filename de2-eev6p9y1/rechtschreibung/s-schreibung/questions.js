@@ -1,6 +1,6 @@
 // Aufgaben zu „s-Schreibung“ (Deutsch, 2. Klasse, Rechtschreibung): nur s, ss und ß – „das“/„dass“ kommt hier nicht vor.
 // Inhalt: übliches Schulwissen der Unterstufe, alle Beispielsätze selbst ausgedacht.
-// level: 1 = leicht, 2 = mittel, 3 = schwer. Pro Runde kommen 15 Aufgaben aus dem Pool einer Stufe (jedes Mal andere).
+// level: 1 = leicht, 2 = mittel, 3 = schwer, 4 = sehr schwer. Pro Runde kommen 15 Aufgaben aus dem Pool einer Stufe (jedes Mal andere).
 // Aufgabentypen:
 //   wahl  – Übungssatz: {a|*b} wird zu einer Stelle, die die Kinder durch Antippen umschalten.
 //           Am Anfang steht die erste Möglichkeit da (Thema I: ss, Thema II: einfaches s); * = richtig.
@@ -197,5 +197,67 @@ const QUESTIONS = [
     info: "Richtig: Zeugnis, Bus, Ergebnis – in der Einzahl nur ein s." },
   { topic: "s", level: 3, type: "mc", q: "Warum schreibt man „sie liest“ mit einfachem s?",
     options: ["Weil es von lesen kommt.", "Weil das ie lang ist.", "Weil danach ein t steht.", "Weil es ein kurzes Wort ist."], answer: 0,
-    info: "Der Wortstamm bleibt: lesen → liest. Aber: gießen → gießt." }
+    info: "Der Wortstamm bleibt: lesen → liest. Aber: gießen → gießt." },
+
+  // ---------- I. ss oder ß · sehr schwer ----------
+  { topic: "ssß", level: 4, type: "wahl", text: "Die Ma{*ss|ß}e des Steins ist gro{ss|*ß}, seine Ma{ss|*ß}e haben wir noch nicht geme{*ss|ß}en.", info: "Die Masse (= wie schwer etwas ist): kurzes a → ss. Die Maße (Länge, Breite): langes a → ß. groß: langes o → ß. gemessen: kurzes e → ss." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Der Rauchfangkehrer hat Ru{ss|*ß} im Gesicht und bla{*ss|ß}e Hände, aber er grü{ss|*ß}t fröhlich.", info: "Ruß: langes u → ß. blass: kurzes a → ss. grüßt: langes ü → ß." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Das Kind sa{ss|*ß} auf Omas Scho{ss|*ß}, als der Jäger im Film scho{*ss|ß}.", info: "saß: langes a → ß. Der Schoß: langes o → ß. Er schoss (von schießen): kurzes o → ss." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Auf dem Flo{ss|*ß} trieben wir dorthin, wo der Bach in den See flo{*ss|ß}.", info: "Das Floß: langes o → ß. Er floss (von fließen): kurzes o → ss." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Er verlie{ss|*ß} das Haus, obwohl er sich auf niemanden verla{*ss|ß}en konnte.", info: "verließ: nach ie → ß. verlassen: kurzes a → ss." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Sie bei{ss|*ß}t in den Apfel, doch nach dem ersten Bi{*ss|ß} ist ihr Hunger noch grö{ss|*ß}er.", info: "beißt: nach ei → ß. Biss: kurzes i → ss. größer: langes ö → ß." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Es go{*ss|ß} in Strömen, das Wa{*ss|ß}er scho{*ss|ß} aus der Dachrinne und flo{*ss|ß} über die Stra{ss|*ß}e.", info: "goss, schoss, floss: kurzes o → ss (aber: gießen, schießen, fließen). Wasser: kurzes a → ss. Straße: langes a → ß." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Mit blo{ss|*ß}en Fü{ss|*ß}en lief er durch das na{*ss|ß}e Gras und verga{ss|*ß} die Zeit.", info: "bloß, Füße, vergaß: langer Selbstlaut → ß. nass: kurzes a → ss." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Wer regelmä{ss|*ß}ig übt, wird zuverlä{*ss|ß}ig be{*ss|ß}er.", info: "regelmäßig kommt von Maß: langes ä → ß. zuverlässig kommt von verlassen: kurzes ä → ss. besser: kurzes e → ss." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Der Schlo{*ss|ß}er schlo{*ss|ß} die Tür auf, und schlie{ss|*ß}lich konnten wir hinein.", info: "Schlosser, schloss: kurzes o → ss. schließlich: nach ie → ß." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Ich wei{ss|*ß} nicht, ob er es gewu{*ss|ß}t hat, aber seine Schwester wei{ss|*ß} es gewi{*ss|ß}.", info: "weiß: nach ei → ß. gewusst, gewiss: kurzer Selbstlaut → ss." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Dieses Gefä{ss|*ß} fa{*ss|ß}t einen Liter, das Fa{*ss|ß} im Keller fa{*ss|ß}t viel mehr.", info: "Gefäß: langes ä → ß. fasst, Fass: kurzes a → ss." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Der Genu{*ss|ß} war gro{ss|*ß}: Wir geno{*ss|ß}en das E{*ss|ß}en und genie{ss|*ß}en jetzt die Ruhe.", info: "Genuss, genossen, Essen: kurzer Selbstlaut → ss. groß: langes o → ß. genießen: nach ie → ß." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Die Gro{ss|*ß}eltern vermi{*ss|ß}en ihre Enkel und schicken herzliche Grü{ss|*ß}e und Kü{*ss|ß}e.", info: "Großeltern, Grüße: langer Selbstlaut → ß. vermissen, Küsse: kurzer Selbstlaut → ss." },
+  { topic: "ssß", level: 4, type: "wahl", text: "Nach dem Zusammensto{ss|*ß} me{*ss|ß}en die Polizisten den Abstand und schlie{ss|*ß}en die Stra{ss|*ß}e.", info: "Zusammenstoß: langes o → ß. messen: kurzes e → ss. schließen: nach ie → ß. Straße: langes a → ß." },
+  { topic: "ssß", level: 4, type: "match", q: "Die Wörter klingen fast gleich. ss oder ß?",
+    pairs: [["die Ma_e (wie schwer etwas ist)", "ss"], ["die Ma_e (Länge und Breite)", "ß"], ["das Flo_ (aus Baumstämmen)", "ß"], ["der Bach flo_ (von fließen)", "ss"], ["der Scho_ (darauf sitzt das Kind)", "ß"]],
+    info: "Masse, floss: kurzer Selbstlaut → ss. Maße, Floß, Schoß: langer Selbstlaut → ß." },
+  { topic: "ssß", level: 4, type: "mc", q: "Welche Reihe ist ganz richtig geschrieben?",
+    options: ["gießen – goss – gegossen – der Guss", "gießen – goß – gegossen – der Guss", "giessen – goss – gegossen – der Guß", "gießen – goss – gegoßen – der Guss"], answer: 0,
+    info: "gießen: nach ie → ß. goss, gegossen, Guss: kurzer Selbstlaut → ss." },
+  { topic: "ssß", level: 4, type: "multi", q: "Welche Wörter sind richtig geschrieben?",
+    options: ["regelmäßig", "zuverläßig", "scheußlich", "ein bißchen", "äußerst"], answers: [0, 2, 4],
+    info: "regelmäßig (langes ä), scheußlich (nach eu), äußerst (nach äu). Richtig wäre: zuverlässig, ein bisschen (kurzer Selbstlaut → ss)." },
+  { topic: "ssß", level: 4, type: "tf", q: "Steht in einem Wort ß, dann haben alle Wörter der Wortfamilie auch ß.", answer: false,
+    info: "Es kommt auf den Selbstlaut davor an: fließen – floss – Fluss, Maß – messen, schließen – Schloss." },
+  { topic: "ssß", level: 4, type: "mc", q: "Welcher Satz ist ganz richtig geschrieben?",
+    options: ["Er ließ den Hund los und goss die Blumen mit Wasser aus dem Fass.", "Er liess den Hund los und goss die Blumen mit Wasser aus dem Fass.", "Er ließ den Hund los und goß die Blumen mit Wasser aus dem Fass.", "Er ließ den Hund los und goss die Blumen mit Wasser aus dem Faß."], answer: 0,
+    info: "ließ: nach ie → ß. goss, Wasser, Fass: kurzer Selbstlaut → ss." },
+
+  // ---------- II. s, ss oder ß · sehr schwer ----------
+  { topic: "s", level: 4, type: "wahl", text: "Du ha{*s|ss|ß}t recht: Mein Bruder ha{s|*ss|ß}t Spinat.", info: "hast kommt von haben → s. hasst kommt von hassen → ss." },
+  { topic: "s", level: 4, type: "wahl", text: "An der Kü{*s|ss|ß}te kü{s|*ss|ß}te der Prinz die Prinze{s|*ss|ß}in.", info: "Die Küste (am Meer): vor t steht s. küsste kommt von küssen → ss. Prinzessin: kurzes e → ss." },
+  { topic: "s", level: 4, type: "wahl", text: "Lie{*s|ss|ß} den Brief bitte vor! Gestern lie{s|ss|*ß} er ihn einfach liegen.", info: "Lies! kommt von lesen → s. ließ kommt von lassen: nach ie → ß." },
+  { topic: "s", level: 4, type: "wahl", text: "Sie la{*s|ss|ß} die Zeitung. La{s|*ss|ß} mich auch hineinschauen!", info: "las kommt von lesen → s. Lass! kommt von lassen: kurzes a → ss." },
+  { topic: "s", level: 4, type: "wahl", text: "Ich mu{s|*ss|ß} das Apfelmu{*s|ss|ß} noch umrühren.", info: "muss kommt von müssen → ss. Das Mus (Brei): langes u, weiches s → s." },
+  { topic: "s", level: 4, type: "wahl", text: "Über die Flie{*s|ss|ß}en im Bad flie{s|ss|*ß}t Wa{s|*ss|ß}er.", info: "Die Fliese: weiches s → s. fließt: scharfes s nach ie → ß. Wasser: kurzes a → ss." },
+  { topic: "s", level: 4, type: "wahl", text: "Die wei{*s|ss|ß}e Eule hat wei{s|ss|*ß}e Federn und wei{s|ss|*ß} fa{*s|ss|ß}t alles.", info: "weise (= klug): weiches s → s. weiße Federn und „sie weiß“: scharfes s nach ei → ß. fast (= beinahe) mit s." },
+  { topic: "s", level: 4, type: "wahl", text: "Opa mi{s|*ss|ß}t den Haufen Mi{*s|ss|ß}t hinter dem Stall.", info: "misst kommt von messen → ss. Der Mist: vor t steht s." },
+  { topic: "s", level: 4, type: "wahl", text: "Wer viel rei{*s|ss|ß}t, i{s|*ss|ß}t in Asien oft Rei{*s|ss|ß}.", info: "reist kommt von reisen → s. isst kommt von essen → ss. Reis ist ein Merkwort mit einfachem s." },
+  { topic: "s", level: 4, type: "wahl", text: "Trotz aller Hinderni{s|*ss|ß}e war das Ergebni{*s|ss|ß} ein gro{s|ss|*ß}er Erfolg.", info: "-nis mit einem s, in der Mehrzahl -nisse. groß: scharfes s nach langem o → ß." },
+  { topic: "s", level: 4, type: "wahl", text: "Der Detektiv bewie{*s|ss|ß} mit einem Bewei{*s|ss|ß}, wer den Schmuck hatte, und nun wu{s|*ss|ß}ten es alle.", info: "bewies, Beweis kommen von beweisen: weiches s → s. wussten kommt von wissen → ss." },
+  { topic: "s", level: 4, type: "wahl", text: "Der Wind blie{*s|ss|ß} heftig und ri{s|*ss|ß} die Wäsche von der Leine.", info: "blies kommt von blasen → s. riss kommt von reißen: kurzes i → ss." },
+  { topic: "s", level: 4, type: "wahl", text: "Die Erb{*s|ss|ß}en und Lin{*s|ss|ß}en schmecken be{s|*ss|ß}er als das Gemü{*s|ss|ß}e von gestern.", info: "Nach einem Mitlaut (b, n, l, r) steht nie ss oder ß: Erbsen, Linsen. besser: kurzes e → ss. Gemüse: weiches s → s." },
+  { topic: "s", level: 4, type: "wahl", text: "Im Frühling blühen viele Kroku{s|*ss|ß}e, nur ein Kroku{*s|ss|ß} ist schon verblüht.", info: "Krokus ist ein Merkwort mit einem s. In der Mehrzahl steht ss: Krokusse." },
+  { topic: "s", level: 4, type: "wahl", text: "Von au{s|ss|*ß}en sieht das Hau{*s|ss|ß} klein aus, aber innen ist es rie{*s|ss|ß}ig.", info: "außen: scharfes s nach au → ß. Haus – Häuser: weiches s → s. riesig kommt von Riese → s." },
+  { topic: "s", level: 4, type: "match", q: "Lies genau, was gemeint ist. Welcher Buchstabe fehlt?",
+    pairs: [["du ha_t Glück (haben)", "s"], ["er ha_t Lärm (hassen)", "ss"], ["die Kü_te (am Meer)", "s"], ["er kü_te sie (küssen)", "ss"], ["sie lie_ los (lassen)", "ß"]],
+    info: "hast, Küste mit s. hasst, küsste: der Stamm von hassen und küssen bleibt → ss. ließ: nach ie → ß." },
+  { topic: "s", level: 4, type: "mc", q: "Welche Reihe ist ganz richtig geschrieben?",
+    options: ["lesen – sie liest – sie las – gelesen", "lesen – sie ließt – sie las – gelesen", "lesen – sie liest – sie laß – gelesen", "lesen – sie lisst – sie las – gelesen"], answer: 0,
+    info: "Der Wortstamm von lesen hat ein einfaches s. Es bleibt in allen Formen: liest, las, gelesen." },
+  { topic: "s", level: 4, type: "multi", q: "Welche Wörter sind richtig geschrieben?",
+    options: ["die Erbse", "die Linße", "der Felsen", "die Hindernise", "das Rätsel"], answers: [0, 2, 4],
+    info: "Nach einem Mitlaut steht nie ss oder ß: Erbse, Linse, Felsen, Rätsel. Mehrzahl von -nis: Hindernisse." },
+  { topic: "s", level: 4, type: "tf", q: "Nach einem Mitlaut wie l, n oder r steht nie ss oder ß.", answer: true,
+    info: "Hals, Gans, Vers, Felsen, Linse, Erbse: nach einem Mitlaut immer einfaches s." },
+  { topic: "s", level: 4, type: "mc", q: "Welcher Satz ist ganz richtig geschrieben?",
+    options: ["Sie isst Reis, während er die Preise liest.", "Sie ist Reis, während er die Preise liest.", "Sie isst Reiß, während er die Preise liest.", "Sie isst Reis, während er die Preise ließt."], answer: 0,
+    info: "isst kommt von essen → ss. Reis, Preise: weiches s → s. liest kommt von lesen → s." }
 ];

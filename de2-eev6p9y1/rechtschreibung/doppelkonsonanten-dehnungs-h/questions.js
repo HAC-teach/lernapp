@@ -1,6 +1,6 @@
 // Aufgaben zu „Doppelkonsonanten und Dehnungs-h“ (Deutsch, 2. Klasse, Rechtschreibung)
 // Inhalt: übliches Schulwissen der Unterstufe, alle Beispielsätze selbst ausgedacht.
-// level: 1 = leicht, 2 = mittel, 3 = schwer. Pro Runde kommen 15 Aufgaben aus dem Pool einer Stufe (jedes Mal andere).
+// level: 1 = leicht, 2 = mittel, 3 = schwer, 4 = sehr schwer. Pro Runde kommen 15 Aufgaben aus dem Pool einer Stufe (jedes Mal andere).
 // Aufgabentypen:
 //   wahl  – Übungssatz: {a|*b} wird zu einer Stelle, die die Kinder durch Antippen umschalten.
 //           Am Anfang steht die erste Möglichkeit da (immer die einfache: ein Mitlaut, ohne h); * = richtig.
@@ -193,5 +193,67 @@ const QUESTIONS = [
     info: "Bei ge-hen hört man das h am Anfang der zweiten Silbe. Ein Dehnungs-h hört man nie: Zahl, Sohn." },
   { topic: "dehnung", level: 3, type: "multi", q: "Welche Wörter gehören zur Wortfamilie von „wählen“?",
     options: ["Wahl", "Auswahl", "wahr", "Wähler", "Wal"], answers: [0, 1, 3],
-    info: "wahr (= richtig) und Wal (Tier) klingen ähnlich, gehören aber nicht dazu." }
+    info: "wahr (= richtig) und Wal (Tier) klingen ähnlich, gehören aber nicht dazu." },
+
+  // ---------- I. Doppelkonsonanten · sehr schwer ----------
+  { topic: "doppel", level: 4, type: "wahl", text: "Auf der Schi{f|ff|*fff}ahrt tra{*f|ff}en wir einen Kapi{*t|tt}än.", info: "Schiff + Fahrt = Schifffahrt: Alle drei f bleiben. trafen: langes a → ein f (aber: treffen). Kapitän: Fremdwort mit einem t." },
+  { topic: "doppel", level: 4, type: "wahl", text: "Der Hirte besitzt zwei Hü{*t|tt}e und wohnt im Sommer in einer Hü{t|*tt}e.", info: "Die Hüte (von Hut): langes ü → ein t. Die Hütte: kurzes ü → tt." },
+  { topic: "doppel", level: 4, type: "wahl", text: "Die Pi{z|tz|*zz}a schme{k|*ck}t, aber der Sa{*l|ll}at ist noch be{s|*ss}er.", info: "Pizza: Fremdwort mit zz. schmeckt: kurzes e → ck. Salat: Fremdwort mit einem l. besser: kurzes e → ss." },
+  { topic: "doppel", level: 4, type: "wahl", text: "Im Ho{*t|tt}el liegt ein Pa{*k|ck}et mit einer Ka{*m|mm}era.", info: "Fremdwörter: Hotel, Paket und Kamera haben nur einen Mitlaut. Achtung: packen mit ck, aber Paket mit k!" },
+  { topic: "doppel", level: 4, type: "wahl", text: "Er ka{*m|mm} zu spät, obwohl er sonst immer pünktlich ko{m|*mm}t.", info: "kam: langes a → ein m. kommt: kurzes o → mm. In der Wortfamilie kann das wechseln." },
+  { topic: "doppel", level: 4, type: "wahl", text: "Sie ba{*t|tt} mich um Hilfe, und nun bi{t|*tt}e ich dich darum.", info: "bat: langes a → ein t. bitte: kurzes i → tt." },
+  { topic: "doppel", level: 4, type: "wahl", text: "Der Zug ro{l|*ll}t durch den Tu{n|*nn}el, während der Scha{f|*ff}ner die Fahrkarten kontro{l|*ll}iert.", info: "rollt, Tunnel, Schaffner, kontrolliert: kurzer Selbstlaut → verdoppeln." },
+  { topic: "doppel", level: 4, type: "wahl", text: "Ma{*n|nn} sagt, dieser Ma{n|*nn} ka{n|*nn} zaubern.", info: "man (= irgendwer) ist ein Merkwort mit einem n. Der Mann und „er kann“ mit nn." },
+  { topic: "doppel", level: 4, type: "wahl", text: "We{n|*nn} es regnet, überlege ich, we{*n|nn} ich anrufen so{l|*ll}.", info: "wenn (= falls) mit nn. wen (Frage: Wen rufe ich an?) mit einem n. soll: kurzes o → ll." },
+  { topic: "doppel", level: 4, type: "wahl", text: "Die Ärzti{n|*nn}en besprechen die Ergebni{s|*ss}e mit einer Patienti{*n|nn}.", info: "Mehrzahl: -innen und -nisse. Einzahl: die Patientin mit einem n." },
+  { topic: "doppel", level: 4, type: "wahl", text: "Die Gra{m|*mm}atik ist intere{s|*ss}ant, aber das Fernsehprogra{m|*mm} gefä{l|*ll}t mir heute mehr.", info: "Grammatik, interessant, Programm: Fremdwörter mit Doppelkonsonant. gefällt kommt von fallen → ll." },
+  { topic: "doppel", level: 4, type: "wahl", text: "Die Bre{n|nn|*nnn}e{s|*ss}el bre{n|*nn}t auf der Haut, also fa{s|*ss} sie nicht an!", info: "Brenn + Nessel = Brennnessel: Alle drei n bleiben. Nessel, brennt, fass: kurzer Selbstlaut → verdoppeln." },
+  { topic: "doppel", level: 4, type: "wahl", text: "Die Gi{*r|rr}a{f|*ff}e fri{s|*ss}t Blä{t|*tt}er von den höchsten Ä{*s|ss}ten.", info: "Giraffe: ein r, aber ff. frisst, Blätter: verdoppeln. Äste: s und t folgen → nicht verdoppeln." },
+  { topic: "doppel", level: 4, type: "wahl", text: "Der Do{*k|ck}tor untersucht das Inse{*k|ck}t unter der Lu{*p|pp}e.", info: "Doktor, Insekt: Nach dem k folgt ein t → kein ck. Lupe: langes u → ein p." },
+  { topic: "doppel", level: 4, type: "wahl", text: "In der Fa{*b|bb}rik pa{k|*ck}en Ro{*b|bb}oter die Scho{*k|ck}olade in Schachteln.", info: "Fabrik, Roboter, Schokolade: Fremdwörter mit einfachem Mitlaut. packen: kurzes a → ck." },
+  { topic: "doppel", level: 4, type: "mc", q: "Welches Wort ist richtig geschrieben?",
+    options: ["Schifffahrt", "Schiffahrt", "Schiffart", "Schifffart"], answer: 0,
+    info: "Schiff + Fahrt: In zusammengesetzten Wörtern bleiben alle Buchstaben erhalten – auch drei gleiche." },
+  { topic: "doppel", level: 4, type: "multi", q: "Welche Fremdwörter sind richtig geschrieben?",
+    options: ["das Paket", "das Hottel", "die Kamera", "die Schockolade", "die Gitarre"], answers: [0, 2, 4],
+    info: "Paket, Kamera, Gitarre stimmen. Richtig wäre: Hotel, Schokolade. Fremdwörter muss man sich merken." },
+  { topic: "doppel", level: 4, type: "match", q: "Die Wörter klingen ähnlich. Was fehlt?",
+    pairs: [["die Hü_e (auf dem Kopf)", "t"], ["die Hü_e (kleines Haus)", "tt"], ["der Sta_ (für die Kühe)", "ll"], ["der O_en (zum Heizen)", "f"], ["die Tür ist o_en", "ff"]],
+    info: "Hüte, Ofen: langer Selbstlaut → ein Mitlaut. Hütte, Stall, offen: kurzer Selbstlaut → verdoppeln." },
+  { topic: "doppel", level: 4, type: "tf", q: "Treffen in einem zusammengesetzten Wort drei gleiche Buchstaben zusammen, fällt einer weg.", answer: false,
+    info: "Alle drei bleiben: Schifffahrt, Brennnessel, Betttuch, Schritttempo." },
+  { topic: "doppel", level: 4, type: "mc", q: "Warum schreibt man „er kam“ mit EINEM m, obwohl es von „kommen“ kommt?",
+    options: ["Das a in „kam“ ist lang.", "In der Vergangenheit wird nie verdoppelt.", "Am Wortende wird nie verdoppelt.", "Weil „kam“ ein kurzes Wort ist."], answer: 0,
+    info: "Es zählt der Selbstlaut: kommen (kurzes o → mm), kam (langes a → m). Genauso: treffen – traf, bitten – bat." },
+
+  // ---------- II. Dehnungs-h · sehr schwer ----------
+  { topic: "dehnung", level: 4, type: "wahl", text: "Das w{*a|ah}r eine w{a|*ah}re Geschichte, sie ist w{a|*ah}rscheinlich hundert J{a|*ah}re alt.", info: "war (von sein) ohne h. wahr (= es stimmt), wahrscheinlich, Jahre mit h." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Der N{*a|ah}me des Mannes, der den Koffer n{a|*ah}m, ist unbekannt.", info: "Der Name ohne h. nahm (von nehmen) mit h." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Der Müller m{a|*ah}lt das Korn zu M{e|*eh}l, seine Tochter m{*a|ah}lt ein Bild.", info: "mahlen (Korn zu Mehl) mit h. malen (mit Farbe) ohne h." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Die S{o|*oh}le meines Stiefels ist kaputt, ich h{*o|oh}le sch{*o|oh}n den Kleber.", info: "Die Sohle (am Schuh) mit h. holen und schon ohne h." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Der Baumstamm ist h{o|*oh}l, dort h{*o|oh}lt sich der Specht sein Futter.", info: "hohl (= innen leer) mit h. holt (von holen) ohne h." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Die F{ä|*äh}re f{u|*uh}r ab, w{ä|*äh}rend wir noch am {*U|Uh}fer standen.", info: "Fähre, fuhr (von fahren) und während mit h. Ufer ohne h." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Nach dem Diebst{a|*ah}l fand die Polizei die gest{o|*oh}lene {U|*Uh}r in einem T{*o|oh}pf.", info: "Diebstahl, gestohlen (von stehlen) und Uhr mit h. Topf: kurzes o → kein h." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Der Kr{*a|ah}n hebt einen Pf{a|*ah}l aus St{a|*ah}l über die Sch{*u|uh}le.", info: "Nach Kr und Sch steht meist kein h: Kran, Schule. Pfahl und Stahl sind Ausnahmen – die muss man sich merken." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Die Dr{o|*oh}ne fliegt über das T{*a|ah}l und filmt die Sp{*u|uh}ren im Schn{e|*ee|eh}.", info: "Drohne mit h (Ausnahme). Tal: nach t kein h. Spuren: nach sp kein h. Schnee mit ee." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Die {U|*Uh}r meines {*U|Uh}rgroßvaters läuft noch f{e|*eh}lerfrei.", info: "Die Uhr (zeigt die Zeit) mit h. Die Vorsilbe Ur- (Urgroßvater, uralt) ohne h. Fehler mit h." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Der K{*ö|öh}nig war ber{ü|*üh}mt, doch sein R{u|*uh}m machte {i|*ih}n nicht glücklich.", info: "König ohne h. berühmt, Ruhm mit h. ihn mit ih." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Die Kinder, mit d{*e|eh}nen ich turne, d{e|*eh}nen zuerst {i|*ih}re Beine.", info: "denen (mit denen) ohne h. dehnen (= strecken) mit h. ihre mit ih." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Das Festm{a|*ah}l war gut, beim nächsten M{*a|ah}l n{e|*eh}men wir die Großeltern mit.", info: "Das Mahl (Essen) mit h. Das Mal (einmal, nächstes Mal) ohne h. nehmen mit h." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Im L{*a|ah}den liegt teure W{*a|ah}re, doch w{a|*ah}re Freundschaft ist unbez{a|*ah}lbar.", info: "Laden und Ware (zum Verkaufen) ohne h. wahre (= echte) und unbezahlbar (von zahlen) mit h." },
+  { topic: "dehnung", level: 4, type: "wahl", text: "Wir w{*ä|äh}ren gern länger geblieben, aber die Ferien w{ä|*äh}rten nur eine W{*o|oh}che.", info: "wären (von sein) ohne h. währten (= dauerten, wie in „während“) mit h. Woche: kurzes o → kein h." },
+  { topic: "dehnung", level: 4, type: "match", q: "Die Wörter klingen gleich. Mit h oder ohne?",
+    pairs: [["es w_r einmal", "a"], ["das ist w_r (es stimmt)", "ah"], ["der N_me", "a"], ["er n_m das Buch", "ah"], ["Korn m_len", "ah"]],
+    info: "war, Name ohne h. wahr, nahm, mahlen mit h." },
+  { topic: "dehnung", level: 4, type: "tf", q: "Ein Dehnungs-h steht nur vor l, m, n oder r.", answer: true,
+    info: "Zahl, nehmen, Sohn, Uhr. Vor anderen Mitlauten steht kein Dehnungs-h: Brot, Hase, Weg." },
+  { topic: "dehnung", level: 4, type: "multi", q: "Welche Wörter sind richtig geschrieben?",
+    options: ["der Kran", "die Schuhle", "der Pfahl", "die Spuhr", "der Stahl"], answers: [0, 2, 4],
+    info: "Nach Kr, Sch und Sp steht meist kein h: Kran, Schule, Spur. Ausnahmen zum Merken: Pfahl, Stahl, Strahl, Stuhl." },
+  { topic: "dehnung", level: 4, type: "mc", q: "Welche Reihe ist ganz richtig geschrieben?",
+    options: ["fahren – er fuhr – die Fähre – der Gefährte", "fahren – er fur – die Fähre – der Gefährte", "fahren – er fuhr – die Färe – der Gefährte", "fahren – er fuhr – die Fähre – der Gefärte"], answer: 0,
+    info: "In der Wortfamilie von fahren bleibt das h: fuhr, Fähre, Gefährte, Fahrt." },
+  { topic: "dehnung", level: 4, type: "mc", q: "Warum schreibt man „genommen“ ohne h, obwohl es von „nehmen“ kommt?",
+    options: ["Das o ist kurz – ein Dehnungs-h steht nur nach einem langen Selbstlaut.", "In der Vergangenheit steht nie ein h.", "Nach n steht nie ein h.", "Weil das Wort so lang ist."], answer: 0,
+    info: "nehmen, nahm: langer Selbstlaut → h. genommen: kurzes o → mm, kein h." }
 ];
