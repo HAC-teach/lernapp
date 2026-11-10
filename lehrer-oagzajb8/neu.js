@@ -3,6 +3,8 @@
 // text = was sich geändert hat (für die Lehrkraft), ziel = optional Kapitelordner für die Vorschau.
 // Einträge der letzten 14 Tage bekommen das Kennzeichen „neu“.
 const NEUIGKEITEN = [
+  { datum: "2026-11-10", fach: "de", wo: "2. Klasse · Rechtschreibung · Langes i und lange Vokale", ziel: "de2-eev6p9y1/rechtschreibung/langes-i-lange-vokale/",
+    text: "Neues Lernspiel mit den Themen I. Langes i (ie, einfaches i wie in Tiger und Maschine, ih, ieh, -ieren, Vergangenheit wie schrieb) und II. Lange Vokale (einfach, aa/ee/oo, Dehnungs-h, gleich klingende Wörter wie Meer – mehr). Je drei Stufen: leicht, mittel, schwer. Die meisten Aufgaben sind Übungssätze: Die Kinder tippen markierte Stellen an und wechseln zwischen den Schreibweisen (auch an Stellen, wo die einfache Schreibung richtig ist). Pro Runde 15 Aufgaben aus 20 je Stufe, jedes Mal andere. Dazu Lernkarten, je Thema 2 Fehlertexte mit genau 10 Fehlern und die Animation „Buchstabenpaare“. Übliches Schulwissen, alle Sätze und Texte selbst ausgedacht. Keine Millionenshow." },
   { datum: "2026-11-10", fach: "de", wo: "2. Klasse · Kapitelliste", ziel: "de2-eev6p9y1/",
     text: "Korrigiert: Beim Kapitel Rechtschreibung stand noch „Noch keine Lernspiele“. Jetzt stehen dort die beiden Lernspiele: Nomen und Großschreibung · Doppelkonsonanten und Dehnungs-h." },
   { datum: "2026-11-10", fach: "de", wo: "2. Klasse · Grammatik · Das Verb: Aktiv/Passiv", ziel: "de2-eev6p9y1/grammatik/verb-aktiv-passiv/",
