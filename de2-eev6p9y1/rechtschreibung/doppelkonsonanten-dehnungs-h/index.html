@@ -1,0 +1,506 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="color-scheme" content="light only">
+<title>Lernspiel Rechtschreibung</title>
+<style>
+  /* Design „Forscherheft“: Karopapier, Textmarker, Klebestreifen, Haftnotizen.
+     Themenfarben: --c (Farbe), --ci (dunkel, für Schrift/Buttons), --soft (sehr hell), --mid (Textmarker) – setzt paint() pro Thema. */
+  :root {
+    --card: #ffffff; --text: #2f2a22; --ink: #2f2a22; --muted: #7c7466; --border: #d9d1c2; --dash: #b9b0a0;
+    --note: #fff6b8; --grid: #e9eef5;
+    --ok: #3f9a6f; --ok-soft: #e3f4ea; --bad: #d0533f; --bad-soft: #fbe6e1;
+    --c: #e0b100; --ci: #7a5f00; --soft: #fdf6d6; --mid: #ffd96a;
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; color: var(--text); font: 17px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background: #ffffff; background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+    background-size: 22px 22px; }
+  .top { background: rgba(255, 255, 255, .94); border-bottom: 1.5px solid var(--ink); padding: 8px 16px; }
+  .top .in { max-width: 820px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .top .info { color: var(--muted); font-size: .9rem; font-weight: 600; }
+  main { max-width: 820px; margin: 0 auto; padding: 24px 16px 48px; }
+  .hl { display: inline; padding: 0 4px; -webkit-box-decoration-break: clone; box-decoration-break: clone;
+    background: linear-gradient(transparent 55%, var(--mid) 55%); }
+  h1 { font-size: 2rem; font-weight: 800; margin: 0 0 12px; line-height: 1.35; }
+  h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 16px; }
+  .sub { color: var(--muted); margin: 0 0 24px; }
+  button { font: inherit; color: inherit; cursor: pointer; }
+  /* Karte mit Klebestreifen */
+  .card { position: relative; background: var(--card); border: 1.5px solid var(--ink); padding: 22px 20px 20px; margin-top: 12px;
+    border-radius: 4px 14px 6px 12px / 12px 6px 14px 4px; }
+  .card::before { content: ""; position: absolute; top: -11px; left: 42%; width: 76px; height: 21px; background: var(--mid); opacity: .8; transform: rotate(-3deg); }
+  /* Themen-Kopf mit Motiv */
+  .thead { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 8px; }
+  .thead h1 { font-size: 1.55rem; margin: 0; }
+  .thead svg { width: 58px; height: 58px; flex: none; color: var(--ci); transform: rotate(8deg); }
+  /* Themen als Haftnotizen */
+  .grid { display: grid; gap: 18px; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); }
+  .topic { text-align: left; background: var(--soft); border: 0; border-radius: 2px; padding: 0; display: flex; flex-direction: column;
+    box-shadow: 1px 3px 6px rgba(0, 0, 0, .13); transform: rotate(-1deg); transition: transform .15s, box-shadow .15s; }
+  .topic:nth-child(2n) { transform: rotate(1deg); }
+  .topic:hover { transform: rotate(0) translateY(-2px); box-shadow: 2px 5px 10px rgba(0, 0, 0, .16); }
+  .topic .head { display: flex; gap: 12px; align-items: center; padding: 14px 16px 10px; flex: 1; font-weight: 700; }
+  .topic .head svg { width: 40px; height: 40px; flex: none; color: var(--ci); }
+  .topic small { display: block; color: var(--muted); font-size: .85rem; padding: 8px 16px 12px; border-top: 1.5px dashed rgba(0, 0, 0, .15); }
+  .topic.all { grid-column: 1 / -1; transform: rotate(-.4deg); }
+  .num { flex: none; color: var(--ci); font-weight: 800; font-size: 1rem; line-height: 1; min-width: 1.1em; }
+  .btn { background: var(--ci); color: #fff; border: 1.5px solid var(--ink); border-radius: 4px; padding: 10px 20px;
+    font-weight: 700; box-shadow: 2px 2px 0 var(--ink); transform: rotate(-.6deg); }
+  .btn:hover:not(:disabled) { filter: brightness(1.08); }
+  .btn:active:not(:disabled) { transform: translate(1px, 1px) rotate(-.6deg); box-shadow: 1px 1px 0 var(--ink); }
+  .btn:disabled { opacity: .45; cursor: default; }
+  .btn.ghost { background: var(--card); color: var(--text); }
+  .bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--muted); font-size: .95rem; flex-wrap: wrap; }
+  .progress { height: 12px; background: var(--card); border: 1.5px solid var(--ink); border-radius: 99px; overflow: hidden; margin-bottom: 14px; }
+  .progress div { height: 100%; transition: width .3s;
+    background: repeating-linear-gradient(-45deg, var(--c) 0 6px, var(--mid) 6px 12px); }
+  .q { font-size: 1.1rem; font-weight: 650; margin: 0 0 18px; }
+  .opts { display: grid; gap: 10px; }
+  .opt { text-align: left; background: var(--card); border: 1.5px dashed var(--dash); border-radius: 6px; padding: 12px 14px; }
+  .opt:hover:not(:disabled) { border-color: var(--c); border-style: solid; }
+  .opt.sel { border: 1.5px solid var(--c); background: var(--soft); box-shadow: inset 0 0 0 1px var(--c); }
+  .opt.ok { border: 1.5px solid var(--ok); background: var(--ok-soft); box-shadow: inset 0 0 0 1px var(--ok); }
+  .opt.bad { border: 1.5px solid var(--bad); background: var(--bad-soft); box-shadow: inset 0 0 0 1px var(--bad); }
+  .opt:disabled { cursor: default; }
+  .tf { grid-template-columns: 1fr 1fr; }
+  .tf .opt { text-align: center; font-weight: 600; padding: 18px; }
+  .row { display: grid; grid-template-columns: 1fr 1.3fr; gap: 10px; align-items: center; padding: 10px 0; border-bottom: 1.5px dashed var(--border); }
+  .row:last-child { border-bottom: 0; }
+  .row b { font-weight: 600; }
+  select { font: inherit; color: var(--text); background: var(--card); border: 1.5px solid var(--dash); border-radius: 6px; padding: 9px 10px; width: 100%; }
+  select:focus { outline: 2px solid var(--soft); border-color: var(--c); }
+  select.ok { border-color: var(--ok); background: var(--ok-soft); }
+  select.bad { border-color: var(--bad); background: var(--bad-soft); }
+  .fix { grid-column: 2; font-size: .9rem; color: var(--ok); }
+  .feedback { margin-top: 18px; border-radius: 6px; padding: 12px 14px; border-left: 4px solid; }
+  .feedback.ok { background: var(--ok-soft); border-color: var(--ok); }
+  .feedback.bad { background: var(--bad-soft); border-color: var(--bad); }
+  .feedback strong { display: block; }
+  .feedback .more { display: block; margin-top: 6px; color: var(--muted); font-size: .92rem; }
+  .actions { display: flex; gap: 10px; justify-content: flex-end; align-items: center; margin-top: 18px; flex-wrap: wrap; }
+  .big { display: inline-block; font-size: 3rem; font-weight: 800; margin: 8px 0; padding: 0 6px;
+    background: linear-gradient(transparent 55%, var(--mid) 55%); }
+  .center { text-align: center; }
+  .review { margin-top: 20px; text-align: left; }
+  .review li { margin-bottom: 10px; }
+  .review span { color: var(--muted); display: block; font-size: .92rem; }
+  .streak { font-weight: 700; color: var(--ci); }
+  .back { display: block; width: fit-content; color: var(--muted); text-decoration: none; font-size: .95rem; font-weight: 600; margin-bottom: 12px; }
+  .back:hover { color: var(--text); }
+  .learn ul { margin: 0; padding-left: 1.2em; }
+  .learn li { margin-bottom: 8px; }
+  .learn li::marker { color: var(--ci); }
+  .tip { margin-top: 18px; background: var(--note); border-radius: 2px; padding: 12px 14px; box-shadow: 1px 2px 5px rgba(0, 0, 0, .12); transform: rotate(-.5deg); }
+  .dots { display: flex; gap: 6px; justify-content: center; margin-top: 16px; }
+  .dots i { width: 8px; height: 8px; border-radius: 50%; background: var(--border); }
+  .dots i.on { background: var(--c); }
+  .skip { background: none; border: 0; color: var(--muted); text-decoration: underline; padding: 0; }
+  .reset { margin-right: auto; font-size: .95rem; color: var(--ci); font-weight: 600; }
+  footer { color: var(--muted); font-size: .85rem; text-align: center; margin-top: 32px; }
+  .hint { color: var(--muted); font-size: .95rem; margin: -8px 0 12px; }
+  .opt.check { display: flex; gap: 10px; align-items: center; }
+  .opt.check::before { content: ""; flex: none; width: 18px; height: 18px; border: 2px solid var(--border); border-radius: 4px; background: var(--card); }
+  .opt.check.sel::before, .opt.check.ok::before { border-color: var(--ok); background: var(--ok); box-shadow: inset 0 0 0 3px var(--card); }
+  .opt.check.sel::before { border-color: var(--c); background: var(--c); }
+  .opt.check.bad::before { border-color: var(--bad); background: var(--bad); box-shadow: inset 0 0 0 3px var(--card); }
+  .opt.miss { border: 2px dashed var(--ok); }
+  /* Übungssatz: Wörter bzw. Buchstaben antippen und umschalten */
+  .satz { font-size: 1.45rem; font-weight: 700; line-height: 2.2; margin: 0; overflow-wrap: anywhere; }
+  .satz .w, .satz .tg { font: inherit; color: inherit; border: 0; margin: 0; padding: 0 2px; border-radius: 5px; background: none; line-height: 1.4; }
+  .satz .w:hover:not(:disabled) { background: var(--soft); }
+  .satz .w.up { color: var(--ci); }
+  .satz .tg { color: var(--ci); background: var(--soft); border-bottom: 3px solid var(--c); border-radius: 4px 4px 0 0; padding: 0; margin: 0 1px; position: relative; }
+  .satz .tg::after { content: ""; position: absolute; inset: -8px -5px; } /* größere Tippfläche ohne Lücke im Wort */
+  .satz .wd { white-space: nowrap; }
+  .satz .tg:hover:not(:disabled) { background: var(--mid); }
+  .satz button:disabled { cursor: default; }
+  .satz .bad { color: var(--bad) !important; background: var(--bad-soft) !important; border-bottom: 3px solid var(--bad); }
+  .satz .ok { color: var(--ok) !important; background: var(--ok-soft) !important; border-bottom-color: var(--ok); }
+  .again { display: inline-block; font-size: .8rem; font-weight: 700; color: var(--ci); border: 1.5px solid var(--c); background: var(--soft); border-radius: 99px; padding: 1px 10px; margin-bottom: 10px; }
+  .solution { margin-top: 14px; background: var(--note); border-radius: 2px; padding: 12px 14px; box-shadow: 1px 2px 5px rgba(0, 0, 0, .12); transform: rotate(-.3deg); }
+  .solution .satz { font-size: 1.15rem; line-height: 1.7; margin: 4px 0 8px; }
+  .solution mark { background: none; color: var(--ok); text-decoration: underline 3px; text-underline-offset: 4px; }
+  .solution mark.fixd { background: #ffd96a; color: var(--text); border-radius: 3px; padding: 0 2px; }
+  .solution p { margin: 0; }
+  /* Schwierigkeit */
+  .lvdots { display: inline-flex; gap: 3px; vertical-align: middle; }
+  .lvdots i { width: 9px; height: 9px; border-radius: 50%; border: 1.5px solid var(--ci); }
+  .lvdots i.on { background: var(--ci); }
+  .levels { display: grid; gap: 12px; grid-template-columns: repeat(3, 1fr); }
+  .lvl { background: var(--soft); border: 1.5px solid var(--ink); border-radius: 6px; padding: 14px 10px; display: flex; flex-direction: column; align-items: center; gap: 6px;
+    box-shadow: 2px 2px 0 var(--ink); }
+  .lvl:hover { background: var(--mid); }
+  .lvl b { font-size: 1.15rem; }
+  .lvl small { color: var(--muted); font-size: .85rem; text-align: center; }
+  .lvl .lvdots i { width: 12px; height: 12px; }
+  /* Animationen am Ende (ohne Ton) */
+  .fx { position: fixed; inset: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }
+  @media (min-width: 700px) {
+    body { font-size: 18px; }
+    main { padding: 32px 24px 56px; }
+    .card { padding: 28px 28px 24px; }
+    .thead h1 { font-size: 1.9rem; }
+    .thead svg { width: 72px; height: 72px; }
+    .opts:not(.tf) { grid-template-columns: 1fr 1fr; }
+    .satz { font-size: 1.7rem; }
+  }
+  @media (max-width: 480px) { .row { grid-template-columns: 1fr; } .fix { grid-column: 1; } h1 { font-size: 1.6rem; } .top .info { display: none; }
+    .levels { grid-template-columns: 1fr; } .lvl { flex-direction: row; justify-content: space-between; } .satz { font-size: 1.3rem; } }
+</style>
+</head>
+<body>
+<header class="top"><div class="in"><span data-marke="de"></span><span class="info">2. Klasse</span></div></header>
+<main id="app"></main>
+<script src="../../../marke.js"></script>
+<script src="questions.js"></script>
+<script src="lernen.js"></script>
+<script src="bilder.js"></script>
+<script src="animation.js"></script>
+<script>
+// Ablauf: Thema → Lernkarten → Schwierigkeit (leicht/mittel/schwer) → Runde mit ROUND Aufgaben aus dem Pool dieser Stufe.
+// Aufgaben aus der letzten Runde kommen erst wieder dran, wenn die neuen aufgebraucht sind – so gibt es jedes Mal andere.
+// Falsch gelöste Aufgaben kommen in derselben Runde noch genau REPEATS-mal.
+const app = document.getElementById("app");
+const ROUND = 15, REPEATS = 2;
+const LEVELS = [{ n: 1, name: "leicht" }, { n: 2, name: "mittel" }, { n: 3, name: "schwer" }];
+const KEY = SPIEL.key;
+let state = null;
+document.title = SPIEL.title + " Lernspiel";
+QUESTIONS.forEach((q, i) => { q.nr = i; if (!q.q) q.q = SPIEL.prompts[q.type] || ""; });
+
+const shuffle = a => { a = a.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
+const esc = s => String(s).replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const store = (k, v) => { try { if (v === undefined) return JSON.parse(localStorage.getItem(k) || "{}"); localStorage.setItem(k, JSON.stringify(v)); } catch { return {}; } };
+const loadBest = () => store(KEY + "-best");
+function saveBest(id, pct) { const b = loadBest(); if (!(b[id] >= pct)) { b[id] = pct; store(KEY + "-best", b); } }
+const lvDots = n => `<span class="lvdots" aria-hidden="true">${[1, 2, 3].map(k => `<i class="${k <= n ? "on" : ""}"></i>`).join("")}</span>`;
+const levelName = n => LEVELS.find(l => l.n === n).name;
+
+// Themenfarben: aus TOPICS[].color werden helle und dunkle Abstufungen berechnet
+const rgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const mix = (h, w, t) => { const a = rgb(h), b = rgb(w); return `rgb(${a.map((x, i) => Math.round(x + (b[i] - x) * t)).join(",")})`; };
+const colorOf = id => { const t = TOPICS.find(t => t.id === id); return t ? t.color : null; };
+const themeVars = c => c ? `--c:${c};--ci:${mix(c, "#000000", .38)};--soft:${mix(c, "#ffffff", .84)};--mid:${mix(c, "#ffffff", .55)}` : "";
+function paint(id) { app.style.cssText = themeVars(colorOf(id)); }
+const topicIcon = id => TOPIC_ICONS[id] ? `<svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${TOPIC_ICONS[id]}</svg>` : "";
+const topicTitle = id => id === "all" ? "Alle Themen gemischt" : TOPICS.find(t => t.id === id).title;
+const topicHead = id => `<div class="thead"><h1><span class="hl">${esc(topicTitle(id))}</span></h1>${topicIcon(id)}</div>`;
+const bestLine = (best, id) => {
+  const s = LEVELS.filter(l => best[id + "-" + l.n] != null).map(l => `${l.name} ${best[id + "-" + l.n]} %`);
+  return s.length ? ` · Bestwert ${s.join(", ")}` : "";
+};
+
+function home() {
+  paint(null);
+  const best = loadBest();
+  const tile = (id, n, cls = "") =>
+    `<button class="topic ${cls}" data-id="${id}" style="${themeVars(colorOf(id))}"><span class="head">${topicIcon(id) || `<span class="num">${n}</span>`}${esc(topicTitle(id))}</span>
+      <small>${id === "all" ? "" : `${(LESSONS[id] || []).length} Lernkarten · `}3 Stufen${bestLine(best, id)}</small></button>`;
+  app.innerHTML = `
+    <a class="back" href="../">← Rechtschreibung</a>
+    <h1><span class="hl">${esc(SPIEL.title)}</span></h1>
+    <p class="sub">Wähle ein Thema: Zuerst lernst du mit den Karten. Dann wählst du, wie schwer es sein soll: leicht, mittel oder schwer.</p>
+    <div class="grid">
+      ${tile("all", "Mix", "all")}
+      ${TOPICS.map((t, n) => tile(t.id, n + 1)).join("")}
+    </div>
+    <footer>Jede Runde hat ${ROUND} Aufgaben – jedes Mal andere. Was du falsch machst, kommt in der Runde noch ${REPEATS}-mal.</footer>`;
+  app.querySelectorAll(".topic").forEach(b => b.onclick = () => b.dataset.id === "all" ? chooseLevel("all") : learn(b.dataset.id, 0));
+  window.scrollTo(0, 0);
+}
+
+function learn(id, i) {
+  const cards = LESSONS[id] || [];
+  if (!cards.length) return chooseLevel(id);
+  const c = cards[i], last = i === cards.length - 1;
+  paint(id);
+  app.innerHTML = `
+    ${topicHead(id)}
+    <div class="bar"><button class="btn ghost" id="quit" style="padding:6px 12px">← Themen</button>
+      <span>Karte ${i + 1} / ${cards.length}</span></div>
+    <div class="card learn">
+      <h2>${esc(c.title)}</h2>
+      <ul>${c.points.map(p => `<li>${esc(p)}</li>`).join("")}</ul>
+      ${c.tip ? `<div class="tip"><b>Tipp:</b> ${esc(c.tip)}</div>` : ""}
+      <div class="dots">${cards.map((_, j) => `<i class="${j === i ? "on" : ""}"></i>`).join("")}</div>
+      <div class="actions">
+        ${i > 0 ? `<button class="btn ghost" id="prev">← Zurück</button>` : ""}
+        <button class="btn" id="next">${last ? "Zum Üben" : "Weiter →"}</button>
+      </div>
+    </div>
+    ${last ? "" : `<p class="center"><button class="skip" id="toquiz">Direkt zum Üben</button></p>`}`;
+  document.getElementById("quit").onclick = home;
+  document.getElementById("next").onclick = () => last ? chooseLevel(id) : learn(id, i + 1);
+  if (i > 0) document.getElementById("prev").onclick = () => learn(id, i - 1);
+  if (!last) document.getElementById("toquiz").onclick = () => chooseLevel(id);
+  window.scrollTo(0, 0);
+}
+
+const poolOf = (id, level) => QUESTIONS.filter(q => q.level === level && (id === "all" || q.topic === id));
+
+function chooseLevel(id) {
+  const best = loadBest();
+  paint(id === "all" ? null : id);
+  app.innerHTML = `
+    ${topicHead(id)}
+    <div class="bar"><button class="btn ghost" id="quit" style="padding:6px 12px">← Themen</button></div>
+    <div class="card">
+      <h2>Wie schwer soll es sein?</h2>
+      <p class="hint" style="margin:-6px 0 16px">Jede Runde hat ${ROUND} Aufgaben – jedes Mal andere.</p>
+      <div class="levels">${LEVELS.map(l => `<button class="lvl" data-l="${l.n}">${lvDots(l.n)}<b>${l.name}</b>
+        <small>${best[id + "-" + l.n] != null ? `Bestwert ${best[id + "-" + l.n]} %` : "noch nicht gespielt"}</small></button>`).join("")}</div>
+      ${id !== "all" && (LESSONS[id] || []).length ? `<p class="center" style="margin:18px 0 0"><button class="skip" id="relearn">Lernkarten ansehen</button></p>` : ""}
+    </div>`;
+  document.getElementById("quit").onclick = home;
+  app.querySelectorAll(".lvl").forEach(b => b.onclick = () => start(id, +b.dataset.l));
+  const r = document.getElementById("relearn");
+  if (r) r.onclick = () => learn(id, 0);
+  window.scrollTo(0, 0);
+}
+
+// Neue Aufgaben zuerst: was in der letzten Runde dran war, kommt nur dazu, wenn der Pool sonst zu klein ist
+function pickRound(pool, key) {
+  const seen = store(KEY + "-seen"), last = new Set(seen[key] || []);
+  const list = shuffle(shuffle(pool.filter(q => !last.has(q.nr))).concat(shuffle(pool.filter(q => last.has(q.nr)))).slice(0, ROUND));
+  seen[key] = list.map(q => q.nr);
+  store(KEY + "-seen", seen);
+  return list;
+}
+
+function start(id, level) {
+  const list = pickRound(poolOf(id, level), id + "-" + level).map(q => ({ q, rep: 0 }));
+  state = { id, level, list, n: list.length, i: 0, score: 0, streak: 0, wrong: [], repTotal: 0, repOk: 0 };
+  render();
+}
+
+function render() {
+  const item = state.list[state.i], q = item.q;
+  state.answered = false;
+  state.pick = null;
+  paint(q.topic);
+  const satz = q.type === "gross" || q.type === "wahl";
+  app.innerHTML = `
+    ${topicHead(q.topic)}
+    <div class="bar"><button class="btn ghost" id="quit" style="padding:6px 12px">← Themen</button>
+      <span>Aufgabe ${state.i + 1} von ${state.list.length}</span>
+      <span>${lvDots(state.level)} ${levelName(state.level)} · ${state.score} Punkte${state.streak >= 3 ? ` · <span class="streak">${state.streak} in Folge</span>` : ""}</span></div>
+    <div class="progress"><div style="width:${state.i / state.list.length * 100}%"></div></div>
+    <div class="card">
+      ${item.rep ? `<span class="again">Wiederholung ${item.rep} von ${REPEATS}</span>` : ""}
+      <p class="q">${esc(q.q)}</p>
+      <div id="body"></div>
+      <div id="fb"></div>
+      <div class="actions">${satz ? `<button class="skip reset" id="reset">Übungssatz zurücksetzen</button>` : ""}<button class="btn" id="go" disabled>Prüfen</button></div>
+    </div>`;
+  document.getElementById("quit").onclick = home;
+  const go = document.getElementById("go");
+  go.onclick = () => state.answered ? next() : check();
+  ({ gross: renderGross, wahl: renderWahl, mc: renderMC, tf: renderTF, match: renderMatch, multi: renderMulti })[q.type](q, document.getElementById("body"), go);
+  if (satz) document.getElementById("reset").onclick = () => { if (!state.answered) state.reset(); };
+}
+
+// Groß oder klein: Der Satz steht ganz klein da. Antippen schaltet den Anfangsbuchstaben groß ↔ klein.
+const LETTER = /\p{L}/u;
+const isBig = w => { const m = w.match(LETTER); return !!m && m[0] !== m[0].toLowerCase(); };
+const caseTo = (w, big) => w.replace(LETTER, c => big ? c.toUpperCase() : c.toLowerCase());
+function renderGross(q, el, go) {
+  const words = q.text.split(" ");
+  let cur = words.map(() => false);
+  const draw = () => {
+    el.innerHTML = `<p class="satz">${words.map((w, i) => `<button class="w${cur[i] ? " up" : ""}" data-i="${i}">${esc(caseTo(w, cur[i]))}</button>`).join(" ")}</p>`;
+    el.querySelectorAll(".w").forEach(b => b.onclick = () => { if (state.answered) return; cur[+b.dataset.i] = !cur[+b.dataset.i]; draw(); });
+  };
+  draw();
+  go.disabled = false;
+  state.reset = () => { cur = words.map(() => false); draw(); };
+  state.grade = () => {
+    const wrong = words.map((w, i) => cur[i] !== isBig(w));
+    el.querySelectorAll(".w").forEach((b, i) => { b.disabled = true; if (wrong[i]) b.classList.add("bad"); else if (cur[i]) b.classList.add("ok"); });
+    return {
+      ok: !wrong.some(Boolean), correct: q.text,
+      solution: words.map((w, i) => isBig(w) || wrong[i] ? `<mark class="${wrong[i] ? "fixd" : ""}">${esc(w)}</mark>` : esc(w)).join(" ")
+    };
+  };
+}
+
+// Einfach oder doppelt, mit oder ohne h …: {a|*ah} im Text wird zu einer Umschalt-Stelle (erste Möglichkeit steht am Anfang da, * = richtig)
+function renderWahl(q, el, go) {
+  const parts = q.text.split(/\{([^}]+)\}/).map((p, i) => i % 2 ? (() => {
+    const o = p.split("|");
+    return { opts: o.map(x => x.replace(/^\*/, "")), right: o.findIndex(x => x.startsWith("*")) };
+  })() : p);
+  let cur = parts.map(() => 0);
+  const draw = () => {
+    // jedes Wort in ein nowrap-span, damit es nie zwischen Umschalt-Stelle und Rest umbricht
+    el.innerHTML = `<p class="satz"><span class="wd">${parts.map((p, i) => i % 2 ? `<button class="tg" data-i="${i}">${esc(p.opts[cur[i]])}</button>` : esc(p).split(" ").join(`</span> <span class="wd">`)).join("")}</span></p>`;
+    el.querySelectorAll(".tg").forEach(b => b.onclick = () => { if (state.answered) return; const i = +b.dataset.i; cur[i] = (cur[i] + 1) % parts[i].opts.length; draw(); });
+  };
+  draw();
+  go.disabled = false;
+  state.reset = () => { cur = parts.map(() => 0); draw(); };
+  state.grade = () => {
+    let ok = true;
+    el.querySelectorAll(".tg").forEach(b => {
+      const i = +b.dataset.i, right = cur[i] === parts[i].right;
+      b.disabled = true; b.classList.add(right ? "ok" : "bad");
+      if (!right) ok = false;
+    });
+    const plain = parts.map(p => typeof p === "string" ? p : p.opts[p.right]).join("");
+    return {
+      ok, correct: plain,
+      solution: parts.map((p, i) => typeof p === "string" ? esc(p) : `<mark class="${cur[i] !== p.right ? "fixd" : ""}">${esc(p.opts[p.right])}</mark>`).join("")
+    };
+  };
+}
+
+function renderMulti(q, el, go) {
+  const order = shuffle(q.options.map((_, i) => i));
+  const sel = new Set();
+  el.innerHTML = `<p class="hint">Mehrere Antworten sind richtig.</p>
+    <div class="opts">${order.map(i => `<button class="opt check" data-i="${i}">${esc(q.options[i])}</button>`).join("")}</div>`;
+  el.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    const i = +b.dataset.i;
+    sel.has(i) ? sel.delete(i) : sel.add(i);
+    b.classList.toggle("sel", sel.has(i));
+    go.disabled = sel.size === 0;
+  });
+  state.grade = () => {
+    const ok = sel.size === q.answers.length && q.answers.every(a => sel.has(a));
+    el.querySelectorAll(".opt").forEach(b => {
+      const i = +b.dataset.i, right = q.answers.includes(i);
+      b.disabled = true; b.classList.remove("sel");
+      if (right) b.classList.add(sel.has(i) ? "ok" : "miss");
+      else if (sel.has(i)) b.classList.add("bad");
+    });
+    return { ok, correct: q.answers.map(i => q.options[i]).join(", ") };
+  };
+}
+
+function renderMC(q, el, go) {
+  const order = shuffle(q.options.map((_, i) => i));
+  el.innerHTML = `<div class="opts">${order.map(i => `<button class="opt" data-i="${i}">${esc(q.options[i])}</button>`).join("")}</div>`;
+  el.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    el.querySelectorAll(".opt").forEach(x => x.classList.remove("sel"));
+    b.classList.add("sel"); state.pick = +b.dataset.i; go.disabled = false;
+  });
+  state.grade = () => {
+    el.querySelectorAll(".opt").forEach(b => {
+      b.disabled = true;
+      if (+b.dataset.i === q.answer) b.classList.add("ok");
+      else if (b.classList.contains("sel")) b.classList.add("bad");
+    });
+    return { ok: state.pick === q.answer, correct: q.options[q.answer] };
+  };
+}
+
+function renderTF(q, el, go) {
+  el.innerHTML = `<div class="opts tf"><button class="opt" data-v="1">Richtig</button><button class="opt" data-v="0">Falsch</button></div>`;
+  el.querySelectorAll(".opt").forEach(b => b.onclick = () => {
+    el.querySelectorAll(".opt").forEach(x => x.classList.remove("sel"));
+    b.classList.add("sel"); state.pick = b.dataset.v === "1"; go.disabled = false;
+  });
+  state.grade = () => {
+    el.querySelectorAll(".opt").forEach(b => {
+      b.disabled = true;
+      if ((b.dataset.v === "1") === q.answer) b.classList.add("ok");
+      else if (b.classList.contains("sel")) b.classList.add("bad");
+    });
+    return { ok: state.pick === q.answer, correct: q.answer ? "Richtig" : "Falsch" };
+  };
+}
+
+function renderMatch(q, el, go) {
+  const answers = shuffle([...new Set(q.pairs.map(p => p[1]))]);
+  const rows = shuffle(q.pairs);
+  el.innerHTML = rows.map((p, i) => `
+    <div class="row"><b>${esc(p[0])}</b>
+      <select data-i="${i}"><option value="">– wählen –</option>${answers.map(a => `<option>${esc(a)}</option>`).join("")}</select></div>`).join("");
+  const sels = [...el.querySelectorAll("select")];
+  sels.forEach(s => s.onchange = () => { go.disabled = sels.some(x => !x.value); });
+  state.grade = () => {
+    let ok = true;
+    sels.forEach((s, i) => {
+      s.disabled = true;
+      const right = s.value === rows[i][1];
+      s.classList.add(right ? "ok" : "bad");
+      if (!right) { ok = false; s.parentElement.insertAdjacentHTML("beforeend", `<span class="fix">Richtig: ${esc(rows[i][1])}</span>`); }
+    });
+    return { ok, correct: q.pairs.map(p => `${p[0]} – ${p[1]}`).join("; ") };
+  };
+}
+
+function check() {
+  const item = state.list[state.i], q = item.q;
+  const { ok, correct, solution } = state.grade();
+  state.answered = true;
+  if (item.rep) { state.repTotal++; if (ok) state.repOk++; }
+  else if (ok) state.score++;
+  state.streak = ok ? state.streak + 1 : 0;
+  let more = "";
+  if (!ok && !item.rep) { // genau REPEATS-mal wiederholen, mit etwas Abstand
+    state.wrong.push({ q, correct });
+    let pos = state.i;
+    for (let r = 1; r <= REPEATS; r++) { pos = Math.min(state.list.length, pos + 4); state.list.splice(pos, 0, { q, rep: r }); }
+    more = `<span class="more">Diese Aufgabe kommt später noch ${REPEATS}-mal.</span>`;
+  }
+  const praise = ["Super!", "Richtig!", "Genau!", "Sehr gut!", "Toll!"];
+  const fb = document.getElementById("fb");
+  if (ok) fb.innerHTML = `<div class="feedback ok"><strong>${praise[Math.floor(Math.random() * praise.length)]}</strong>${esc(q.info || "")}</div>`;
+  else if (solution) { // Satz-Aufgabe: Lösung erst auf Wunsch
+    fb.innerHTML = `<div class="feedback bad"><strong>Leider nicht ganz.</strong>Die rot markierten Stellen stimmen nicht.${more}
+      <div class="actions" style="justify-content:flex-start;margin-top:10px"><button class="btn ghost" id="sol">Lösung zeigen</button></div></div>`;
+    document.getElementById("sol").onclick = () => {
+      fb.querySelector(".feedback").insertAdjacentHTML("afterend", `<div class="solution"><b>Lösung:</b><p class="satz">${solution}</p><p>${esc(q.info || "")}</p></div>`);
+      document.getElementById("sol").parentElement.remove();
+    };
+  } else fb.innerHTML = `<div class="feedback bad"><strong>Leider nicht ganz.</strong>${esc(q.info || "")}${more}</div>`;
+  const go = document.getElementById("go");
+  go.textContent = state.i + 1 < state.list.length ? "Weiter →" : "Ergebnis anzeigen";
+  go.disabled = false;
+  go.focus();
+  const rs = document.getElementById("reset");
+  if (rs) rs.remove();
+}
+
+function next() {
+  state.i++;
+  if (state.i < state.list.length) render(); else result();
+}
+
+function result() {
+  const n = state.n, pct = Math.round(state.score / n * 100);
+  saveBest(state.id + "-" + state.level, pct);
+  paint(state.id === "all" ? null : state.id);
+  const msg = pct === 100 ? `Perfekt! Du bist ein ${SPIEL.profi}!` : pct >= 80 ? "Sehr gut gemacht!" : pct >= 50 ? "Gut! Mit etwas Übung schaffst du noch mehr." : "Übe das Thema noch einmal – du schaffst das!";
+  app.innerHTML = `
+    <div class="card center">
+      <h2>Ergebnis · ${lvDots(state.level)} ${levelName(state.level)}</h2>
+      <div class="big">${state.score} / ${n}</div>
+      <p style="margin:0">beim ersten Versuch richtig (${pct} %) · ${msg}</p>
+      ${state.repTotal ? `<p style="color:var(--muted)">Wiederholungen: ${state.repOk} von ${state.repTotal} richtig</p>` : ""}
+      ${state.wrong.length ? `<div class="review"><b>Das solltest du wiederholen:</b><ul>${state.wrong.map(w =>
+        `<li>${esc(w.q.type === "gross" || w.q.type === "wahl" ? w.correct : w.q.q)}${w.q.type === "gross" || w.q.type === "wahl" ? "" : `<span>Richtig: ${esc(w.correct)}</span>`}<span>${esc(w.q.info || "")}</span></li>`).join("")}</ul></div>` : ""}
+      <div class="actions" style="justify-content:center">
+        <button class="btn ghost" id="home">Themen</button>
+        ${state.id !== "all" && LESSONS[state.id] ? `<button class="btn ghost" id="relearn">Lernkarten</button>` : ""}
+        <button class="btn ghost" id="level">Andere Stufe</button>
+        <button class="btn" id="again">Neue Runde</button>
+      </div>
+    </div>`;
+  document.getElementById("home").onclick = home;
+  document.getElementById("again").onclick = () => start(state.id, state.level);
+  document.getElementById("level").onclick = () => chooseLevel(state.id);
+  const relearn = document.getElementById("relearn");
+  if (relearn) relearn.onclick = () => learn(state.id, 0);
+  window.scrollTo(0, 0);
+  fxEnd(pct === 100 ? "perfect" : "done", state.id);
+}
+
+home();
+</script>
+</body>
+</html>
