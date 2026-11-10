@@ -23,7 +23,7 @@ const FAECHER = [
     klassen: [
       { name: "2. Klasse", folder: "de2-eev6p9y1", kapitel: [
         { name: "1. Textsorten", path: "textsorten/" },
-        { name: "2. Grammatik", path: "grammatik/", spiele: ["verb-modus-modalverben/"] },
+        { name: "2. Grammatik", path: "grammatik/", spiele: ["verb-aktiv-passiv/", "verb-modus-modalverben/"] },
         { name: "3. Rechtschreibung", path: "rechtschreibung/", spiele: ["nomen-grossschreibung/", "doppelkonsonanten-dehnungs-h/"] }
       ] }
     ]
