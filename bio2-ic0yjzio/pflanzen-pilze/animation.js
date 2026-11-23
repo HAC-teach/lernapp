@@ -135,7 +135,7 @@ const FX = {
 // Aufgeteilte Themen verwenden die Animation ihres Folien-Themas (Bäume bzw. Pilze).
 for (const kind of ["done", "perfect"]) {
   FX[kind].laub = FX[kind].nadel = FX[kind].baeume;
-  FX[kind].pilzleben = FX[kind].pilze;
+  FX[kind].pilzleben = FX[kind].flechten = FX[kind].pilze;
 }
 
 function fxEnd(kind, topic) {

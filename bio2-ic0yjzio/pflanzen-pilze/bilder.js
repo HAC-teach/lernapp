@@ -201,6 +201,30 @@ const IMAGES = {
     <g stroke="#c9b48a" stroke-width="1.5"><path d="M130 102l10 10M150 106l6 9M170 108l3 8M190 110v6M210 110v6M230 108l-3 8M250 106l-6 9M270 102l-10 10"/></g>
     <path d="M110 98C112 50 160 24 200 24S288 50 290 98Q200 116 110 98Z" fill="#b5713f" stroke="#7d4a24" stroke-width="2.5"/>
     <path d="M150 50q30-16 60-14" stroke="#d29a68" stroke-width="5" stroke-linecap="round" fill="none"/>
+  </svg>`,
+  pilzformen: `<svg viewBox="0 0 400 260" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vier Pilzformen">
+    <rect width="400" height="260" fill="#eef6fb"/>
+    <rect y="220" width="400" height="40" fill="#a8835a"/><rect y="218" width="400" height="5" fill="#7cb860"/>
+    <!-- Lamellenpilz: Hutunterseite mit Lamellen -->
+    <ellipse cx="70" cy="114" rx="50" ry="22" fill="#f3e6c8" stroke="#b9a77f" stroke-width="2"/>
+    <g stroke="#b9a07a" stroke-width="1.6"><path d="M70 116L22 112M70 116L26 124M70 116L34 130M70 116L46 134M70 116L60 136M70 116L80 136M70 116L94 134M70 116L106 130M70 116L114 124M70 116L118 112"/></g>
+    <path d="M62 116V214Q62 220 70 220Q78 220 78 214V116z" fill="#f4ead2" stroke="#b9a77f" stroke-width="2"/>
+    <path d="M20 110C22 72 44 52 70 52S118 72 120 110Q70 102 20 110Z" fill="#c8574a" stroke="#8a3528" stroke-width="2.5"/>
+    <g fill="#fff6ea"><circle cx="50" cy="80" r="4"/><circle cx="74" cy="68" r="4.5"/><circle cx="96" cy="86" r="3.5"/><circle cx="62" cy="96" r="3"/></g>
+    <!-- Röhrenpilz: dicker Stiel, Hutunterseite mit Poren -->
+    <path d="M154 126Q140 190 150 218Q170 224 190 218Q200 190 186 126z" fill="#efe3c6" stroke="#b9a77f" stroke-width="2"/>
+    <ellipse cx="170" cy="122" rx="50" ry="20" fill="#e8cf62" stroke="#b89a30" stroke-width="2"/>
+    <g fill="#a88a24"><circle cx="132" cy="122" r="2"/><circle cx="142" cy="116" r="2"/><circle cx="142" cy="128" r="2"/><circle cx="152" cy="122" r="2"/><circle cx="152" cy="134" r="2"/><circle cx="162" cy="116" r="2"/><circle cx="162" cy="128" r="2"/><circle cx="172" cy="122" r="2"/><circle cx="172" cy="136" r="2"/><circle cx="182" cy="116" r="2"/><circle cx="182" cy="128" r="2"/><circle cx="192" cy="122" r="2"/><circle cx="192" cy="134" r="2"/><circle cx="202" cy="116" r="2"/><circle cx="202" cy="128" r="2"/><circle cx="210" cy="122" r="2"/></g>
+    <path d="M120 119C122 80 144 60 170 60S218 80 220 119Q170 110 120 119Z" fill="#8a5530" stroke="#5e3518" stroke-width="2.5"/>
+    <!-- Leistenpilz: Trichterform, Leisten laufen bis zum Stiel -->
+    <path d="M226 92Q266 112 306 92Q300 124 276 150L274 218H258L256 150Q232 124 226 92Z" fill="#e8b33a" stroke="#a87a18" stroke-width="2"/>
+    <g stroke="#b8861e" stroke-width="1.6" fill="none"><path d="M234 102Q252 126 260 160M248 106Q258 130 263 165M266 108V170M284 106Q274 130 269 165M298 102Q280 126 272 160"/></g>
+    <ellipse cx="266" cy="92" rx="40" ry="8" fill="#f2c95a" stroke="#a87a18" stroke-width="2"/>
+    <!-- Bauchpilz: kugelig, Sporen innen -->
+    <path d="M334 206Q336 218 352 219Q368 218 370 206z" fill="#d9c7a4" stroke="#9c8762" stroke-width="2"/>
+    <circle cx="352" cy="182" r="32" fill="#e3d2ae" stroke="#9c8762" stroke-width="2.5"/>
+    <g fill="#b8a27a"><circle cx="338" cy="172" r="2"/><circle cx="352" cy="166" r="2"/><circle cx="366" cy="174" r="2"/><circle cx="344" cy="190" r="2"/><circle cx="362" cy="194" r="2"/><circle cx="352" cy="180" r="2"/></g>
+    <circle cx="352" cy="152" r="3" fill="#7a6648"/>
   </svg>`
 };
 
@@ -211,5 +235,6 @@ const TOPIC_ICONS = {
   nadel: `<path d="M24 5l-8 12h5l-8 11h6l-8 11h26l-8-11h6l-8-11h5z" /><path d="M24 39v5" />`,
   sporen: `<path d="M22 44c0-12 0-20 6-26a7 7 0 1 0-8-5 3.5 3.5 0 0 0 5 2" /><path d="M22 38l-7-3M22 31l-6-4M23 26l-5-5M22 38l7-1M23 31l6-2" />`,
   pilze: `<path d="M8 25c0-10 7-17 16-17s16 7 16 17z" /><path d="M19 25v14c0 3 10 3 10 0V25" /><circle cx="18" cy="17" r="1.6" /><circle cx="29" cy="15" r="1.6" />`,
-  pilzleben: `<path d="M6 24h36l-5 17H11z" /><path d="M13 24c0-12 22-12 22 0" /><path d="M15 24c0-6 4-10 9-10s9 4 9 10" /><path d="M16 31h16M14 36h20" />`
+  pilzleben: `<path d="M6 24h36l-5 17H11z" /><path d="M13 24c0-12 22-12 22 0" /><path d="M15 24c0-6 4-10 9-10s9 4 9 10" /><path d="M16 31h16M14 36h20" />`,
+  flechten: `<path d="M4 22h40" /><path d="M14 34c-2-6 4-9 9-8 4-3 12-1 12 5 3 4-1 10-8 9-5 3-12 1-13-6z" /><circle cx="21" cy="33" r="1.2" /><circle cx="28" cy="35" r="1.2" /><path d="M10 22c0-5 3-8 6-8s6 3 6 8M26 22c0-4 2-7 5-7s5 3 5 7" />`
 };

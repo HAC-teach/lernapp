@@ -144,63 +144,60 @@ const LESSONS = {
     { title: "Was sind Pilze?",
       points: [
         "kein Chlorophyll → keine Fotosynthese",
-        "zersetzen organische Stoffe außen, nehmen sie dann auf",
+        "organische Stoffe werden außen zersetzt, dann aufgenommen",
         "weder Pflanze noch Tier: eigenes Reich"
-      ] },
-    { title: "Der Hallimasch",
-      points: [
-        "größtes Lebewesen: Oregon (USA), entdeckt 2000",
-        "ca. 2 400 Jahre alt",
-        "900 Hektar (1 260 Fußballfelder), ca. 1 m tief",
-        "leuchtet: Biolumineszenz"
       ] },
     { title: "Aufbau",
       points: [
-        "Mycel = Fadengeflecht im Boden (Hauptteil)",
+        "Mycel = Pilzfadengeflecht im Boden (Hauptorgan)",
         "Hyphe = einzelner Pilzfaden",
-        "„Schwammerl“ = Sporenkörper: Hut, Lamellen, Ring, Stiel"
-      ], tip: "Schimmelige Marmelade wegwerfen: Das Mycel ist auch dort, wo man nichts sieht." },
+        "„Schwammerl“ = Sporenträger (Fruchtkörper): Hut, Lamellen, Ring, Stiel",
+        "Lamellen: Sporen entstehen an den Ständerzellen"
+      ], tip: "Schimmelige Marmelade wegwerfen: Die Hyphen sind auch dort, wo man nichts sieht." },
     { title: "Vom Pilz zum Pilz",
       points: [
-        "Lamellen bilden „+“- und „–“-Sporen",
-        "Sporen → Hyphen",
-        "Hyphen verschmelzen → neues Mycel",
-        "Mycel → junger Sporenträger"
+        "Sporen reifen auf den Ständerzellen → fallen zu Boden",
+        "Sporen keimen",
+        "Hyphen einer „+“- und „–“-Spore verschmelzen",
+        "neues Mycel → neuer Sporenträger"
       ] },
     { title: "Sporen verbreiten",
       points: [
-        "Wind, Regentropfen, Berührung oder Druck",
-        "Aasgeruch lockt Tiere an",
-        "die Form des Pilzes verrät den Weg"
+        "Wind: Hut mit Lamellen (Fliegenpilz)",
+        "Aasgeruch → Fliegen: kein Hut, schleimig (Stinkmorchel)",
+        "Regentropfen: Becher als Sporenbehälter (Teuerling)",
+        "Berührung, Druck: kugelig, Sporen innen (Stäubling)"
+      ], tip: "Die Form des Pilzes verrät, wie er seine Sporen verbreitet." },
+    { title: "Der Hexenring",
+      points: [
+        "Mycel wächst jedes Jahr weiter nach außen",
+        "Mitte: altes Mycel stirbt ab",
+        "am Rand wachsen Fruchtkörper → Kreis aus Pilzen",
+        "Name: früher Versammlungsplatz für Hexen und Feen"
       ] }
   ],
 
   pilzleben: [
     { title: "Drei Arten der Ernährung",
       points: [
-        "Destruenten: zersetzen Totes → Nährstoffe (Champignon, Schimmelpilze)",
-        "Parasiten: schädigen einen Wirt (Fußpilz, Hallimasch)",
+        "Destruenten (Zersetzer): zersetzen Totes → Nährstoffe (Champignon, Schimmelpilze)",
+        "Parasiten (Schmarotzer): schädigen einen Wirt (Fußpilz, Hallimasch)",
         "Symbionten: beide haben Vorteile (Steinpilz, Eierschwammerl, Fliegenpilz)"
       ] },
     { title: "Mykorrhiza",
       points: [
-        "Symbiose von Pilz und Baumwurzel",
-        "Pilz bekommt Nährstoffe vom Baum",
-        "Baum bekommt Wasser + Mineralsalze vom Pilz"
+        "Symbiose von Pilz und Baum",
+        "Pilzfäden dringen in die Wurzeln ein",
+        "Pilz gibt Wasser + Mineralsalze ab",
+        "Baum gibt Nährstoffe ab"
       ] },
-    { title: "Flechten",
+    { title: "Pilzformen",
       points: [
-        "Pilz + Alge (Symbiose)",
-        "Pilz: Schutz vor Austrocknung und UV",
-        "Alge: Nahrung durch Fotosynthese"
-      ] },
-    { title: "Pilzvergiftung",
-      points: [
-        "Verwechslung, z. B. Steinpilz ↔ Gallenröhrling",
-        "nach 6–48 h: Durchfall, Erbrechen, Blutdruckabfall",
-        "später: Leber- und Nierenversagen",
-        "Ruhe bewahren, Vergiftungsinformationszentrale, Krankenhaus",
-        "keine Milch, kein Alkohol · Reste aufheben"
+        "Lamellenpilz: Sporen auf Lamellen (Champignon, Fliegenpilz)",
+        "Röhrenpilz: Sporen in Röhren (Steinpilz)",
+        "Leistenpilz: Sporen auf Leisten (Eierschwammerl)",
+        "Stachel-, Korallen- (Bärentatze), Bauchpilz (Sporen innen)",
+        "Schlauchpilz: Sporen in Schläuchen (Speisemorchel)"
       ] },
     { title: "Regeln beim Sammeln",
       points: [
@@ -208,6 +205,40 @@ const LESSONS = {
         "herausdrehen oder abschneiden → Mycel bleibt heil",
         "luftig im Korb, nicht im Plastiksack",
         "rasch verarbeiten"
+      ] }
+  ],
+
+  flechten: [
+    { title: "Trüffeln",
+      points: [
+        "Fruchtkörper wachsen unterirdisch",
+        "Symbiose mit Sträuchern und Bäumen (oft Eichen)",
+        "Delikatesse: selten, aufwändig zu suchen → teuer"
+      ] },
+    { title: "Trüffelsuche",
+      points: [
+        "früher: Trüffelschweine",
+        "aber: fressen Trüffeln selbst, beschädigen Baumwurzeln",
+        "heute: speziell trainierte Hunde"
+      ] },
+    { title: "Flechten: Pilz + Alge",
+      points: [
+        "Symbiose: beide Partner haben Vorteile",
+        "Pilz: Wasser + Mineralsalze, Schutz vor UV und Austrocknung, Verankerung",
+        "Alge: Fotosynthese → Nährstoffe (Zucker)"
+      ] },
+    { title: "Leben überall",
+      points: [
+        "auf Felsen, Bäumen, Zäunen, Boden",
+        "vertragen Austrocknung, Kälte, Hitze (Wüste, Arktis)",
+        "Pionierlebewesen: Säuren lösen Fels → Erde entsteht",
+        "Vermehrung durch Teilung: „Körnchen“ fliegen mit dem Wind"
+      ] },
+    { title: "Anzeiger für saubere Luft",
+      points: [
+        "sterben bei Luftschadstoffen",
+        "können giftige Stoffe nicht abgeben",
+        "Zeigerorganismen für Luftverschmutzung"
       ] }
   ]
 };
