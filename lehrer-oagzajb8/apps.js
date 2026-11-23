@@ -22,7 +22,7 @@ const FAECHER = [
     id: "de", name: "Deutsch", color: "#c8483b", soft: "#fbe6e1",
     klassen: [
       { name: "2. Klasse", folder: "de2-eev6p9y1", kapitel: [
-        { name: "1. Textsorten", path: "textsorten/" },
+        { name: "1. Textsorten", path: "textsorten/", spiele: ["anleitungen/", "rezepte/"] },
         { name: "2. Grammatik", path: "grammatik/", spiele: ["verb-aktiv-passiv/", "verb-modus-modalverben/", "praepositionen/"] },
         { name: "3. Rechtschreibung", path: "rechtschreibung/", spiele: ["nomen-grossschreibung/", "doppelkonsonanten-dehnungs-h/", "langes-i-lange-vokale/", "s-schreibung/"] },
         { name: "4. Gliederung", path: "gliederung/" }
